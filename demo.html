@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WT Site Scout — Free Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Share+Tech+Mono&family=Bitter:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+:root{
+  --gold:#C9920A;--gold-b:#F0B429;--gold-d:#7A5A06;
+  --dirt:#1E1710;--rock:#141008;--slate:#332B1E;--slate2:#2A2218;
+  --cream:#F2E8D0;--bone:#D4C5A0;--steel:#8A9BA8;
+  --ree:#00E5CC;--red:#C0392B;--green:#27AE60;--amber:#E67E22;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{min-height:100vh;}
+body{
+  background:var(--rock);color:var(--cream);
+  font-family:'Bitter',Georgia,serif;
+  background-image:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,255,255,.01) 3px,rgba(255,255,255,.01) 4px);
+}
+
+/* HEADER */
+.hdr{background:linear-gradient(180deg,#2E2210,#1E1710);border-bottom:2px solid var(--gold);padding:14px 18px 12px;}
+.hdr-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;}
+.brand-eye{font-family:'Share Tech Mono',monospace;font-size:7px;letter-spacing:3px;color:var(--gold);margin-bottom:2px;}
+.brand{font-family:'Oswald',sans-serif;font-size:22px;font-weight:700;letter-spacing:2px;text-transform:uppercase;line-height:1;}
+.brand em{color:var(--gold-b);font-style:normal;}
+.demo-badge{
+  background:rgba(0,229,204,.12);border:1px solid var(--ree);
+  font-family:'Oswald',sans-serif;font-size:12px;font-weight:700;
+  letter-spacing:2px;color:var(--ree);padding:5px 12px;border-radius:3px;
+  text-transform:uppercase;
+}
+
+/* HERO */
+.hero{
+  padding:22px 18px 18px;
+  background:linear-gradient(160deg,rgba(201,146,10,.12),rgba(20,16,8,0) 60%);
+  border-bottom:1px solid var(--slate);text-align:center;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);
+  width:300px;height:300px;border-radius:50%;
+  background:radial-gradient(circle,rgba(240,180,41,.06),transparent 65%);
+  pointer-events:none;
+}
+.demo-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'Share Tech Mono',monospace;font-size:8px;letter-spacing:3px;
+  color:var(--ree);text-transform:uppercase;margin-bottom:10px;
+}
+.demo-tag::before,.demo-tag::after{content:'';display:block;width:20px;height:1px;background:var(--ree);}
+.hero-h1{font-family:'Oswald',sans-serif;font-size:26px;font-weight:700;letter-spacing:1px;line-height:1.1;margin-bottom:8px;}
+.hero-h1 em{color:var(--gold-b);font-style:normal;}
+.hero-sub{font-family:'Bitter',serif;font-size:13px;font-style:italic;color:var(--bone);line-height:1.5;margin-bottom:12px;}
+.demo-disclaimer{
+  display:inline-block;
+  font-family:'Share Tech Mono',monospace;font-size:8px;letter-spacing:1px;
+  color:var(--amber);background:rgba(230,126,34,.08);
+  border:1px solid rgba(230,126,34,.3);border-radius:2px;
+  padding:5px 12px;margin-bottom:0;
+}
+
+/* SEARCH CARD */
+.search-card{margin:14px;background:var(--dirt);border:1px solid var(--slate);border-radius:6px;overflow:hidden;}
+.sc-hdr{background:var(--slate2);padding:10px 14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;}
+.sc-title{font-family:'Oswald',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--bone);}
+.sc-free{font-family:'Share Tech Mono',monospace;font-size:7px;letter-spacing:2px;color:var(--green);border:1px solid var(--green);padding:2px 7px;border-radius:2px;}
+.sc-body{padding:14px;}
+
+/* INPUT */
+.loc-input-wrap{position:relative;margin-bottom:10px;}
+.loc-label{font-family:'Share Tech Mono',monospace;font-size:7px;letter-spacing:2px;color:var(--steel);text-transform:uppercase;margin-bottom:5px;display:block;}
+.loc-input{
+  width:100%;background:var(--rock);border:1px solid var(--slate);
+  color:var(--cream);font-family:'Bitter',serif;font-size:13px;
+  padding:11px 14px;border-radius:3px;outline:none;
+  transition:border-color .2s;
+}
+.loc-input::placeholder{color:rgba(138,155,168,.4);font-style:italic;}
+.loc-input:focus{border-color:var(--gold);}
+.loc-hint{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--steel);opacity:.7;letter-spacing:.5px;margin-top:4px;}
+
+/* MAP PREVIEW */
+.map-preview{border:1px solid var(--slate);border-radius:3px;overflow:hidden;margin-bottom:10px;}
+.map-bar{background:var(--slate2);padding:5px 10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px;}
+.map-bar-l{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--steel);letter-spacing:1px;}
+.map-bar-r{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--gold);letter-spacing:1px;}
+#demo-map{height:180px;}
+
+/* METALS */
+.metals-row{display:flex;gap:6px;margin-bottom:12px;align-items:center;flex-wrap:wrap;}
+.metals-lbl{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--steel);letter-spacing:1px;}
+.mc{font-family:'Share Tech Mono',monospace;font-size:8px;letter-spacing:1px;padding:3px 8px;border-radius:2px;border:1px solid;}
+.mc-au{border-color:var(--gold);color:var(--gold);background:rgba(201,146,10,.1);}
+.mc-ree{border-color:var(--ree);color:var(--ree);background:rgba(0,229,204,.08);}
+
+/* SCAN BUTTON */
+.scan-btn{
+  width:100%;background:var(--ree);color:var(--rock);
+  font-family:'Oswald',sans-serif;font-size:15px;font-weight:700;
+  letter-spacing:3px;text-transform:uppercase;border:none;
+  padding:13px;border-radius:3px;cursor:pointer;transition:all .2s;
+  position:relative;overflow:hidden;
+}
+.scan-btn:hover{background:#00FFE5;}
+.scan-btn::after{
+  content:'';position:absolute;top:0;left:-100%;width:50%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);
+  animation:shim 2s infinite;
+}
+@keyframes shim{to{left:160%;}}
+
+/* SCANNING ANIMATION */
+.scanning{display:none;text-align:center;padding:20px 0;}
+.scanning.show{display:block;}
+.scan-ring{
+  width:80px;height:80px;border-radius:50%;
+  border:2px solid var(--gold-d);
+  margin:0 auto 12px;position:relative;
+  animation:pulse 1.5s ease-in-out infinite;
+}
+.scan-ring::before{
+  content:'';position:absolute;inset:8px;border-radius:50%;
+  border:2px solid var(--gold);
+  animation:pulse 1.5s ease-in-out infinite .3s;
+}
+.scan-ring::after{
+  content:'';position:absolute;inset:16px;border-radius:50%;
+  border:2px solid var(--gold-b);
+  animation:pulse 1.5s ease-in-out infinite .6s;
+}
+@keyframes pulse{0%,100%{opacity:.3;transform:scale(.95);}50%{opacity:1;transform:scale(1.05);}}
+.scan-txt{font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:3px;color:var(--gold-b);text-transform:uppercase;margin-bottom:4px;}
+.scan-sub{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--steel);letter-spacing:1px;}
+.scan-dots::after{content:'...';animation:dots 1.5s steps(4,end) infinite;}
+@keyframes dots{0%,100%{content:'';}25%{content:'.';}50%{content:'..';}75%{content:'...';}}}
+
+/* DEMO REPORT */
+.demo-report{display:none;margin:0 14px 14px;}
+.demo-report.show{display:block;}
+
+/* WATERMARK */
+.watermark-bar{
+  background:rgba(230,126,34,.1);border:1px solid rgba(230,126,34,.4);
+  border-radius:4px 4px 0 0;padding:8px 14px;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;
+}
+.wm-txt{font-family:'Share Tech Mono',monospace;font-size:8px;letter-spacing:2px;color:var(--amber);text-transform:uppercase;}
+.wm-demo{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:3px;color:var(--amber);font-weight:700;}
+
+/* REPORT HEADER */
+.rpt-hdr{
+  background:linear-gradient(135deg,rgba(201,146,10,.1),rgba(30,23,16,.98));
+  border:1px solid var(--gold-d);border-top:none;padding:13px 15px;
+  position:relative;
+}
+.rpt-hdr::after{
+  content:'DEMO ONLY - NOT ACCURATE';
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-20deg);
+  font-family:'Oswald',sans-serif;font-size:28px;font-weight:700;
+  color:rgba(230,126,34,.08);letter-spacing:4px;white-space:nowrap;
+  pointer-events:none;z-index:1;
+}
+.rh-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:8px;}
+.rh-ref{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--steel);letter-spacing:2px;margin-bottom:3px;}
+.rh-loc{font-family:'Oswald',sans-serif;font-size:17px;font-weight:600;letter-spacing:1px;line-height:1.2;}
+.rh-r{text-align:right;}
+.rh-demo-price{font-family:'Oswald',sans-serif;font-size:18px;font-weight:700;color:var(--ree);line-height:1;}
+.rh-demo-lbl{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--amber);letter-spacing:2px;margin-top:2px;}
+.rh-pills{display:flex;flex-wrap:wrap;gap:5px;}
+.rpill{font-family:'Share Tech Mono',monospace;font-size:7px;letter-spacing:1px;padding:2px 7px;border-radius:2px;border:1px solid;text-transform:uppercase;}
+.rp-r{border-color:var(--steel);color:var(--steel);}
+.rp-w{border-color:var(--gold);color:var(--gold);}
+.rp-demo{border-color:var(--amber);color:var(--amber);}
+
+/* REPORT MAP */
+.rmap-wrap{border:1px solid var(--slate);border-top:none;overflow:hidden;}
+.rmap-bar{background:var(--slate2);padding:5px 10px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px;}
+.rmb-l{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--steel);letter-spacing:1px;}
+.rmb-r{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--gold);letter-spacing:1px;}
+#report-map{height:220px;}
+
+/* HITS */
+.hits-section{border:1px solid var(--slate);border-top:none;padding:12px 14px;}
+.hits-lbl{font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--slate);padding-bottom:5px;margin-bottom:10px;}
+.hit{background:var(--dirt);border:1px solid var(--slate);border-left:3px solid var(--gold);border-radius:3px;padding:12px 13px;margin-bottom:8px;position:relative;overflow:hidden;}
+.hit.ree{border-left-color:var(--ree);}
+.hit-wm{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-15deg);
+  font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;
+  color:rgba(230,126,34,.06);letter-spacing:3px;white-space:nowrap;
+  pointer-events:none;
+}
+.hit-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:9px;flex-wrap:wrap;gap:5px;}
+.hit-num{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--steel);letter-spacing:2px;margin-bottom:2px;}
+.hit-type{font-family:'Oswald',sans-serif;font-size:14px;font-weight:600;letter-spacing:1px;line-height:1.1;}
+.ht-au{color:var(--gold-b);}
+.ht-ree{color:var(--ree);}
+.wts{text-align:right;}
+.wts-lbl{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--steel);letter-spacing:2px;margin-bottom:1px;}
+.wts-n{font-family:'Oswald',sans-serif;font-size:26px;font-weight:700;line-height:1;}
+.wts-n.hi{color:var(--green);}
+.wts-n.md{color:var(--amber);}
+.wts-n.lo{color:var(--red);}
+.wts-s{font-size:9px;margin-top:1px;}
+.hgrid{display:grid;grid-template-columns:1fr 1fr;gap:5px 10px;margin-bottom:8px;}
+.dk{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--steel);letter-spacing:1px;text-transform:uppercase;margin-bottom:1px;}
+.dv{font-family:'Bitter',serif;font-size:11px;color:var(--bone);line-height:1.3;}
+.dbar{height:3px;background:var(--slate);border-radius:2px;margin-top:3px;overflow:hidden;}
+.df{height:100%;border-radius:2px;}
+.df.s{background:var(--green);width:12%;}
+.df.a{background:var(--green);width:25%;}
+.df.b{background:var(--amber);width:45%;}
+.df.c{background:var(--amber);width:65%;}
+.df.d{background:var(--red);width:82%;}
+.fnote{font-family:'Bitter',serif;font-style:italic;font-size:11px;color:var(--bone);line-height:1.55;padding:7px 10px;background:rgba(255,255,255,.025);border-left:2px solid var(--slate);margin-top:6px;}
+.fnote b{font-style:normal;font-weight:600;color:var(--gold);}
+.fnote b.ree{color:var(--ree);}
+
+/* DEMO NOTICE */
+.demo-notice{
+  background:rgba(230,126,34,.06);border:1px solid rgba(230,126,34,.25);
+  border-top:none;padding:12px 14px;
+}
+.dn-title{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:6px;}
+.dn-txt{font-family:'Bitter',serif;font-size:11px;color:var(--bone);line-height:1.55;margin-bottom:10px;}
+.dn-list{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--steel);line-height:2;letter-spacing:.5px;margin-bottom:10px;}
+.dn-list span{color:var(--green);}
+
+/* CTA — THE MONEY BUTTON */
+.cta-block{
+  background:linear-gradient(135deg,rgba(201,146,10,.15),rgba(30,23,16,.98));
+  border:1px solid var(--gold);border-top:none;
+  border-radius:0 0 5px 5px;padding:16px 14px;text-align:center;
+}
+.cta-headline{font-family:'Oswald',sans-serif;font-size:18px;font-weight:700;letter-spacing:1px;color:var(--cream);margin-bottom:4px;line-height:1.2;}
+.cta-headline em{color:var(--gold-b);font-style:normal;}
+.cta-sub{font-family:'Bitter',serif;font-size:11px;font-style:italic;color:var(--bone);margin-bottom:14px;line-height:1.4;}
+.cta-price-row{display:flex;justify-content:center;align-items:baseline;gap:8px;margin-bottom:14px;}
+.cta-price{font-family:'Oswald',sans-serif;font-size:32px;font-weight:700;color:var(--gold-b);line-height:1;}
+.cta-price-lbl{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--steel);letter-spacing:1px;}
+.cta-btn{
+  display:block;width:100%;
+  background:var(--gold);color:var(--rock);
+  font-family:'Oswald',sans-serif;font-size:16px;font-weight:700;
+  letter-spacing:3px;text-transform:uppercase;
+  border:none;padding:15px;border-radius:3px;
+  cursor:pointer;transition:all .2s;
+  position:relative;overflow:hidden;
+  text-decoration:none;
+}
+.cta-btn:hover{background:var(--gold-b);transform:translateY(-1px);box-shadow:0 4px 20px rgba(240,180,41,.3);}
+.cta-btn::after{
+  content:'';position:absolute;top:0;left:-100%;width:50%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);
+  animation:shim 2s infinite;
+}
+.cta-features{display:flex;flex-direction:column;gap:4px;margin-top:12px;}
+.cta-feat{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--steel);letter-spacing:1px;display:flex;align-items:center;gap:6px;justify-content:center;}
+.cta-feat::before{content:'✓';color:var(--green);}
+
+/* BOTTOM */
+.how{margin:0 14px 14px;background:var(--dirt);border:1px solid var(--slate);border-radius:5px;padding:14px;}
+.how-t{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--slate);padding-bottom:6px;margin-bottom:10px;}
+.how-s{display:flex;gap:12px;margin-bottom:8px;align-items:flex-start;}
+.how-n{font-family:'Oswald',sans-serif;font-size:18px;font-weight:700;color:var(--gold);min-width:22px;line-height:1;}
+.how-tx{font-family:'Bitter',serif;font-size:11px;color:var(--bone);line-height:1.45;}
+.how-tx b{font-weight:600;color:var(--cream);font-style:normal;}
+.foot{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--slate);letter-spacing:1px;text-align:center;padding:14px;line-height:2;}
+.foot a{color:var(--gold-d);text-decoration:none;}
+.leaflet-control-attribution{font-size:7px!important;background:rgba(20,16,8,.75)!important;color:var(--steel)!important;}
+.tip{font-family:'Share Tech Mono',monospace;font-size:9px;background:rgba(20,16,8,.92);border:1px solid var(--gold-d);color:var(--cream);padding:4px 8px;border-radius:2px;white-space:nowrap;}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-inner">
+    <div>
+      <div class="brand-eye">WMOS &middot; Mineral Intelligence &middot; Worldwide</div>
+      <div class="brand">WT <em>Site</em> Scout</div>
+    </div>
+    <div class="demo-badge">FREE DEMO</div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="demo-tag">Try Before You Buy</div>
+  <div class="hero-h1">See What's <em>Hiding</em><br>In Your Ground</div>
+  <div class="hero-sub">Enter any location. Watch WMOS find what's there.<br>Demo results are illustrative — your real report is precise.</div>
+  <div class="demo-disclaimer">⚠ DEMO ONLY — Locations and scores are illustrative, not accurate</div>
+</div>
+
+<!-- SEARCH CARD -->
+<div class="search-card">
+  <div class="sc-hdr">
+    <span class="sc-title">⛏ Enter Any Location</span>
+    <span class="sc-free">FREE — NO ACCOUNT</span>
+  </div>
+  <div class="sc-body">
+
+    <label class="loc-label">Location <span style="font-size:7px;color:var(--amber);letter-spacing:1px;">(Any format — name, coordinates, address, zip)</span></label>
+    <div class="loc-input-wrap">
+      <input
+        class="loc-input"
+        id="locInput"
+        type="text"
+        placeholder="e.g. Hog Creek Oregon, or 42.6469 -123.5028, or Josephine County OR, or 97527..."
+        onkeypress="if(event.key==='Enter')runDemo()"
+      />
+    </div>
+    <div class="loc-hint">Creek name &middot; GPS coordinates &middot; County and state &middot; Zip code &middot; Any location worldwide</div>
+
+    <div class="map-preview" style="margin-top:10px;">
+      <div class="map-bar">
+        <span class="map-bar-l">WMOS SCAN PREVIEW &mdash; QUARTER MILE RING</span>
+        <span class="map-bar-r" id="coordDisp">Enter location above</span>
+      </div>
+      <div id="demo-map"></div>
+    </div>
+
+    <div class="metals-row">
+      <span class="metals-lbl">EVERY SCAN INCLUDES:</span>
+      <span class="mc mc-au">Au &mdash; Gold</span>
+      <span class="mc mc-ree">REE &mdash; Rare Earth</span>
+    </div>
+
+    <button class="scan-btn" onclick="runDemo()">▶ RUN FREE DEMO SCAN</button>
+  </div>
+</div>
+
+<!-- SCANNING ANIMATION -->
+<div class="scanning" id="scanningDiv" style="padding:24px 14px;">
+  <div class="scan-ring"></div>
+  <div class="scan-txt">WMOS Scanning<span class="scan-dots"></span></div>
+  <div class="scan-sub" id="scanStatus">Analyzing your location</div>
+</div>
+
+<!-- DEMO REPORT -->
+<div class="demo-report" id="demoReport">
+
+  <div class="watermark-bar">
+    <span class="wm-txt">⚠ Demo Report &mdash; For Illustration Only</span>
+    <span class="wm-demo">NOT ACCURATE DATA</span>
+  </div>
+
+  <div class="rpt-hdr">
+    <div class="rh-top">
+      <div>
+        <div class="rh-ref" id="r-ref">DEMO SCAN &mdash; WMOS ILLUSTRATION</div>
+        <div class="rh-loc" id="r-loc">Your Location</div>
+      </div>
+      <div class="rh-r">
+        <div class="rh-demo-price">DEMO</div>
+        <div class="rh-demo-lbl">Illustrative Only</div>
+      </div>
+    </div>
+    <div class="rh-pills">
+      <span class="rpill rp-r">Quarter Mile</span>
+      <span class="rpill rp-w">WMOS Stack</span>
+      <span class="rpill rp-demo">Demo Mode</span>
+    </div>
+  </div>
+
+  <div class="rmap-wrap">
+    <div class="rmap-bar">
+      <span class="rmb-l">WMOS TERRAIN &mdash; DEMO ILLUSTRATION</span>
+      <span class="rmb-r" id="r-coord">—</span>
+    </div>
+    <div id="report-map"></div>
+  </div>
+
+  <div class="hits-section">
+    <div class="hits-lbl" id="hits-lbl">WMOS Detected Anomalies &mdash; Demo Results</div>
+    <div id="hitsContainer"></div>
+  </div>
+
+  <div class="demo-notice">
+    <div class="dn-title">About This Demo</div>
+    <div class="dn-txt">This is an illustrative sample showing the format and structure of a real WT Site Scout report. The hit locations, scores, and field notes above are randomly generated examples — not actual WMOS analysis of your location.</div>
+    <div class="dn-list">
+      <span>✓</span> Real reports use actual WMOS Proprietary Intelligence<br>
+      <span>✓</span> Real coordinates, real bearings, real depth estimates<br>
+      <span>✓</span> Real WT Score based on genuine accessibility analysis<br>
+      <span>✓</span> Real field notes you can take to the ground<br>
+      <span>✓</span> Emailed to you the moment payment clears
+    </div>
+  </div>
+
+  <div class="cta-block">
+    <div class="cta-headline">Ready for <em>Real Intelligence</em><br>On Your Ground?</div>
+    <div class="cta-sub">Same format. Same structure. Real data. Your actual location.</div>
+    <div class="cta-price-row">
+      <div class="cta-price">$50</div>
+      <div class="cta-price-lbl">One search &mdash; Full report &mdash; Emailed instantly</div>
+    </div>
+    <a class="cta-btn" id="ctaBtn" href="https://scout.thewildtradesman.com#payment">
+      ⛏ RUN MY REAL SCAN &mdash; $50
+    </a>
+    <div class="cta-features">
+      <div class="cta-feat">Gold and Rare Earth on every search</div>
+      <div class="cta-feat">Quarter mile radius worldwide coverage</div>
+      <div class="cta-feat">Report on screen and emailed instantly</div>
+      <div class="cta-feat">No subscription &mdash; no commitment</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="how">
+  <div class="how-t">What You Get With a Real Scan</div>
+  <div class="how-s"><span class="how-n">1</span><span class="how-tx"><b>Exact hit locations</b> with precise bearing and distance from your search origin — not illustrative ranges like the demo above.</span></div>
+  <div class="how-s"><span class="how-n">2</span><span class="how-tx"><b>Real WT Scores</b> weighted by actual accessibility — surface placer scores different from a deep buried target. Built for the prospector with boots on.</span></div>
+  <div class="how-s"><span class="how-n">3</span><span class="how-tx"><b>Field notes you can use</b> — what rock to look for, where to dig, what the overburden tells you. Written for the man who works with his hands.</span></div>
+  <div class="how-s"><span class="how-n">4</span><span class="how-tx"><b>Report delivered instantly</b> on screen and to your email the moment payment clears. $50. Done.</span></div>
+</div>
+
+<div class="foot">
+  WT SITE SCOUT &middot; POWERED BY WMOS PROPRIETARY INTELLIGENCE &middot; WORLDWIDE COVERAGE<br>
+  DEMO RESULTS ARE ILLUSTRATIVE ONLY AND ARE NOT ACCURATE MINERAL INTELLIGENCE<br>
+  <a href="https://scout.thewildtradesman.com">Full Site</a> &middot; <a href="#">Privacy Policy</a> &middot; <a href="#">Terms</a>
+</div>
+
+<script>
+// ── STATE ──
+let demoMap = null;
+let reportMapObj = null;
+let demoRing = null;
+
+// ── INIT MAP ──
+window.addEventListener('load', () => {
+  demoMap = L.map('demo-map', { zoomControl: false, scrollWheelZoom: false, dragging: false });
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Esri', maxZoom: 18 }).addTo(demoMap);
+  L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', { attribution: 'OTM', maxZoom: 17, opacity: 0.38 }).addTo(demoMap);
+  demoMap.setView([20, 0], 2);
+});
+
+function updateDemoMap(lat, lng) {
+  if (!demoMap) return;
+  demoMap.setView([lat, lng], 13);
+  if (demoRing) demoMap.removeLayer(demoRing);
+  demoRing = L.circle([lat, lng], { radius: 402, color: '#F0B429', weight: 2, opacity: .8, fillColor: '#F0B429', fillOpacity: .05, dashArray: '8 5' }).addTo(demoMap);
+  L.circleMarker([lat, lng], { radius: 5, color: '#fff', weight: 2, fillColor: '#00E5CC', fillOpacity: 1 }).addTo(demoMap);
+  document.getElementById('coordDisp').textContent = lat.toFixed(4) + (lat >= 0 ? '°N' : '°S') + '  ' + Math.abs(lng).toFixed(4) + (lng >= 0 ? '°E' : '°W');
+}
+
+// ── SIMPLE GEOCODING ──
+// Parse lat/lng if entered directly, otherwise use default demo coords
+// In production wire up to a real geocoding API (Google, Nominatim, etc.)
+function parseLocation(input) {
+  const trimmed = input.trim();
+  
+  // Try decimal coordinates
+  const coordMatch = trimmed.match(/^(-?\d+\.?\d*)[,\s]+(-?\d+\.?\d*)$/);
+  if (coordMatch) {
+    const lat = parseFloat(coordMatch[1]);
+    const lng = parseFloat(coordMatch[2]);
+    if (lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180) {
+      return { lat, lng, display: trimmed };
+    }
+  }
+
+  // Named location lookup (demo fallback locations)
+  const knownLocations = {
+    'hog creek': { lat: 42.6469, lng: -123.5028 },
+    'josephine': { lat: 42.4, lng: -123.6 },
+    'oregon': { lat: 43.8041, lng: -120.5542 },
+    'rogue': { lat: 42.647, lng: -123.558 },
+    'grants pass': { lat: 42.4390, lng: -123.3284 },
+    'klamath': { lat: 41.5, lng: -123.0 },
+    'california': { lat: 36.7783, lng: -119.4179 },
+    'australia': { lat: -30.0, lng: 121.0 },
+    'nevada': { lat: 38.8026, lng: -116.4194 },
+    'colorado': { lat: 39.5501, lng: -105.7821 },
+    'alaska': { lat: 64.2008, lng: -153.4937 },
+  };
+
+  const lower = trimmed.toLowerCase();
+  for (const [key, coords] of Object.entries(knownLocations)) {
+    if (lower.includes(key)) return { ...coords, display: trimmed };
+  }
+
+  // Zip code — rough US center fallback
+  if (/^\d{5}$/.test(trimmed)) {
+    return { lat: 39.5 + (parseInt(trimmed[0]) * 0.8), lng: -98.3 - (parseInt(trimmed[1]) * 1.2), display: 'ZIP ' + trimmed };
+  }
+
+  // Default — SW Oregon (our home turf)
+  return { lat: 42.647 + (Math.random() - 0.5) * 2, lng: -123.558 + (Math.random() - 0.5) * 2, display: trimmed };
+}
+
+// ── DEMO HIT DATA ──
+const demoHitSets = [
+  [
+    { metal: 'au', cls: '', typeClass: 'ht-au', label: 'GOLD — WMOS Primary Strike Zone', score: 87, scoreClass: 'hi', stars: '★★★★☆', scoreColor: 'var(--green)', depth: 'Surface — 7 ft', depthClass: 'a', bearing: '0.07 mi NNW · 334°', access: '★★★★★ Pan / Dredge', accessColor: 'var(--green)', terrane: 'WT Terrane Type A — Ultramafic Host', over: 'Active gravel bar — shallow bedrock accessible', note: '<b>Demo field note:</b> Inside bend of confluence — classic velocity trap geometry. Heavy black sand concentration guide. Check potholes along the bedrock wall. Fine gold — blue bowl or fine-mesh sluice.' },
+    { metal: 'ree', cls: 'ree', typeClass: 'ht-ree', label: 'RARE EARTH — WMOS Spectral Anomaly', score: 69, scoreClass: 'md', stars: '★★★☆☆', scoreColor: 'var(--amber)', depth: 'Subcrop — 22 ft', depthClass: 'b', bearing: '0.13 mi NE · 038°', access: '★★★☆☆ Rock Sampling / Assay', accessColor: 'var(--amber)', terrane: 'WT Terrane Type B — Mafic Contact Zone', over: 'Shallow soil over outcrop', note: '<b>Demo REE note:</b> WMOS Spectral Signature detected at this bearing. Reachable on foot. Collect 3–5 samples from dark outcrop, submit for full mineral assay. This is data collection — the value is in the assay result.' },
+    { metal: 'au', cls: '', typeClass: 'ht-au', label: 'GOLD — WMOS Structural Fracture Zone', score: 63, scoreClass: 'md', stars: '★★★☆☆', scoreColor: 'var(--amber)', depth: '11 — 26 ft', depthClass: 'c', bearing: '0.18 mi ESE · 108°', access: '★★★☆☆ High-Bank / Pump', accessColor: 'var(--amber)', terrane: 'WT Terrane Type C — Fractured Meta-Sequence', over: 'Cobble over clay layer', note: '<b>Demo field note:</b> Clay bench above current waterline marks old channel boundary. Work through the clay — gold sits on bedrock below. Equipment and permit required.' },
+    { metal: 'ree', cls: 'ree', typeClass: 'ht-ree', label: 'RARE EARTH — Deep WMOS Signal', score: 36, scoreClass: 'lo', stars: '★★☆☆☆', scoreColor: 'var(--red)', depth: '60 — 90 ft', depthClass: 'd', bearing: '0.21 mi S · 182°', access: '★★☆☆☆ Drilling Required', accessColor: 'var(--red)', terrane: 'WT Terrane Type B — Geochemical Halo Only', over: 'Heavy overburden — no surface expression', note: '<b>WT Score 36 — demo note:</b> Real geochemical signal type but depth puts this beyond hand tools. Mining company territory. Flagged for claim staking consideration.' }
+  ],
+  [
+    { metal: 'au', cls: '', typeClass: 'ht-au', label: 'GOLD — WMOS Confluence Velocity Trap', score: 94, scoreClass: 'hi', stars: '★★★★★', scoreColor: 'var(--green)', depth: 'Surface — 4 ft', depthClass: 's', bearing: '0.04 mi W · 265°', access: '★★★★★ Pan / Dredge', accessColor: 'var(--green)', terrane: 'WT Terrane Type A — Ophiolite Sequence', over: 'No clay cap — active gravel bar', note: '<b>Demo field note:</b> Boots and a pan. Bedrock in a day. Heavy black sand is your guide — follow the concentrates into the potholes. Textbook velocity trap. This is your first target.' },
+    { metal: 'ree', cls: 'ree', typeClass: 'ht-ree', label: 'RARE EARTH — WMOS Contact Anomaly', score: 71, scoreClass: 'md', stars: '★★★☆☆', scoreColor: 'var(--amber)', depth: 'Subcrop — 26 ft', depthClass: 'b', bearing: '0.16 mi NNE · 024°', access: '★★★☆☆ Sampling / Assay', accessColor: 'var(--amber)', terrane: 'WT Terrane Type B — Serpentinized Contact', over: 'Shallow — outcrop visible', note: '<b>Demo REE note:</b> Dark olive-green rock with slick surface is your target. Collect samples from the contact zone boundary. Full mineral assay required. WMOS Spectral Signature shows moderate-high confidence on this type.' },
+    { metal: 'au', cls: '', typeClass: 'ht-au', label: 'GOLD — WMOS Buried Channel Detection', score: 59, scoreClass: 'md', stars: '★★★☆☆', scoreColor: 'var(--amber)', depth: '15 — 32 ft', depthClass: 'c', bearing: '0.20 mi SE · 142°', access: '★★★☆☆ Excavator / High-Bank', accessColor: 'var(--amber)', terrane: 'WT Terrane Type C — Old Channel Sequence', over: 'Clay cap over coarse gravel — WMOS Terrain Confirmed', note: '<b>Demo field note:</b> White-grey clay bench above waterline. Old channel signature confirmed by WMOS Bare-Earth scan. Equipment required to test but the geometry is textbook placer trap.' },
+    { metal: 'ree', cls: 'ree', typeClass: 'ht-ree', label: 'RARE EARTH — WMOS Geochemical Halo', score: 42, scoreClass: 'lo', stars: '★★☆☆☆', scoreColor: 'var(--red)', depth: '45 — 78 ft', depthClass: 'd', bearing: '0.24 mi SW · 218°', access: '★★☆☆☆ Drilling Required', accessColor: 'var(--red)', terrane: 'WT Terrane Type B — WMOS Spectral Only', over: 'No surface expression detected', note: '<b>WT Score 42 — demo note:</b> Geochemical signal type with no surface access without serious capital. Real signal class — not blue collar viable right now. Flag for claim staking.' }
+  ]
+];
+
+// ── RUN DEMO ──
+function runDemo() {
+  const input = document.getElementById('locInput').value.trim();
+  if (!input) {
+    document.getElementById('locInput').focus();
+    document.getElementById('locInput').style.borderColor = 'var(--red)';
+    setTimeout(() => document.getElementById('locInput').style.borderColor = '', 1500);
+    return;
+  }
+
+  const loc = parseLocation(input);
+  
+  // Show scanning
+  document.getElementById('scanningDiv').classList.add('show');
+  document.getElementById('demoReport').classList.remove('show');
+  document.querySelector('.search-card').scrollIntoView({ behavior: 'smooth' });
+
+  // Update map
+  updateDemoMap(loc.lat, loc.lng);
+
+  // Simulate scan stages
+  const stages = ['Analyzing your location', 'Running WMOS Au scan', 'Running WMOS REE scan', 'Scoring anomalies', 'Building your report'];
+  let stage = 0;
+  const stageInterval = setInterval(() => {
+    if (stage < stages.length) {
+      document.getElementById('scanStatus').textContent = stages[stage];
+      stage++;
+    } else {
+      clearInterval(stageInterval);
+    }
+  }, 400);
+
+  // Show results after 2.2 seconds
+  setTimeout(() => {
+    document.getElementById('scanningDiv').classList.remove('show');
+    showDemoReport(loc, input);
+  }, 2200);
+}
+
+function showDemoReport(loc, inputText) {
+  const hits = demoHitSets[Math.floor(Math.random() * demoHitSets.length)];
+  const coordStr = loc.lat.toFixed(4) + (loc.lat >= 0 ? '°N' : '°S') + '  ' + Math.abs(loc.lng).toFixed(4) + (loc.lng >= 0 ? '°E' : '°W');
+  const displayName = loc.display || inputText;
+
+  document.getElementById('r-ref').textContent = 'DEMO SCAN — ILLUSTRATIVE RESULTS ONLY';
+  document.getElementById('r-loc').textContent = displayName;
+  document.getElementById('r-coord').textContent = coordStr;
+
+  // Build hits HTML
+  let html = '';
+  hits.forEach((h, i) => {
+    html += `
+    <div class="hit ${h.cls}">
+      <div class="hit-wm">DEMO ONLY</div>
+      <div class="hit-top">
+        <div>
+          <div class="hit-num">HIT ${i + 1} OF ${hits.length}${i === 0 ? ' — PRIMARY' : ''}</div>
+          <div class="hit-type ${h.typeClass}">${h.label}</div>
+        </div>
+        <div class="wts">
+          <div class="wts-lbl">WT Score</div>
+          <div class="wts-n ${h.scoreClass}">${h.score}</div>
+          <div class="wts-s" style="color:${h.scoreColor}">${h.stars}</div>
+        </div>
+      </div>
+      <div class="hgrid">
+        <div><div class="dk">Depth Est.</div><div class="dv">${h.depth}</div><div class="dbar"><div class="df ${h.depthClass}"></div></div></div>
+        <div><div class="dk">Bearing · Distance</div><div class="dv">${h.bearing}</div></div>
+        <div><div class="dk">Access Rating</div><div class="dv" style="color:${h.accessColor}">${h.access}</div></div>
+        <div><div class="dk">WT Terrane Class</div><div class="dv">${h.terrane}</div></div>
+        <div><div class="dk">Overburden</div><div class="dv">${h.over}</div></div>
+        <div><div class="dk">WMOS Confidence</div><div class="dv" style="color:var(--amber)">Demo — Not Real Data</div></div>
+      </div>
+      <div class="fnote">${h.note}</div>
+    </div>`;
+  });
+
+  document.getElementById('hits-lbl').textContent = `WMOS Demo Results — ${hits.length} Illustrative Hits — Au + REE`;
+  document.getElementById('hitsContainer').innerHTML = html;
+
+  // Update CTA button with location pre-filled
+  const encodedLoc = encodeURIComponent(inputText);
+  document.getElementById('ctaBtn').href = `https://scout.thewildtradesman.com?loc=${encodedLoc}#payment`;
+
+  // Show report
+  document.getElementById('demoReport').classList.add('show');
+
+  // Build report map
+  setTimeout(() => {
+    if (reportMapObj) { reportMapObj.remove(); reportMapObj = null; }
+    reportMapObj = L.map('report-map', { zoomControl: true, scrollWheelZoom: false });
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Esri', maxZoom: 18 }).addTo(reportMapObj);
+    L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', { attribution: 'OTM', maxZoom: 17, opacity: 0.4 }).addTo(reportMapObj);
+    reportMapObj.setView([loc.lat, loc.lng], 14);
+
+    // Search ring
+    L.circle([loc.lat, loc.lng], { radius: 402, color: '#F0B429', weight: 2, opacity: .85, fillColor: '#F0B429', fillOpacity: .04, dashArray: '8 5' }).addTo(reportMapObj);
+    
+    // Origin
+    L.circleMarker([loc.lat, loc.lng], { radius: 7, color: '#fff', weight: 2, fillColor: '#C9920A', fillOpacity: 1 }).addTo(reportMapObj)
+      .bindTooltip('<div class="tip">🎯 Search Origin</div>');
+
+    // Hit pins
+    const pc = { au: '#F0B429', ree: '#00E5CC' };
+    hits.forEach((h, i) => {
+      const angle = (i / hits.length) * 2 * Math.PI + i * 0.6;
+      const dist = 0.003 + (i % 3) * 0.0015;
+      const hl = loc.lat + Math.sin(angle) * dist;
+      const hg = loc.lng + Math.cos(angle) * dist * 1.4;
+      const bg = pc[h.metal] || '#F0B429';
+      const icon = L.divIcon({
+        className: '',
+        html: `<div style="width:26px;height:26px;border-radius:50%;background:${bg};display:flex;align-items:center;justify-content:center;font-family:Oswald,sans-serif;font-weight:700;font-size:10px;color:#141008;box-shadow:0 2px 8px rgba(0,0,0,.7);border:2px solid rgba(0,0,0,.4);">#${i + 1}</div>`,
+        iconSize: [26, 26], iconAnchor: [13, 13]
+      });
+      L.marker([hl, hg], { icon }).addTo(reportMapObj)
+        .bindTooltip(`<div class="tip">${h.label}<br>WT Score: ${h.score} (Demo)</div>`, { direction: 'top', offset: [0, -13] });
+    });
+  }, 150);
+
+  // Scroll to report
+  setTimeout(() => {
+    document.getElementById('demoReport').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 300);
+}
+</script>
+</body>
+</html>
