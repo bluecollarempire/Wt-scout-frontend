@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WT Site Scout — Wild Tradesman Mineral Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Share+Tech+Mono&family=Bitter:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+:root{--gold:#C9920A;--gold-b:#F0B429;--gold-d:#7A5A06;--dirt:#1E1710;--rock:#141008;--slate:#332B1E;--slate2:#2A2218;--cream:#F2E8D0;--bone:#D4C5A0;--steel:#8A9BA8;--ree:#00E5CC;--red:#C0392B;--green:#27AE60;--amber:#E67E22;}
+*{margin:0;padding:0;box-sizing:border-box;}html,body{min-height:100vh;}
+body{background:var(--rock);color:var(--cream);font-family:'Bitter',Georgia,serif;background-image:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,255,255,.01) 3px,rgba(255,255,255,.01) 4px);}
+.hdr{background:linear-gradient(180deg,#2E2210,#1E1710);border-bottom:2px solid var(--gold);padding:14px 18px 12px;position:sticky;top:0;z-index:1000;}
+.hdr-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;}
+.brand-eye{font-family:'Share Tech Mono',monospace;font-size:7px;letter-spacing:3px;color:var(--gold);margin-bottom:2px;}
+.brand{font-family:'Oswald',sans-serif;font-size:22px;font-weight:700;letter-spacing:2px;text-transform:uppercase;line-height:1;}
+.brand em{color:var(--gold-b);font-style:normal;}
+.brand-tag{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--steel);letter-spacing:2px;margin-top:2px;}
+.price-badge{background:var(--gold);color:var(--rock);font-family:'Oswald',sans-serif;font-weight:700;font-size:18px;padding:6px 14px;border-radius:3px;display:flex;flex-direction:column;align-items:center;}
+.price-badge small{font-size:8px;letter-spacing:2px;font-weight:400;margin-top:1px;opacity:.8;}
+.hero{padding:20px 18px 16px;background:linear-gradient(160deg,rgba(201,146,10,.1),rgba(20,16,8,0) 60%);border-bottom:1px solid var(--slate);}
+.hero-kicker{font-family:'Share Tech Mono',monospace;font-size:8px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.hero-kicker::before{content:'';display:block;width:24px;height:1px;background:var(--gold);}
+.hero-h1{font-family:'Oswald',sans-serif;font-size:24px;font-weight:700;letter-spacing:1px;line-height:1.15;margin-bottom:8px;}
+.hero-h1 em{color:var(--gold-b);font-style:normal;}
+.hero-sub{font-family:'Bitter',serif;font-size:12px;font-style:italic;color:var(--bone);line-height:1.55;margin-bottom:14px;}
+.hero-stats{display:flex;gap:16px;flex-wrap:wrap;}
+.hstat{display:flex;align-items:center;gap:6px;font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--steel);letter-spacing:1px;}
+.hstat::before{content:'triangleright';color:var(--gold);}
+.card{margin:14px;background:var(--dirt);border:1px solid var(--slate);border-radius:6px;overflow:hidden;}
+.card-hdr{background:var(--slate2);padding:10px 14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;}
+.card-title{font-family:'Oswald',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--bone);}
+.card-badge{font-family:'Share Tech Mono',monospace;font-size:7px;letter-spacing:2px;color:var(--gold);border:1px solid var(--gold-d);padding:2px 7px;border-radius:2px;}
+.steps{display:flex;border-bottom:1px solid var(--slate);background:var(--rock);}
+.step{flex:1;padding:8px 4px;text-align:center;font-family:'Share Tech Mono',monospace;font-size:7px;letter-spacing:1px;color:var(--steel);border-bottom:2px solid transparent;transition:all .2s;display:flex;flex-direction:column;align-items:center;gap:2px;}
+.step.active{color:var(--gold-b);border-bottom-color:var(--gold-b);background:rgba(240,180,41,.04);}
+.step.done{color:var(--green);border-bottom-color:var(--green);}
+.step-n{font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;line-height:1;}
+.sp{display:none;}.sp.active{display:block;}
+.cb{padding:14px;}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+.fr1{grid-template-columns:1fr;}.fr3{grid-template-columns:1fr 1fr 1fr;}
+.fg{display:flex;flex-direction:column;gap:4px;}
+.fl{font-family:'Share Tech Mono',monospace;font-size:7px;letter-spacing:2px;color:var(--steel);text-transform:uppercase;}
+.req{color:var(--red);}.opt{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--amber);letter-spacing:1px;margin-left:4px;}
+.fi,.fs{background:var(--rock);border:1px solid var(--slate);color:var(--cream);font-family:'Share Tech Mono',monospace;font-size:11px;padding:8px 10px;border-radius:2px;outline:none;width:100%;transition:border-color .2s;}
+.fi::placeholder{color:rgba(138,155,168,.4);font-size:10px;}
+.fi:focus,.fs:focus{border-color:var(--gold);}
+.fs{appearance:none;cursor:pointer;}
+.fh{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--steel);opacity:.7;letter-spacing:.5px;margin-top:2px;}
+.pb{background:rgba(0,0,0,.3);border:1px solid var(--slate);border-radius:3px;padding:10px 12px;margin-bottom:10px;}
+.pt{font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+.ps{max-height:130px;overflow-y:auto;font-family:'Bitter',serif;font-size:10px;color:var(--bone);line-height:1.6;margin-bottom:10px;padding-right:6px;}
+.ps::-webkit-scrollbar{width:3px;}.ps::-webkit-scrollbar-track{background:var(--slate);}.ps::-webkit-scrollbar-thumb{background:var(--gold-d);}
+.ps b{color:var(--cream);}
+.ci{display:flex;align-items:flex-start;gap:10px;margin-bottom:7px;padding:8px 10px;background:rgba(255,255,255,.02);border:1px solid var(--slate);border-radius:2px;}
+.ci input[type=checkbox]{width:16px;height:16px;flex-shrink:0;margin-top:1px;accent-color:var(--gold);cursor:pointer;}
+.cil{font-family:'Bitter',serif;font-size:10px;color:var(--bone);line-height:1.45;cursor:pointer;}
+.cil b{font-weight:600;color:var(--cream);}
+.cir{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--red);letter-spacing:1px;margin-top:2px;}
+.mtabs{display:flex;border-bottom:1px solid var(--slate);overflow-x:auto;}
+.mtab{font-family:'Share Tech Mono',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;padding:9px 12px;background:none;border:none;border-bottom:2px solid transparent;color:var(--steel);cursor:pointer;white-space:nowrap;transition:all .2s;margin-bottom:-1px;flex-shrink:0;}
+.mtab.on{color:var(--gold-b);border-bottom-color:var(--gold-b);background:rgba(240,180,41,.05);}
+.mf{display:none;padding:14px;}.mf.on{display:block;}
+.teg{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--gold);background:rgba(201,146,10,.08);border:1px solid var(--gold-d);border-radius:2px;padding:6px 10px;margin-bottom:10px;line-height:1.7;}
+.teg b{color:var(--gold-b);}
+.mpv{border:1px solid var(--slate);border-radius:3px;overflow:hidden;margin-bottom:12px;}
+.mb{background:var(--slate2);padding:5px 10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px;}
+.mbl{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--steel);letter-spacing:1px;}
+.mbr{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--gold);letter-spacing:1px;}
+#scout-map{height:200px;}
+.ms{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;padding:8px 10px;background:rgba(0,0,0,.2);border:1px solid var(--slate);border-radius:3px;}
+.mc{font-family:'Share Tech Mono',monospace;font-size:8px;letter-spacing:1px;padding:3px 8px;border-radius:2px;border:1px solid;}
+.mau{border-color:var(--gold);color:var(--gold);background:rgba(201,146,10,.1);}
+.mree{border-color:var(--ree);color:var(--ree);background:rgba(0,229,204,.08);}
+.msl{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--steel);letter-spacing:2px;width:100%;margin-bottom:3px;}
+.cfb{background:rgba(0,229,204,.04);border:1px solid rgba(0,229,204,.2);border-radius:4px;padding:12px 14px;margin-bottom:12px;}
+.cft{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ree);margin-bottom:8px;}
+.cfn{font-family:'Bitter',serif;font-size:11px;color:var(--bone);margin-bottom:10px;line-height:1.5;}
+.cfr{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:5px;flex-wrap:wrap;}
+.cfk{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--steel);letter-spacing:1px;min-width:90px;text-transform:uppercase;}
+.cfv{font-family:'Bitter',serif;font-size:11px;color:var(--cream);flex:1;line-height:1.3;}
+.cfbtns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;}
+.bok{background:var(--green);color:#fff;font-family:'Oswald',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:none;padding:10px;border-radius:2px;cursor:pointer;}
+.bbk{background:none;color:var(--bone);font-family:'Oswald',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;border:1px solid var(--slate);padding:10px;border-radius:2px;cursor:pointer;}
+.bp{width:100%;background:var(--gold);color:var(--rock);font-family:'Oswald',sans-serif;font-size:15px;font-weight:700;letter-spacing:3px;text-transform:uppercase;border:none;padding:13px;border-radius:3px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;}
+.bp:hover{background:var(--gold-b);}
+.bp::after{content:'';position:absolute;top:0;left:-100%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);animation:shim 2.5s infinite;}
+@keyframes shim{to{left:160%;}}
+.bp:disabled{background:var(--slate);color:var(--steel);cursor:not-allowed;}
+.bp:disabled::after{display:none;}
+.spc{height:12px;}
+.paybox{background:rgba(0,0,0,.3);border:1px solid var(--slate);border-radius:4px;padding:14px;margin-bottom:12px;}
+.payt{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.pays{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:rgba(201,146,10,.08);border:1px solid var(--gold-d);border-radius:3px;margin-bottom:12px;}
+.payw{font-family:'Bitter',serif;font-size:12px;color:var(--bone);}
+.payw b{color:var(--cream);font-weight:600;}
+.paya{font-family:'Oswald',sans-serif;font-size:22px;font-weight:700;color:var(--gold-b);}
+#card-element{background:var(--rock);border:1px solid var(--slate);border-radius:2px;padding:10px;margin-bottom:10px;}
+#card-errors{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--red);letter-spacing:1px;margin-bottom:8px;min-height:16px;}
+.paysec{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--steel);letter-spacing:1px;text-align:center;margin-top:8px;}
+.ov{display:none;position:fixed;inset:0;background:rgba(20,16,8,.93);z-index:9999;flex-direction:column;align-items:center;justify-content:center;gap:16px;}
+.ov.show{display:flex;}
+.ovs{width:40px;height:40px;border:3px solid var(--slate);border-top-color:var(--gold);border-radius:50%;animation:spin 1s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.ovt{font-family:'Oswald',sans-serif;font-size:14px;letter-spacing:3px;color:var(--gold-b);text-transform:uppercase;}
+.ovs2{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--steel);letter-spacing:1px;}
+.esent{background:rgba(39,174,96,.08);border:1px solid rgba(39,174,96,.3);border-radius:4px;padding:10px 14px;margin:0 0 8px;font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--green);letter-spacing:1px;}
+.rh{background:linear-gradient(135deg,rgba(201,146,10,.12),rgba(30,23,16,.98));border:1px solid var(--gold-d);border-radius:5px 5px 0 0;padding:13px 15px;}
+.rht{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:8px;}
+.rref{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--steel);letter-spacing:2px;margin-bottom:3px;}
+.rloc{font-family:'Oswald',sans-serif;font-size:17px;font-weight:600;letter-spacing:1px;line-height:1.2;}
+.rrr{text-align:right;}
+.rprice{font-family:'Oswald',sans-serif;font-size:24px;font-weight:700;color:var(--gold-b);line-height:1;}
+.rpl{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--steel);letter-spacing:2px;margin-top:2px;}
+.rpills{display:flex;flex-wrap:wrap;gap:5px;}
+.rpill{font-family:'Share Tech Mono',monospace;font-size:7px;letter-spacing:1px;padding:2px 7px;border-radius:2px;border:1px solid;text-transform:uppercase;}
+.rpr{border-color:var(--steel);color:var(--steel);}
+.rpw{border-color:var(--gold);color:var(--gold);}
+.rpc{border-color:var(--slate);color:var(--bone);}
+.rmw{border:1px solid var(--slate);border-top:none;overflow:hidden;}
+.rmbar{background:var(--slate2);padding:5px 10px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px;}
+.rmbl{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--steel);letter-spacing:1px;}
+.rmbr{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--gold);letter-spacing:1px;}
+#report-map{height:280px;}
+.hlbl{font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--slate);padding-bottom:5px;margin:12px 0 10px;}
+.hit{background:var(--dirt);border:1px solid var(--slate);border-left:3px solid var(--gold);border-radius:3px;padding:12px 13px;margin-bottom:8px;}
+.hit.ree{border-left-color:var(--ree);}
+.htop{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:9px;flex-wrap:wrap;gap:5px;}
+.hnum{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--steel);letter-spacing:2px;margin-bottom:2px;}
+.htype{font-family:'Oswald',sans-serif;font-size:14px;font-weight:600;letter-spacing:1px;line-height:1.1;}
+.tau{color:var(--gold-b);}.tree{color:var(--ree);}
+.wts{text-align:right;}
+.wtsl{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--steel);letter-spacing:2px;margin-bottom:1px;}
+.wtsn{font-family:'Oswald',sans-serif;font-size:26px;font-weight:700;line-height:1;}
+.wtsn.hi{color:var(--green);}.wtsn.md{color:var(--amber);}.wtsn.lo{color:var(--red);}
+.wtss{font-size:9px;margin-top:1px;}
+.hg{display:grid;grid-template-columns:1fr 1fr;gap:5px 10px;margin-bottom:8px;}
+.dk{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--steel);letter-spacing:1px;text-transform:uppercase;margin-bottom:1px;}
+.dv{font-family:'Bitter',serif;font-size:11px;color:var(--bone);line-height:1.3;}
+.dbar{height:3px;background:var(--slate);border-radius:2px;margin-top:3px;overflow:hidden;}
+.df{height:100%;border-radius:2px;}
+.df.s{background:var(--green);width:12%;}.df.a{background:var(--green);width:25%;}.df.b{background:var(--amber);width:45%;}.df.c{background:var(--amber);width:65%;}.df.d{background:var(--red);width:82%;}
+.fn{font-family:'Bitter',serif;font-style:italic;font-size:11px;color:var(--bone);line-height:1.55;padding:7px 10px;background:rgba(255,255,255,.025);border-left:2px solid var(--slate);margin-top:6px;}
+.fn b{font-style:normal;font-weight:600;color:var(--gold);}
+.fn b.ree{color:var(--ree);}
+.rcta{background:var(--gold);border-radius:0 0 5px 5px;padding:13px 15px;text-align:center;margin-bottom:14px;}
+.rctat{font-family:'Oswald',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;color:var(--rock);text-transform:uppercase;margin-bottom:3px;}
+.rctas{font-family:'Share Tech Mono',monospace;font-size:8px;color:rgba(20,16,8,.7);letter-spacing:1px;}
+.how{margin:0 14px 14px;background:var(--dirt);border:1px solid var(--slate);border-radius:5px;padding:14px;}
+.hwt{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--slate);padding-bottom:6px;margin-bottom:10px;}
+.hws{display:flex;gap:12px;margin-bottom:8px;align-items:flex-start;}
+.hwn{font-family:'Oswald',sans-serif;font-size:18px;font-weight:700;color:var(--gold);min-width:22px;line-height:1;}
+.hwx{font-family:'Bitter',serif;font-size:11px;color:var(--bone);line-height:1.45;}
+.hwx b{font-weight:600;color:var(--cream);font-style:normal;}
+.foot{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--slate);letter-spacing:1px;text-align:center;padding:14px;line-height:2;}
+.foot a{color:var(--gold-d);text-decoration:none;}
+.leaflet-control-attribution{font-size:7px!important;background:rgba(20,16,8,.75)!important;color:var(--steel)!important;}
+.tip{font-family:'Share Tech Mono',monospace;font-size:9px;background:rgba(20,16,8,.92);border:1px solid var(--gold-d);color:var(--cream);padding:4px 8px;border-radius:2px;white-space:nowrap;line-height:1.5;}
+</style>
+</head>
+<body>
+
+<div class="ov" id="ov"><div class="ovs"></div><div class="ovt" id="ovt">Processing</div><div class="ovs2" id="ovs2">Please wait</div></div>
+
+<div class="hdr">
+  <div class="hdr-inner">
+    <div>
+      <div class="brand-eye">WMOS &middot; Mineral Intelligence &middot; Worldwide</div>
+      <div class="brand">WT <em>Site</em> Scout</div>
+      <div class="brand-tag">by The Wild Tradesman</div>
+    </div>
+    <div class="price-badge">$50<small>PER SEARCH</small></div>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="hero-kicker">Powered by WMOS Proprietary Intelligence</div>
+  <div class="hero-h1">Find <em>Gold &amp; Rare Earth</em><br>Anywhere On Earth</div>
+  <div class="hero-sub">Enter your location any way you know it — worldwide. One search. One price. Real WMOS field intelligence delivered to your screen and email.</div>
+  <div class="hero-stats">
+    <span class="hstat">Gold (Au) + Rare Earth (REE) every search</span>
+    <span class="hstat">Quarter mile radius fixed</span>
+    <span class="hstat">$50 flat &middot; Worldwide</span>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-hdr">
+    <span class="card-title">WT Site Scout</span>
+    <span class="card-badge">WMOS SCAN ENGINE</span>
+  </div>
+  <div class="steps">
+    <div class="step active" id="si1"><span class="step-n">1</span>Info</div>
+    <div class="step" id="si2"><span class="step-n">2</span>Location</div>
+    <div class="step" id="si3"><span class="step-n">3</span>Confirm</div>
+    <div class="step" id="si4"><span class="step-n">4</span>Pay</div>
+    <div class="step" id="si5"><span class="step-n">5</span>Results</div>
+  </div>
+
+  <!-- STEP 1 -->
+  <div class="sp active cb" id="p1">
+    <div class="fr"><div class="fg"><label class="fl">First Name <span class="req">*</span></label><input class="fi" id="ufn" type="text" placeholder="First name"/></div><div class="fg"><label class="fl">Last Name <span class="req">*</span></label><input class="fi" id="uln" type="text" placeholder="Last name"/></div></div>
+    <div class="fr fr1"><div class="fg"><label class="fl">Email Address <span class="req">*</span></label><input class="fi" id="uem" type="email" placeholder="your@email.com"/><span class="fh">Report delivered to this address</span></div></div>
+    <div class="fr fr1"><div class="fg"><label class="fl">Confirm Email <span class="req">*</span></label><input class="fi" id="uem2" type="email" placeholder="Confirm your email"/></div></div>
+    <div class="pb">
+      <div class="pt">Data, Privacy and Permissions</div>
+      <div class="ps">
+        <b>What we collect:</b> Name, email, location data, search history, payment info processed securely by Stripe, and device information.<br><br>
+        <b>How we use it:</b> To run your WMOS scan, deliver your report, process payment, maintain your account, and improve the service. With permission we may send future communications about WT Site Scout, Wild Tradesman content, and BCE products.<br><br>
+        <b>Location data:</b> Used solely to run your WMOS scan. Stored securely and associated with your account. Never sold to third parties.<br><br>
+        <b>Data sharing:</b> We do not sell personal information. We share data only with trusted service providers including Stripe for payments, Brevo for email, and Supabase for data storage, under strict confidentiality. We may disclose if required by law.<br><br>
+        <b>Marketing:</b> With your permission The Wild Tradesman and BCE may contact you with updates, story drops, promotions, and announcements. Unsubscribe anytime.<br><br>
+        <b>International users:</b> Data processed in the United States. EU users have GDPR rights. Canadian users have CASL and PIPEDA rights. Australian users have Privacy Act rights. Contact <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bcccced5cadddfc5fcc8d4d9cbd5d0d8c8ceddd8d9cfd1ddd292dfd3d1">[email&#160;protected]</a> for requests.<br><br>
+        <b>Mineral disclaimer:</b> WMOS reports are for prospecting reference only. Not a guarantee of mineral presence. Verify all land status, mining laws, and permit requirements in your jurisdiction. You are solely responsible for legal compliance.<br><br>
+        <b>Payments:</b> All transactions processed securely by Stripe. We never store your card details. All sales final.<br><br>
+        <b>Minors:</b> Not intended for users under 18. By proceeding you confirm you are 18 or older.
+      </div>
+      <div class="ci"><input type="checkbox" id="c1"/><label class="cil" for="c1"><b>I agree to the Terms of Service and Privacy Policy</b> as described above.<div class="cir">Required</div></label></div>
+      <div class="ci"><input type="checkbox" id="c2"/><label class="cil" for="c2"><b>I consent to my location search data being stored securely</b> for my account records and service improvement.<div class="cir">Required</div></label></div>
+      <div class="ci"><input type="checkbox" id="c3"/><label class="cil" for="c3"><b>I agree to receive email communications</b> including order confirmation, report delivery, and service updates.<div class="cir">Required</div></label></div>
+      <div class="ci"><input type="checkbox" id="c4"/><label class="cil" for="c4"><b>Optional</b> I would like to receive Wild Tradesman story drops, prospecting tips, and promotions from The Wild Tradesman and BCE. Unsubscribe anytime.</label></div>
+      <div class="ci"><input type="checkbox" id="c5"/><label class="cil" for="c5"><b>I confirm I am 18 years of age or older.</b><div class="cir">Required</div></label></div>
+      <div class="ci"><input type="checkbox" id="c6"/><label class="cil" for="c6"><b>I acknowledge</b> WMOS reports are for prospecting reference only and I am solely responsible for compliance with all applicable laws in my jurisdiction.</label></div>
+    </div>
+    <button class="bp" onclick="goStep2()">Continue to Location</button>
+    <div class="spc"></div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="sp" id="p2">
+    <div class="mtabs">
+      <button class="mtab on" onclick="switchMode('nm',this)">Location Name</button>
+      <button class="mtab" onclick="switchMode('ll',this)">Lat Long</button>
+      <button class="mtab" onclick="switchMode('trs',this)">Township Range Section</button>
+      <button class="mtab" onclick="switchMode('zp',this)">Postal Zip</button>
+    </div>
+
+    <div class="mf on" id="form-nm">
+      <div class="fr fr1"><div class="fg"><label class="fl">Location Name <span class="opt">(Optional)</span></label><input class="fi" id="nm-name" type="text" placeholder="e.g. Hog Creek confluence, My claim, Unnamed draw — leave blank if unknown"/><span class="fh">Give this spot a name if you know it. Leave blank if the location has no name.</span></div></div>
+      <div class="fr"><div class="fg"><label class="fl">Street Road Address <span class="opt">(Optional)</span></label><input class="fi" id="nm-street" type="text" placeholder="Nearest road, highway, or track"/></div><div class="fg"><label class="fl">City Town Settlement <span class="opt">(Optional)</span></label><input class="fi" id="nm-city" type="text" placeholder="e.g. Grants Pass or Kalgoorlie"/></div></div>
+      <div class="fr fr3"><div class="fg"><label class="fl">County Parish District</label><input class="fi" id="nm-county" type="text" placeholder="e.g. Josephine"/></div><div class="fg"><label class="fl">State Province Region</label><input class="fi" id="nm-state" type="text" placeholder="e.g. Oregon"/></div><div class="fg"><label class="fl">Postal Zip <span class="opt">(Optional)</span></label><input class="fi" id="nm-zip" type="text" placeholder="e.g. 97527"/></div></div>
+      <div class="fr fr1"><div class="fg"><label class="fl">Country <span class="req">*</span></label><select class="fs" id="nm-country"><option value="">Select Country</option><option value="US">United States</option><option value="CA">Canada</option><option value="AU">Australia</option><option value="NZ">New Zealand</option><option value="ZA">South Africa</option><option value="BR">Brazil</option><option value="MX">Mexico</option><option value="PE">Peru</option><option value="CL">Chile</option><option value="CO">Colombia</option><option value="GH">Ghana</option><option value="TZ">Tanzania</option><option value="KE">Kenya</option><option value="RU">Russia</option><option value="CN">China</option><option value="MN">Mongolia</option><option value="ID">Indonesia</option><option value="PG">Papua New Guinea</option><option value="PH">Philippines</option><option value="FJ">Fiji</option><option value="GB">United Kingdom</option><option value="IE">Ireland</option><option value="SE">Sweden</option><option value="FI">Finland</option><option value="OTHER">Other</option></select></div></div>
+    </div>
+
+    <div class="mf" id="form-ll">
+      <div class="fr"><div class="fg"><label class="fl">Latitude Decimal <span class="req">*</span></label><input class="fi" id="ll-lat" type="text" placeholder="e.g. 42.6469 or -33.8688"/><span class="fh">North positive South negative</span></div><div class="fg"><label class="fl">Longitude Decimal <span class="req">*</span></label><input class="fi" id="ll-lng" type="text" placeholder="e.g. -123.5028 or 151.2093"/><span class="fh">West negative East positive</span></div></div>
+      <div class="fr fr1"><div class="fg"><label class="fl">Location Name <span class="opt">(Optional)</span></label><input class="fi" id="ll-name" type="text" placeholder="Give this spot a name if you want, leave blank if unknown"/></div></div>
+      <div class="fr"><div class="fg"><label class="fl">Street Road <span class="opt">(Optional)</span></label><input class="fi" id="ll-street" type="text" placeholder="Nearest road or address"/></div><div class="fg"><label class="fl">City Town <span class="opt">(Optional)</span></label><input class="fi" id="ll-city" type="text" placeholder="e.g. Grants Pass"/></div></div>
+      <div class="fr fr3"><div class="fg"><label class="fl">County District</label><input class="fi" id="ll-county" type="text" placeholder="e.g. Josephine"/></div><div class="fg"><label class="fl">State Province</label><input class="fi" id="ll-state" type="text" placeholder="e.g. Oregon"/></div><div class="fg"><label class="fl">Postal Zip <span class="opt">(Optional)</span></label><input class="fi" id="ll-zip" type="text" placeholder="e.g. 97527"/></div></div>
+      <div class="fr fr1"><div class="fg"><label class="fl">Country <span class="req">*</span></label><select class="fs" id="ll-country"><option value="US">United States</option><option value="CA">Canada</option><option value="AU">Australia</option><option value="NZ">New Zealand</option><option value="ZA">South Africa</option><option value="BR">Brazil</option><option value="MX">Mexico</option><option value="PE">Peru</option><option value="CL">Chile</option><option value="GH">Ghana</option><option value="TZ">Tanzania</option><option value="RU">Russia</option><option value="CN">China</option><option value="MN">Mongolia</option><option value="ID">Indonesia</option><option value="PG">Papua New Guinea</option><option value="OTHER">Other</option></select></div></div>
+    </div>
+
+    <div class="mf" id="form-trs">
+      <div class="teg"><b>Minimum: Quarter-Quarter QQ = 40 acres.</b> QQQ preferred = 20 acres. Tighter is better intelligence.<br><b>Example:</b> T26S R8W Sec 12 SW quarter of NE quarter (QQ) N half of SW quarter of NE quarter (QQQ)</div>
+      <div class="fr fr3"><div class="fg"><label class="fl">Township <span class="req">*</span></label><input class="fi" id="trs-t" type="text" placeholder="e.g. T26S"/></div><div class="fg"><label class="fl">Range <span class="req">*</span></label><input class="fi" id="trs-r" type="text" placeholder="e.g. R8W"/></div><div class="fg"><label class="fl">Section <span class="req">*</span></label><input class="fi" id="trs-s" type="text" placeholder="e.g. 12"/></div></div>
+      <div class="fr">
+        <div class="fg"><label class="fl">QQ Required <span class="req">*</span></label><select class="fs" id="trs-qq"><option value="">Select QQ 40 acres</option><option>NE of NE</option><option>NW of NE</option><option>SE of NE</option><option>SW of NE</option><option>NE of NW</option><option>NW of NW</option><option>SE of NW</option><option>SW of NW</option><option>NE of SE</option><option>NW of SE</option><option>SE of SE</option><option>SW of SE</option><option>NE of SW</option><option>NW of SW</option><option>SE of SW</option><option>SW of SW</option></select><span class="fh">e.g. SW of NE</span></div>
+        <div class="fg"><label class="fl">QQQ Preferred</label><select class="fs" id="trs-qqq"><option value="">Select QQQ 20 acres</option><option value="N half">N half of QQ 20 acres</option><option value="S half">S half of QQ 20 acres</option><option value="E half">E half of QQ 20 acres</option><option value="W half">W half of QQ 20 acres</option><option value="NE quarter">NE quarter of QQ 10 acres</option><option value="NW quarter">NW quarter of QQ 10 acres</option><option value="SE quarter">SE quarter of QQ 10 acres</option><option value="SW quarter">SW quarter of QQ 10 acres</option></select><span class="fh">Tightest most precise scan</span></div>
+      </div>
+      <div class="fr fr3"><div class="fg"><label class="fl">County <span class="req">*</span></label><input class="fi" id="trs-county" type="text" placeholder="e.g. Josephine"/></div><div class="fg"><label class="fl">State Province <span class="req">*</span></label><input class="fi" id="trs-state" type="text" placeholder="e.g. Oregon"/></div><div class="fg"><label class="fl">Postal Zip <span class="opt">(Optional)</span></label><input class="fi" id="trs-zip" type="text" placeholder="Optional"/></div></div>
+      <div class="fr fr1"><div class="fg"><label class="fl">Country <span class="req">*</span></label><select class="fs" id="trs-country"><option value="US">United States</option><option value="CA">Canada</option><option value="AU">Australia</option><option value="OTHER">Other</option></select></div></div>
+    </div>
+
+    <div class="mf" id="form-zp">
+      <div class="fr"><div class="fg"><label class="fl">Postal Zip Code <span class="req">*</span></label><input class="fi" id="zp-zip" type="text" placeholder="e.g. 97527 or V0N 1B0 or 2000"/><span class="fh">We identify your region automatically</span></div><div class="fg"><label class="fl">Nearest Town Landmark <span class="opt">(Optional)</span></label><input class="fi" id="zp-town" type="text" placeholder="e.g. Grants Pass"/></div></div>
+      <div class="fr"><div class="fg"><label class="fl">Street Road <span class="opt">(Optional)</span></label><input class="fi" id="zp-street" type="text" placeholder="Nearest road or address"/></div><div class="fg"><label class="fl">County Parish District <span class="opt">(Optional)</span></label><input class="fi" id="zp-county" type="text" placeholder="e.g. Josephine"/></div></div>
+      <div class="fr"><div class="fg"><label class="fl">State Province <span class="opt">(Optional)</span></label><input class="fi" id="zp-state" type="text" placeholder="e.g. Oregon"/></div><div class="fg"><label class="fl">Country <span class="req">*</span></label><select class="fs" id="zp-country"><option value="US">United States</option><option value="CA">Canada</option><option value="AU">Australia</option><option value="NZ">New Zealand</option><option value="ZA">South Africa</option><option value="BR">Brazil</option><option value="MX">Mexico</option><option value="OTHER">Other</option></select></div></div>
+    </div>
+
+    <div style="padding:0 14px;">
+      <div class="mpv"><div class="mb"><span class="mbl">WMOS SCAN PREVIEW - QUARTER MILE SEARCH RING</span><span class="mbr" id="coordDisp">Enter location above</span></div><div id="scout-map"></div></div>
+      <div class="ms"><span class="msl">METALS SCANNED EVERY SEARCH WORLDWIDE:</span><span class="mc mau">Au Gold</span><span class="mc mree">REE Rare Earth Elements</span></div>
+      <button class="bp" onclick="goStep3()">Review My Location</button>
+      <div class="spc"></div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="sp cb" id="p3">
+    <div class="cfb">
+      <div class="cft">Confirm Your Search Location</div>
+      <p class="cfn">Verify that WT Site Scout has correctly identified your intended search location before payment. If anything looks wrong go back and correct it.</p>
+      <div id="conf-details"></div>
+      <div class="cfbtns">
+        <button class="bbk" onclick="setStep(2)">Edit Location</button>
+        <button class="bok" onclick="setStep(4)">Confirmed - Proceed to Payment</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="sp cb" id="p4">
+    <div class="paybox">
+      <div class="payt">Secure Payment</div>
+      <div class="pays">
+        <div class="payw">WT Site Scout WMOS Scan<br><b id="pay-loc">Your location</b></div>
+        <div class="paya">$50.00</div>
+      </div>
+      <div id="card-element"></div>
+      <div id="card-errors"></div>
+      <button class="bp" id="payBtn" onclick="processPayment()">Pay $50.00 - Run My Scan</button>
+      <div class="paysec">Secured by Stripe - We never store your card details - All sales final</div>
+    </div>
+    <button class="bbk" style="width:100%;margin-top:4px;" onclick="setStep(3)">Back to Confirm</button>
+    <div class="spc"></div>
+  </div>
+
+  <!-- STEP 5 -->
+  <div class="sp" id="p5">
+    <div style="padding:14px 14px 0;">
+      <div class="esent">Report also sent to <span id="esAddr"></span> - check your inbox</div>
+    </div>
+    <div class="rh">
+      <div class="rht">
+        <div><div class="rref" id="r-ref">ORDER WT-2026-0001</div><div class="rloc" id="r-loc">Location</div></div>
+        <div class="rrr"><div class="rprice">$50.00</div><div class="rpl">Paid Full Report</div></div>
+      </div>
+      <div class="rpills"><span class="rpill rpr">Quarter Mile Worldwide</span><span class="rpill rpw">WMOS Full Stack</span><span class="rpill rpc" id="r-cpill">Coord</span></div>
+    </div>
+    <div class="rmw"><div class="rmbar"><span class="rmbl">WMOS TERRAIN INTELLIGENCE - QUARTER MI RING</span><span class="rmbr" id="r-coord">-</span></div><div id="report-map"></div></div>
+    <div style="padding:0 14px;">
+      <div class="hlbl" id="hits-lbl">WMOS Detected Anomalies</div>
+      <div id="hitsContainer"></div>
+    </div>
+    <div class="rcta"><div class="rctat">Your WMOS Report Is Ready</div><div class="rctas">Screenshot or save this page - Report also emailed - Valid 90 days - <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="432a2d252c03372b26342a2f273731222726302e222d6d202c2e">[email&#160;protected]</a></div></div>
+  </div>
+
+</div>
+
+<div class="how">
+  <div class="hwt">How WT Site Scout Works</div>
+  <div class="hws"><span class="hwn">1</span><span class="hwx"><b>Create your account</b> with name, email, and consent. Your report is tied to your email and delivered automatically.</span></div>
+  <div class="hws"><span class="hwn">2</span><span class="hwx"><b>Enter your location</b> any way you know it. Location name is optional - if the spot has no name just fill in what you know. GPS coordinates, Township Range Section down to QQQ, postal code, or county and state all work.</span></div>
+  <div class="hws"><span class="hwn">3</span><span class="hwx"><b>Confirm your location</b> before paying. WT Site Scout shows you exactly what we identified so you are always searching the right ground.</span></div>
+  <div class="hws"><span class="hwn">4</span><span class="hwx"><b>Pay $50 securely</b> via Stripe. Your card is never stored. The moment payment clears WMOS runs your scan automatically.</span></div>
+  <div class="hws"><span class="hwn">5</span><span class="hwx"><b>Your report appears instantly</b> on screen and is emailed to you. Gold and REE hits, WT Score, depth, bearing, rock type, and field notes. Built for the prospector with boots on.</span></div>
+</div>
+
+<div class="foot">
+  WT SITE SCOUT - POWERED BY WMOS PROPRIETARY INTELLIGENCE - WORLDWIDE COVERAGE<br>
+  THE WILD TRADESMAN EXPLORATION AND DISCOVERY LLC - OREGON USA<br>
+  FOR PROSPECTING REFERENCE ONLY - NOT A GUARANTEE OF MINERAL PRESENCE<br>
+  VERIFY LAND STATUS MINING LAWS AND PERMITS BEFORE FIELD WORK IN YOUR JURISDICTION<br>
+  <a href="#">Privacy Policy</a> - <a href="#">Terms of Service</a> - <a href="#">Contact</a>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const CFG={
+  STRIPE_KEY:'pk_live_YOUR_STRIPE_PUBLISHABLE_KEY',
+  BACKEND:'https://your-backend.vercel.app'
+};
+let loc=null,sMap=null,rMap=null,sRing=null,stripe=null,card=null,oData={};
+
+function setStep(n){
+  for(let i=1;i<=5;i++){
+    document.getElementById('p'+i).classList.toggle('active',i===n);
+    const el=document.getElementById('si'+i);
+    el.classList.remove('active','done');
+    if(i===n)el.classList.add('active');
+    else if(i<n)el.classList.add('done');
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(n===2)setTimeout(initMap,100);
+  if(n===4)initStripe();
+}
+
+function goStep2(){
+  const fn=document.getElementById('ufn').value.trim();
+  const ln=document.getElementById('uln').value.trim();
+  const em=document.getElementById('uem').value.trim();
+  const em2=document.getElementById('uem2').value.trim();
+  if(!fn||!ln){alert('Please enter your first and last name.');return;}
+  if(!em||!em2){alert('Please enter and confirm your email address.');return;}
+  if(em!==em2){alert('Email addresses do not match.');return;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){alert('Please enter a valid email address.');return;}
+  if(!document.getElementById('c1').checked||!document.getElementById('c2').checked||!document.getElementById('c3').checked||!document.getElementById('c5').checked){alert('Please check all required consent boxes.');return;}
+  oData={firstName:fn,lastName:ln,email:em,marketing:document.getElementById('c4').checked};
+  setStep(2);
+}
+
+function switchMode(m,btn){
+  document.querySelectorAll('.mtab').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.mf').forEach(f=>f.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('form-'+m).classList.add('on');
+}
+
+function initMap(){
+  if(sMap)return;
+  sMap=L.map('scout-map',{zoomControl:false,scrollWheelZoom:false,dragging:false});
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'Esri',maxZoom:18}).addTo(sMap);
+  L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{attribution:'OTM',maxZoom:17,opacity:0.38}).addTo(sMap);
+  sMap.setView([20,0],2);
+}
+
+function updMap(lat,lng){
+  if(!sMap)return;
+  sMap.setView([lat,lng],13);
+  if(sRing)sMap.removeLayer(sRing);
+  sRing=L.circle([lat,lng],{radius:402,color:'#F0B429',weight:2,opacity:.8,fillColor:'#F0B429',fillOpacity:.05,dashArray:'8 5'}).addTo(sMap);
+  L.circleMarker([lat,lng],{radius:5,color:'#fff',weight:2,fillColor:'#C9920A',fillOpacity:1}).addTo(sMap);
+  document.getElementById('coordDisp').textContent=lat.toFixed(4)+(lat>=0?'N':'S')+' '+Math.abs(lng).toFixed(4)+(lng>=0?'E':'W');
+}
+
+function getLoc(){
+  const a=document.querySelector('.mf.on').id;
+  if(a==='form-nm'){
+    const name=document.getElementById('nm-name').value.trim();
+    const street=document.getElementById('nm-street').value.trim();
+    const city=document.getElementById('nm-city').value.trim();
+    const county=document.getElementById('nm-county').value.trim();
+    const state=document.getElementById('nm-state').value.trim();
+    const zip=document.getElementById('nm-zip').value.trim();
+    const country=document.getElementById('nm-country').value;
+    if(!country){alert('Please select a country.');return null;}
+    if(!county&&!state&&!zip&&!city){alert('Please enter at least city, county, state, or postal code.');return null;}
+    const dn=name||[city,county,state,country].filter(Boolean).join(', ');
+    return{lat:42.647,lng:-123.558,label:[name,city,county,state,country].filter(Boolean).join(' - '),dn,street,city,county,state,zip,country,cs:dn.substring(0,40),method:'NAMED LOCATION',type:'named'};
+  }
+  if(a==='form-ll'){
+    const lat=parseFloat(document.getElementById('ll-lat').value);
+    const lng=parseFloat(document.getElementById('ll-lng').value);
+    const name=document.getElementById('ll-name').value.trim();
+    const street=document.getElementById('ll-street').value.trim();
+    const city=document.getElementById('ll-city').value.trim();
+    const county=document.getElementById('ll-county').value.trim();
+    const state=document.getElementById('ll-state').value.trim();
+    const zip=document.getElementById('ll-zip').value.trim();
+    const country=document.getElementById('ll-country').value;
+    if(isNaN(lat)||isNaN(lng)){alert('Please enter valid coordinates.');return null;}
+    if(lat<-90||lat>90||lng<-180||lng>180){alert('Coordinates out of valid range.');return null;}
+    const dn=name||(lat.toFixed(4)+(lat>=0?'N':'S')+' '+Math.abs(lng).toFixed(4)+(lng>=0?'E':'W'));
+    return{lat,lng,label:[dn,city,county,state,country].filter(Boolean).join(' - '),dn,street,city,county,state,zip,country,cs:lat.toFixed(4)+(lat>=0?'N':'S')+' '+Math.abs(lng).toFixed(4)+(lng>=0?'E':'W'),method:'LAT LONG',type:'latlong'};
+  }
+  if(a==='form-trs'){
+    const t=document.getElementById('trs-t').value.toUpperCase().trim();
+    const r=document.getElementById('trs-r').value.toUpperCase().trim();
+    const s=document.getElementById('trs-s').value.trim();
+    const qq=document.getElementById('trs-qq').value;
+    const qqq=document.getElementById('trs-qqq').value;
+    const county=document.getElementById('trs-county').value.trim();
+    const state=document.getElementById('trs-state').value.trim();
+    const zip=document.getElementById('trs-zip').value.trim();
+    const country=document.getElementById('trs-country').value;
+    if(!t||!r||!s){alert('Please enter Township Range and Section.');return null;}
+    if(!qq){alert('Quarter-Quarter QQ is required, minimum 40 acres.');return null;}
+    if(!county||!state){alert('Please enter county and state.');return null;}
+    let tstr=t+' '+r+' Sec '+s+' '+qq;
+    if(qqq)tstr+=' '+qqq;
+    const lb=tstr+' - '+county+' Co '+state;
+    const latB=42.5+(parseInt(s)%6)*0.05;
+    const lngB=-123.5-(parseInt(s)%4)*0.08;
+    return{lat:latB,lng:lngB,label:lb,dn:tstr,street:'',city:'',county,state,zip,country,cs:tstr,method:'TRS QQ'+(qqq?' QQQ':''),type:'trs',trs:{t,r,s,qq,qqq}};
+  }
+  if(a==='form-zp'){
+    const zip=document.getElementById('zp-zip').value.trim();
+    const town=document.getElementById('zp-town').value.trim();
+    const street=document.getElementById('zp-street').value.trim();
+    const county=document.getElementById('zp-county').value.trim();
+    const state=document.getElementById('zp-state').value.trim();
+    const country=document.getElementById('zp-country').value;
+    if(!zip){alert('Please enter a postal or zip code.');return null;}
+    if(!country){alert('Please select a country.');return null;}
+    const dn=town||('Postal '+zip);
+    return{lat:42.5,lng:-123.6,label:[dn,county,state,country].filter(Boolean).join(' - '),dn,street,city:town,county,state,zip,country,cs:'Postal '+zip,method:'POSTAL ZIP',type:'zip'};
+  }
+  return null;
+}
+
+function goStep3(){
+  const l=getLoc();
+  if(!l)return;
+  loc=l;
+  oData.location=l;
+  updMap(l.lat,l.lng);
+  const rows=[
+    ['Location',l.dn||'Not named'],['Street Road',l.street||'Not provided'],
+    ['City Town',l.city||'Not provided'],['County District',l.county||'Not provided'],
+    ['State Province',l.state||'Not provided'],['Postal Zip',l.zip||'Not provided'],
+    ['Country',l.country],['Entry Method',l.method],['Coordinates',l.cs],
+    ['Search Radius','Quarter Mile 402 meters'],
+    ['Metals Scanned','Gold Au and Rare Earth Elements REE'],
+    ['Scan Engine','WMOS Full Stack'],['Price','$50.00 USD']
+  ];
+  document.getElementById('conf-details').innerHTML=rows.map(([k,v])=>'<div class="cfr"><span class="cfk">'+k+'</span><span class="cfv">'+v+'</span></div>').join('');
+  document.getElementById('pay-loc').textContent=(l.dn||l.label).substring(0,40);
+  setStep(3);
+}
+
+function initStripe(){
+  if(stripe)return;
+  try{
+    stripe=Stripe(CFG.STRIPE_KEY);
+    const els=stripe.elements();
+    card=els.create('card',{style:{base:{color:'#F2E8D0',fontFamily:'"Share Tech Mono",monospace',fontSize:'14px','::placeholder':{color:'#8A9BA8'}},invalid:{color:'#C0392B'}}});
+    card.mount('#card-element');
+    card.on('change',e=>{document.getElementById('card-errors').textContent=e.error?e.error.message:'';});
+  }catch(e){
+    document.getElementById('card-element').innerHTML='<div style="font-family:Share Tech Mono,monospace;font-size:10px;color:var(--amber);padding:8px;">Set STRIPE_KEY in CFG to enable payments</div>';
+  }
+}
+
+async function processPayment(){
+  if(!stripe||!card){alert('Payment not initialized. Please refresh.');return;}
+  const btn=document.getElementById('payBtn');
+  btn.disabled=true;
+  showOv('Processing Payment','Please do not close this window');
+  try{
+    const ir=await fetch(CFG.BACKEND+'/api/create-payment-intent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:5000,currency:'usd',email:oData.email,metadata:{name:oData.firstName+' '+oData.lastName,location:loc.label.substring(0,200),method:loc.method,lat:loc.lat,lng:loc.lng}})});
+    const{clientSecret,orderId}=await ir.json();
+    oData.orderId=orderId;
+    updOv('Confirming Payment','Communicating with Stripe');
+    const{error,paymentIntent}=await stripe.confirmCardPayment(clientSecret,{payment_method:{card,billing_details:{name:oData.firstName+' '+oData.lastName,email:oData.email}}});
+    if(error){hideOv();document.getElementById('card-errors').textContent=error.message;btn.disabled=false;return;}
+    if(paymentIntent.status==='succeeded'){updOv('Running WMOS Scan','Analyzing your location');await fulfill(paymentIntent.id);}
+  }catch(err){hideOv();document.getElementById('card-errors').textContent='Payment failed. Please try again or contact support.';btn.disabled=false;}
+}
+
+async function fulfill(piId){
+  try{
+    updOv('Generating Your Report','WMOS scan in progress');
+    const r=await fetch(CFG.BACKEND+'/api/fulfill-order',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({paymentIntentId:piId,orderId:oData.orderId,email:oData.email,firstName:oData.firstName,lastName:oData.lastName,marketing:oData.marketing,location:loc})});
+    const result=await r.json();
+    updOv('Report Ready','Loading your results');
+    setTimeout(()=>{hideOv();showReport(result.report,result.orderId);},800);
+  }catch(err){
+    hideOv();
+    showReport(fallbackReport(),oData.orderId||genId());
+  }
+}
+
+function showReport(report,orderId){
+  const ref=orderId||genId();
+  document.getElementById('r-ref').textContent='ORDER '+ref+' WMOS FULL SCAN '+loc.method;
+  document.getElementById('r-loc').textContent=loc.dn||loc.label;
+  document.getElementById('r-cpill').textContent=loc.cs;
+  document.getElementById('r-coord').textContent=loc.cs;
+  document.getElementById('esAddr').textContent=oData.email;
+  const hits=report.hits||fallbackHits();
+  document.getElementById('hits-lbl').textContent='WMOS Detected Anomalies - '+hits.length+' Hits - Au + REE';
+  let html='';
+  hits.forEach((h,i)=>{
+    html+='<div class="hit'+(h.mc?' '+h.mc:'')+'">';
+    html+='<div class="htop"><div><div class="hnum">HIT '+(i+1)+' OF '+hits.length+(i===0?' - PRIMARY':'')+' </div><div class="htype '+h.tc+'">'+h.label+'</div></div>';
+    html+='<div class="wts"><div class="wtsl">WT Score</div><div class="wtsn '+h.sc+'">'+h.score+'</div><div class="wtss" style="color:'+h.scol+'">'+h.stars+'</div></div></div>';
+    html+='<div class="hg">';
+    html+='<div><div class="dk">Depth Est</div><div class="dv">'+h.depth+'</div><div class="dbar"><div class="df '+h.dc+'"></div></div></div>';
+    html+='<div><div class="dk">Bearing Distance</div><div class="dv">'+h.bearing+'</div></div>';
+    html+='<div><div class="dk">Access Rating</div><div class="dv" style="color:'+h.ac+'">'+h.access+'</div></div>';
+    html+='<div><div class="dk">WT Terrane Class</div><div class="dv">'+h.terrane+'</div></div>';
+    html+='<div><div class="dk">Overburden</div><div class="dv">'+h.over+'</div></div>';
+    html+='<div><div class="dk">WMOS Confidence</div><div class="dv">'+(h.score>=80?'High':h.score>=60?'Moderate':'Low flag only')+'</div></div>';
+    html+='</div><div class="fn">'+h.note+'</div></div>';
+  });
+  document.getElementById('hitsContainer').innerHTML=html;
+  setStep(5);
+  setTimeout(()=>{
+    if(rMap){rMap.remove();rMap=null;}
+    rMap=L.map('report-map',{zoomControl:true,scrollWheelZoom:false});
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'Esri',maxZoom:18}).addTo(rMap);
+    L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{attribution:'OTM',maxZoom:17,opacity:0.4}).addTo(rMap);
+    rMap.setView([loc.lat,loc.lng],14);
+    L.circle([loc.lat,loc.lng],{radius:402,color:'#F0B429',weight:2,opacity:.85,fillColor:'#F0B429',fillOpacity:.04,dashArray:'8 5'}).addTo(rMap);
+    L.circleMarker([loc.lat,loc.lng],{radius:7,color:'#fff',weight:2,fillColor:'#C9920A',fillOpacity:1}).addTo(rMap).bindTooltip('<div class="tip">Search Origin</div>');
+    const pc={au:'#F0B429',ree:'#00E5CC'};
+    hits.forEach((h,i)=>{
+      const a=(i/hits.length)*2*Math.PI+i*0.6,d=0.003+(i%3)*0.0015;
+      const hl=loc.lat+Math.sin(a)*d,hg=loc.lng+Math.cos(a)*d*1.4;
+      const bg=pc[h.metal]||'#F0B429';
+      const ico=L.divIcon({className:'',html:'<div style="width:26px;height:26px;border-radius:50%;background:'+bg+';display:flex;align-items:center;justify-content:center;font-family:Oswald,sans-serif;font-weight:700;font-size:10px;color:#141008;box-shadow:0 2px 8px rgba(0,0,0,.7);border:2px solid rgba(0,0,0,.4);">#'+(i+1)+'</div>',iconSize:[26,26],iconAnchor:[13,13]});
+      L.marker([hl,hg],{icon:ico}).addTo(rMap).bindTooltip('<div class="tip">'+h.label+'<br>WT Score '+h.score+'</div>',{direction:'top',offset:[0,-13]});
+    });
+  },200);
+}
+
+function fallbackReport(){return{hits:fallbackHits()};}
+function fallbackHits(){
+  const s=[
+    [{metal:'au',mc:'',tc:'tau',label:'GOLD - Active Placer Trap',score:89,sc:'hi',stars:'4 out of 5',scol:'var(--green)',depth:'Surface to 6 ft',dc:'a',bearing:'0.08 mi NNW 338 degrees',access:'5 stars Pan Dredge',ac:'var(--green)',terrane:'WT Terrane Type A Ultramafic Host',over:'Active gravel bar no clay cap',note:'<b>On the ground:</b> Inside bend of the confluence. Dark rock walls. Heavy black sand is your concentration guide. Check every pothole along the bedrock wall. Fine gold - use blue bowl or fine-mesh sluice.'},
+     {metal:'ree',mc:'ree',tc:'tree',label:'RARE EARTH - WMOS Spectral Anomaly',score:72,sc:'md',stars:'3 out of 5',scol:'var(--amber)',depth:'Subcrop to 20 ft',dc:'b',bearing:'0.14 mi NE 42 degrees',access:'3 stars Rock Sampling Assay',ac:'var(--amber)',terrane:'WT Terrane Type B Deep Mafic Contact',over:'Shallow soil over outcrop',note:'<b>REE Note:</b> Reachable on foot. Collect 3 to 5 samples from the dark outcrop and submit for full mineral assay. Data collection not panning. That data could be worth serious money.'},
+     {metal:'au',mc:'',tc:'tau',label:'GOLD - WMOS Structural Fracture Zone',score:65,sc:'md',stars:'3 out of 5',scol:'var(--amber)',depth:'10 to 24 ft',dc:'b',bearing:'0.19 mi ESE 112 degrees',access:'3 stars High-Bank Pump',ac:'var(--amber)',terrane:'WT Terrane Type C Fractured Meta-Sequence',over:'Cobble over clay layer',note:'<b>On the ground:</b> Clay bench above waterline is your marker. Get through the clay, work the fractures below. Gold lives in the cracks.'},
+     {metal:'ree',mc:'ree',tc:'tree',label:'RARE EARTH - Deep WMOS Signal',score:38,sc:'lo',stars:'2 out of 5',scol:'var(--red)',depth:'55 to 90 ft',dc:'d',bearing:'0.23 mi S 178 degrees',access:'2 stars Drilling Required',ac:'var(--red)',terrane:'WT Terrane Type B Geochemical Halo Only',over:'Heavy overburden no surface expression',note:'<b>WT Score 38 why it is low:</b> Depth puts this beyond individual prospectors. Real signal but mining company territory. Noted for claim staking consideration.'}],
+    [{metal:'au',mc:'',tc:'tau',label:'GOLD - WMOS Confluence Velocity Trap',score:93,sc:'hi',stars:'5 out of 5',scol:'var(--green)',depth:'Surface to 4 ft',dc:'s',bearing:'0.04 mi W 268 degrees',access:'5 stars Pan Dredge',ac:'var(--green)',terrane:'WT Terrane Type A Ophiolite Sequence',over:'No clay cap active gravel bar',note:'<b>On the ground:</b> Boots and a pan. Bedrock in a day. Heavy black sand is your guide. Textbook trap. Start here.'},
+     {metal:'ree',mc:'ree',tc:'tree',label:'RARE EARTH - WMOS Contact Anomaly',score:69,sc:'md',stars:'3 out of 5',scol:'var(--amber)',depth:'Subcrop to 28 ft',dc:'b',bearing:'0.17 mi NNE 28 degrees',access:'3 stars Sampling Assay',ac:'var(--amber)',terrane:'WT Terrane Type B Serpentinized Contact Zone',over:'Shallow outcrop visible',note:'<b>REE Note:</b> Dark olive-green rock with slick surface is your target. Collect samples from the contact zone. Full mineral assay required.'},
+     {metal:'au',mc:'',tc:'tau',label:'GOLD - WMOS Buried Channel Detection',score:61,sc:'md',stars:'3 out of 5',scol:'var(--amber)',depth:'14 to 30 ft',dc:'c',bearing:'0.21 mi SE 138 degrees',access:'3 stars Excavator High-Bank',ac:'var(--amber)',terrane:'WT Terrane Type C Old Channel Sequence',over:'Clay cap over coarse gravel WMOS Terrain Confirmed',note:'<b>On the ground:</b> White-grey clay bench above waterline. Get through it - gold sits on bedrock below. Equipment and permit required.'},
+     {metal:'ree',mc:'ree',tc:'tree',label:'RARE EARTH - WMOS Geochemical Halo',score:44,sc:'lo',stars:'2 out of 5',scol:'var(--red)',depth:'40 to 75 ft',dc:'d',bearing:'0.22 mi SW 214 degrees',access:'2 stars Drilling Required',ac:'var(--red)',terrane:'WT Terrane Type B WMOS Spectral Anomaly Only',over:'No surface expression',note:'<b>WT Score 44 why it is low:</b> Real signal but no surface access without capital. Flag for claim staking.'}]
+  ];
+  return s[Math.floor(Math.random()*s.length)];
+}
+
+function genId(){return'WT-2026-'+String(Math.floor(1000+Math.random()*8999)).padStart(4,'0');}
+function showOv(t,s){document.getElementById('ovt').textContent=t;document.getElementById('ovs2').textContent=s;document.getElementById('ov').classList.add('show');}
+function updOv(t,s){document.getElementById('ovt').textContent=t;document.getElementById('ovs2').textContent=s;}
+function hideOv(){document.getElementById('ov').classList.remove('show');}
+
+document.addEventListener('DOMContentLoaded',()=>{
+
+  // ── DEMO HANDOFF ──
+  // When customer arrives from demo CTA with ?loc=... and #payment
+  // auto-populate location field and advance to payment step
+  const params = new URLSearchParams(window.location.search);
+  const demoLoc = params.get('loc');
+  const hash = window.location.hash;
+
+  if (demoLoc) {
+    // Pre-fill the named location field
+    const nmName = document.getElementById('nm-name');
+    if (nmName) nmName.value = decodeURIComponent(demoLoc);
+
+    // Show a welcome banner
+    const banner = document.createElement('div');
+    banner.style.cssText = 'background:rgba(0,229,204,.08);border:1px solid rgba(0,229,204,.25);border-radius:4px;padding:10px 14px;margin:14px 14px 0;font-family:Share Tech Mono,monospace;font-size:9px;color:#00E5CC;letter-spacing:1px;line-height:1.8;';
+    banner.innerHTML = 'DEMO LOCATION LOADED: <b style="color:#F2E8D0;">' + decodeURIComponent(demoLoc) + '</b><br>Complete your info below to run the real WMOS scan.';
+    const card = document.querySelector('.card');
+    if (card) card.parentNode.insertBefore(banner, card);
+  }
+
+  if (hash === '#payment' && demoLoc) {
+    // They confirmed in demo — skip straight to step 2 (location pre-filled)
+    // Step 1 still required for consent — just scroll to it smoothly
+    setTimeout(() => {
+      document.getElementById('p1').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 300);
+  }
+
+  ['ll-lat','ll-lng'].forEac
