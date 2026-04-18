@@ -28,7 +28,7 @@ body{background:var(--rock);color:var(--cream);font-family:'Bitter',Georgia,seri
 .hero-sub{font-family:'Bitter',serif;font-size:12px;font-style:italic;color:var(--bone);line-height:1.55;margin-bottom:14px;}
 .hero-stats{display:flex;gap:16px;flex-wrap:wrap;}
 .hstat{display:flex;align-items:center;gap:6px;font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--steel);letter-spacing:1px;}
-.hstat::before{content:'triangleright';color:var(--gold);}
+.hstat::before{content:'▸';color:var(--gold);}
 .card{margin:14px;background:var(--dirt);border:1px solid var(--slate);border-radius:6px;overflow:hidden;}
 .card-hdr{background:var(--slate2);padding:10px 14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;}
 .card-title{font-family:'Oswald',sans-serif;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--bone);}
@@ -124,7 +124,7 @@ body{background:var(--rock);color:var(--cream);font-family:'Bitter',Georgia,seri
 .rmbar{background:var(--slate2);padding:5px 10px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px;}
 .rmbl{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--steel);letter-spacing:1px;}
 .rmbr{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--gold);letter-spacing:1px;}
-#report-map{height:280px;}
+#report-map{height:260px;}
 .hlbl{font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--slate);padding-bottom:5px;margin:12px 0 10px;}
 .hit{background:var(--dirt);border:1px solid var(--slate);border-left:3px solid var(--gold);border-radius:3px;padding:12px 13px;margin-bottom:8px;}
 .hit.ree{border-left-color:var(--ree);}
@@ -162,9 +162,7 @@ body{background:var(--rock);color:var(--cream);font-family:'Bitter',Georgia,seri
 </style>
 </head>
 <body>
-
 <div class="ov" id="ov"><div class="ovs"></div><div class="ovt" id="ovt">Processing</div><div class="ovs2" id="ovs2">Please wait</div></div>
-
 <div class="hdr">
   <div class="hdr-inner">
     <div>
@@ -172,21 +170,19 @@ body{background:var(--rock);color:var(--cream);font-family:'Bitter',Georgia,seri
       <div class="brand">WT <em>Site</em> Scout</div>
       <div class="brand-tag">by The Wild Tradesman</div>
     </div>
-    <div class="price-badge">$50<small>PER SEARCH</small></div>
+    <div class="price-badge">$49.99<small>PER SEARCH</small></div>
   </div>
 </div>
-
 <div class="hero">
   <div class="hero-kicker">Powered by WMOS Proprietary Intelligence</div>
   <div class="hero-h1">Find <em>Gold &amp; Rare Earth</em><br>Anywhere On Earth</div>
-  <div class="hero-sub">Enter your location any way you know it — worldwide. One search. One price. Real WMOS field intelligence delivered to your screen and email.</div>
+  <div class="hero-sub">Can you afford NOT to know what is in your ground? One search. Real intelligence. Delivered instantly.</div>
   <div class="hero-stats">
-    <span class="hstat">Gold (Au) + Rare Earth (REE) every search</span>
-    <span class="hstat">Quarter mile radius fixed</span>
-    <span class="hstat">$50 flat &middot; Worldwide</span>
+    <span class="hstat">Gold Au and Rare Earth REE every search</span>
+    <span class="hstat">Quarter mile radius worldwide</span>
+    <span class="hstat">$49.99 flat no subscriptions</span>
   </div>
 </div>
-
 <div class="card">
   <div class="card-hdr">
     <span class="card-title">WT Site Scout</span>
@@ -199,22 +195,20 @@ body{background:var(--rock);color:var(--cream);font-family:'Bitter',Georgia,seri
     <div class="step" id="si4"><span class="step-n">4</span>Pay</div>
     <div class="step" id="si5"><span class="step-n">5</span>Results</div>
   </div>
-
   <!-- STEP 1 -->
   <div class="sp active cb" id="p1">
     <div class="fr"><div class="fg"><label class="fl">First Name <span class="req">*</span></label><input class="fi" id="ufn" type="text" placeholder="First name"/></div><div class="fg"><label class="fl">Last Name <span class="req">*</span></label><input class="fi" id="uln" type="text" placeholder="Last name"/></div></div>
     <div class="fr fr1"><div class="fg"><label class="fl">Email Address <span class="req">*</span></label><input class="fi" id="uem" type="email" placeholder="your@email.com"/><span class="fh">Report delivered to this address</span></div></div>
     <div class="fr fr1"><div class="fg"><label class="fl">Confirm Email <span class="req">*</span></label><input class="fi" id="uem2" type="email" placeholder="Confirm your email"/></div></div>
     <div class="pb">
-      <div class="pt">Data, Privacy and Permissions</div>
+      <div class="pt">Data Privacy and Permissions</div>
       <div class="ps">
         <b>What we collect:</b> Name, email, location data, search history, payment info processed securely by Stripe, and device information.<br><br>
         <b>How we use it:</b> To run your WMOS scan, deliver your report, process payment, maintain your account, and improve the service. With permission we may send future communications about WT Site Scout, Wild Tradesman content, and BCE products.<br><br>
-        <b>Location data:</b> Used solely to run your WMOS scan. Stored securely and associated with your account. Never sold to third parties.<br><br>
-        <b>Data sharing:</b> We do not sell personal information. We share data only with trusted service providers including Stripe for payments, Brevo for email, and Supabase for data storage, under strict confidentiality. We may disclose if required by law.<br><br>
-        <b>Marketing:</b> With your permission The Wild Tradesman and BCE may contact you with updates, story drops, promotions, and announcements. Unsubscribe anytime.<br><br>
-        <b>International users:</b> Data processed in the United States. EU users have GDPR rights. Canadian users have CASL and PIPEDA rights. Australian users have Privacy Act rights. Contact <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bcccced5cadddfc5fcc8d4d9cbd5d0d8c8ceddd8d9cfd1ddd292dfd3d1">[email&#160;protected]</a> for requests.<br><br>
-        <b>Mineral disclaimer:</b> WMOS reports are for prospecting reference only. Not a guarantee of mineral presence. Verify all land status, mining laws, and permit requirements in your jurisdiction. You are solely responsible for legal compliance.<br><br>
+        <b>Location data:</b> Used solely to run your WMOS scan. Stored securely. Never sold to third parties.<br><br>
+        <b>Data sharing:</b> We do not sell personal information. We share data only with Stripe for payments, Brevo for email, and Supabase for storage under strict confidentiality. We may disclose if required by law.<br><br>
+        <b>International users:</b> Data processed in the United States. EU users have GDPR rights. Canadian users have CASL and PIPEDA rights. Australian users have Privacy Act rights.<br><br>
+        <b>Mineral disclaimer:</b> WMOS reports are for prospecting reference only. Not a guarantee of mineral presence. Verify all land status and permits in your jurisdiction. You are solely responsible for legal compliance.<br><br>
         <b>Payments:</b> All transactions processed securely by Stripe. We never store your card details. All sales final.<br><br>
         <b>Minors:</b> Not intended for users under 18. By proceeding you confirm you are 18 or older.
       </div>
@@ -228,7 +222,6 @@ body{background:var(--rock);color:var(--cream);font-family:'Bitter',Georgia,seri
     <button class="bp" onclick="goStep2()">Continue to Location</button>
     <div class="spc"></div>
   </div>
-
   <!-- STEP 2 -->
   <div class="sp" id="p2">
     <div class="mtabs">
@@ -237,39 +230,34 @@ body{background:var(--rock);color:var(--cream);font-family:'Bitter',Georgia,seri
       <button class="mtab" onclick="switchMode('trs',this)">Township Range Section</button>
       <button class="mtab" onclick="switchMode('zp',this)">Postal Zip</button>
     </div>
-
     <div class="mf on" id="form-nm">
-      <div class="fr fr1"><div class="fg"><label class="fl">Location Name <span class="opt">(Optional)</span></label><input class="fi" id="nm-name" type="text" placeholder="e.g. Hog Creek confluence, My claim, Unnamed draw — leave blank if unknown"/><span class="fh">Give this spot a name if you know it. Leave blank if the location has no name.</span></div></div>
-      <div class="fr"><div class="fg"><label class="fl">Street Road Address <span class="opt">(Optional)</span></label><input class="fi" id="nm-street" type="text" placeholder="Nearest road, highway, or track"/></div><div class="fg"><label class="fl">City Town Settlement <span class="opt">(Optional)</span></label><input class="fi" id="nm-city" type="text" placeholder="e.g. Grants Pass or Kalgoorlie"/></div></div>
-      <div class="fr fr3"><div class="fg"><label class="fl">County Parish District</label><input class="fi" id="nm-county" type="text" placeholder="e.g. Josephine"/></div><div class="fg"><label class="fl">State Province Region</label><input class="fi" id="nm-state" type="text" placeholder="e.g. Oregon"/></div><div class="fg"><label class="fl">Postal Zip <span class="opt">(Optional)</span></label><input class="fi" id="nm-zip" type="text" placeholder="e.g. 97527"/></div></div>
-      <div class="fr fr1"><div class="fg"><label class="fl">Country <span class="req">*</span></label><select class="fs" id="nm-country"><option value="">Select Country</option><option value="US">United States</option><option value="CA">Canada</option><option value="AU">Australia</option><option value="NZ">New Zealand</option><option value="ZA">South Africa</option><option value="BR">Brazil</option><option value="MX">Mexico</option><option value="PE">Peru</option><option value="CL">Chile</option><option value="CO">Colombia</option><option value="GH">Ghana</option><option value="TZ">Tanzania</option><option value="KE">Kenya</option><option value="RU">Russia</option><option value="CN">China</option><option value="MN">Mongolia</option><option value="ID">Indonesia</option><option value="PG">Papua New Guinea</option><option value="PH">Philippines</option><option value="FJ">Fiji</option><option value="GB">United Kingdom</option><option value="IE">Ireland</option><option value="SE">Sweden</option><option value="FI">Finland</option><option value="OTHER">Other</option></select></div></div>
+      <div class="fr fr1"><div class="fg"><label class="fl">Location Name <span class="opt">(Optional)</span></label><input class="fi" id="nm-name" type="text" placeholder="e.g. Hog Creek Oregon, My claim, Unnamed draw - leave blank if unknown"/><span class="fh">Give this spot a name if you know it. Leave blank if no name.</span></div></div>
+      <div class="fr"><div class="fg"><label class="fl">Street Road <span class="opt">(Optional)</span></label><input class="fi" id="nm-street" type="text" placeholder="Nearest road or highway"/></div><div class="fg"><label class="fl">City Town <span class="opt">(Optional)</span></label><input class="fi" id="nm-city" type="text" placeholder="e.g. Grants Pass"/></div></div>
+      <div class="fr fr3"><div class="fg"><label class="fl">County District</label><input class="fi" id="nm-county" type="text" placeholder="e.g. Josephine"/></div><div class="fg"><label class="fl">State Province</label><input class="fi" id="nm-state" type="text" placeholder="e.g. Oregon"/></div><div class="fg"><label class="fl">Postal Zip <span class="opt">(Optional)</span></label><input class="fi" id="nm-zip" type="text" placeholder="e.g. 97527"/></div></div>
+      <div class="fr fr1"><div class="fg"><label class="fl">Country <span class="req">*</span></label><select class="fs" id="nm-country"><option value="">Select Country</option><option value="US">United States</option><option value="CA">Canada</option><option value="AU">Australia</option><option value="NZ">New Zealand</option><option value="ZA">South Africa</option><option value="BR">Brazil</option><option value="MX">Mexico</option><option value="PE">Peru</option><option value="CL">Chile</option><option value="CO">Colombia</option><option value="GH">Ghana</option><option value="TZ">Tanzania</option><option value="KE">Kenya</option><option value="RU">Russia</option><option value="CN">China</option><option value="MN">Mongolia</option><option value="ID">Indonesia</option><option value="PG">Papua New Guinea</option><option value="PH">Philippines</option><option value="GB">United Kingdom</option><option value="OTHER">Other</option></select></div></div>
     </div>
-
     <div class="mf" id="form-ll">
-      <div class="fr"><div class="fg"><label class="fl">Latitude Decimal <span class="req">*</span></label><input class="fi" id="ll-lat" type="text" placeholder="e.g. 42.6469 or -33.8688"/><span class="fh">North positive South negative</span></div><div class="fg"><label class="fl">Longitude Decimal <span class="req">*</span></label><input class="fi" id="ll-lng" type="text" placeholder="e.g. -123.5028 or 151.2093"/><span class="fh">West negative East positive</span></div></div>
-      <div class="fr fr1"><div class="fg"><label class="fl">Location Name <span class="opt">(Optional)</span></label><input class="fi" id="ll-name" type="text" placeholder="Give this spot a name if you want, leave blank if unknown"/></div></div>
-      <div class="fr"><div class="fg"><label class="fl">Street Road <span class="opt">(Optional)</span></label><input class="fi" id="ll-street" type="text" placeholder="Nearest road or address"/></div><div class="fg"><label class="fl">City Town <span class="opt">(Optional)</span></label><input class="fi" id="ll-city" type="text" placeholder="e.g. Grants Pass"/></div></div>
-      <div class="fr fr3"><div class="fg"><label class="fl">County District</label><input class="fi" id="ll-county" type="text" placeholder="e.g. Josephine"/></div><div class="fg"><label class="fl">State Province</label><input class="fi" id="ll-state" type="text" placeholder="e.g. Oregon"/></div><div class="fg"><label class="fl">Postal Zip <span class="opt">(Optional)</span></label><input class="fi" id="ll-zip" type="text" placeholder="e.g. 97527"/></div></div>
-      <div class="fr fr1"><div class="fg"><label class="fl">Country <span class="req">*</span></label><select class="fs" id="ll-country"><option value="US">United States</option><option value="CA">Canada</option><option value="AU">Australia</option><option value="NZ">New Zealand</option><option value="ZA">South Africa</option><option value="BR">Brazil</option><option value="MX">Mexico</option><option value="PE">Peru</option><option value="CL">Chile</option><option value="GH">Ghana</option><option value="TZ">Tanzania</option><option value="RU">Russia</option><option value="CN">China</option><option value="MN">Mongolia</option><option value="ID">Indonesia</option><option value="PG">Papua New Guinea</option><option value="OTHER">Other</option></select></div></div>
+      <div class="fr"><div class="fg"><label class="fl">Latitude <span class="req">*</span></label><input class="fi" id="ll-lat" type="text" placeholder="e.g. 42.6469 or -33.8688"/><span class="fh">North positive South negative</span></div><div class="fg"><label class="fl">Longitude <span class="req">*</span></label><input class="fi" id="ll-lng" type="text" placeholder="e.g. -123.5028 or 151.2093"/><span class="fh">West negative East positive</span></div></div>
+      <div class="fr fr1"><div class="fg"><label class="fl">Location Name <span class="opt">(Optional)</span></label><input class="fi" id="ll-name" type="text" placeholder="Give this spot a name if you want"/></div></div>
+      <div class="fr"><div class="fg"><label class="fl">Street Road <span class="opt">(Optional)</span></label><input class="fi" id="ll-street" type="text" placeholder="Nearest road"/></div><div class="fg"><label class="fl">City Town <span class="opt">(Optional)</span></label><input class="fi" id="ll-city" type="text" placeholder="e.g. Grants Pass"/></div></div>
+      <div class="fr fr3"><div class="fg"><label class="fl">County District</label><input class="fi" id="ll-county" type="text" placeholder="e.g. Josephine"/></div><div class="fg"><label class="fl">State Province</label><input class="fi" id="ll-state" type="text" placeholder="e.g. Oregon"/></div><div class="fg"><label class="fl">Postal Zip <span class="opt">(Optional)</span></label><input class="fi" id="ll-zip" type="text" placeholder="Optional"/></div></div>
+      <div class="fr fr1"><div class="fg"><label class="fl">Country <span class="req">*</span></label><select class="fs" id="ll-country"><option value="US">United States</option><option value="CA">Canada</option><option value="AU">Australia</option><option value="NZ">New Zealand</option><option value="ZA">South Africa</option><option value="BR">Brazil</option><option value="MX">Mexico</option><option value="PE">Peru</option><option value="CL">Chile</option><option value="GH">Ghana</option><option value="RU">Russia</option><option value="CN">China</option><option value="OTHER">Other</option></select></div></div>
     </div>
-
     <div class="mf" id="form-trs">
-      <div class="teg"><b>Minimum: Quarter-Quarter QQ = 40 acres.</b> QQQ preferred = 20 acres. Tighter is better intelligence.<br><b>Example:</b> T26S R8W Sec 12 SW quarter of NE quarter (QQ) N half of SW quarter of NE quarter (QQQ)</div>
+      <div class="teg"><b>Minimum: Quarter-Quarter QQ = 40 acres.</b> QQQ preferred = 20 acres. Tighter is better intelligence.<br><b>Example:</b> T26S R8W Sec 12 SW of NE quarter (QQ) N half of SW of NE (QQQ)</div>
       <div class="fr fr3"><div class="fg"><label class="fl">Township <span class="req">*</span></label><input class="fi" id="trs-t" type="text" placeholder="e.g. T26S"/></div><div class="fg"><label class="fl">Range <span class="req">*</span></label><input class="fi" id="trs-r" type="text" placeholder="e.g. R8W"/></div><div class="fg"><label class="fl">Section <span class="req">*</span></label><input class="fi" id="trs-s" type="text" placeholder="e.g. 12"/></div></div>
       <div class="fr">
-        <div class="fg"><label class="fl">QQ Required <span class="req">*</span></label><select class="fs" id="trs-qq"><option value="">Select QQ 40 acres</option><option>NE of NE</option><option>NW of NE</option><option>SE of NE</option><option>SW of NE</option><option>NE of NW</option><option>NW of NW</option><option>SE of NW</option><option>SW of NW</option><option>NE of SE</option><option>NW of SE</option><option>SE of SE</option><option>SW of SE</option><option>NE of SW</option><option>NW of SW</option><option>SE of SW</option><option>SW of SW</option></select><span class="fh">e.g. SW of NE</span></div>
-        <div class="fg"><label class="fl">QQQ Preferred</label><select class="fs" id="trs-qqq"><option value="">Select QQQ 20 acres</option><option value="N half">N half of QQ 20 acres</option><option value="S half">S half of QQ 20 acres</option><option value="E half">E half of QQ 20 acres</option><option value="W half">W half of QQ 20 acres</option><option value="NE quarter">NE quarter of QQ 10 acres</option><option value="NW quarter">NW quarter of QQ 10 acres</option><option value="SE quarter">SE quarter of QQ 10 acres</option><option value="SW quarter">SW quarter of QQ 10 acres</option></select><span class="fh">Tightest most precise scan</span></div>
+        <div class="fg"><label class="fl">QQ Required <span class="req">*</span></label><select class="fs" id="trs-qq"><option value="">Select QQ 40 acres</option><option>NE of NE</option><option>NW of NE</option><option>SE of NE</option><option>SW of NE</option><option>NE of NW</option><option>NW of NW</option><option>SE of NW</option><option>SW of NW</option><option>NE of SE</option><option>NW of SE</option><option>SE of SE</option><option>SW of SE</option><option>NE of SW</option><option>NW of SW</option><option>SE of SW</option><option>SW of SW</option></select></div>
+        <div class="fg"><label class="fl">QQQ Preferred</label><select class="fs" id="trs-qqq"><option value="">Select QQQ 20 acres</option><option value="N half">N half 20 acres</option><option value="S half">S half 20 acres</option><option value="E half">E half 20 acres</option><option value="W half">W half 20 acres</option><option value="NE quarter">NE quarter 10 acres</option><option value="NW quarter">NW quarter 10 acres</option><option value="SE quarter">SE quarter 10 acres</option><option value="SW quarter">SW quarter 10 acres</option></select></div>
       </div>
       <div class="fr fr3"><div class="fg"><label class="fl">County <span class="req">*</span></label><input class="fi" id="trs-county" type="text" placeholder="e.g. Josephine"/></div><div class="fg"><label class="fl">State Province <span class="req">*</span></label><input class="fi" id="trs-state" type="text" placeholder="e.g. Oregon"/></div><div class="fg"><label class="fl">Postal Zip <span class="opt">(Optional)</span></label><input class="fi" id="trs-zip" type="text" placeholder="Optional"/></div></div>
       <div class="fr fr1"><div class="fg"><label class="fl">Country <span class="req">*</span></label><select class="fs" id="trs-country"><option value="US">United States</option><option value="CA">Canada</option><option value="AU">Australia</option><option value="OTHER">Other</option></select></div></div>
     </div>
-
     <div class="mf" id="form-zp">
-      <div class="fr"><div class="fg"><label class="fl">Postal Zip Code <span class="req">*</span></label><input class="fi" id="zp-zip" type="text" placeholder="e.g. 97527 or V0N 1B0 or 2000"/><span class="fh">We identify your region automatically</span></div><div class="fg"><label class="fl">Nearest Town Landmark <span class="opt">(Optional)</span></label><input class="fi" id="zp-town" type="text" placeholder="e.g. Grants Pass"/></div></div>
-      <div class="fr"><div class="fg"><label class="fl">Street Road <span class="opt">(Optional)</span></label><input class="fi" id="zp-street" type="text" placeholder="Nearest road or address"/></div><div class="fg"><label class="fl">County Parish District <span class="opt">(Optional)</span></label><input class="fi" id="zp-county" type="text" placeholder="e.g. Josephine"/></div></div>
+      <div class="fr"><div class="fg"><label class="fl">Postal Zip Code <span class="req">*</span></label><input class="fi" id="zp-zip" type="text" placeholder="e.g. 97527 or V0N 1B0"/><span class="fh">We identify your region automatically</span></div><div class="fg"><label class="fl">Nearest Town <span class="opt">(Optional)</span></label><input class="fi" id="zp-town" type="text" placeholder="e.g. Grants Pass"/></div></div>
+      <div class="fr"><div class="fg"><label class="fl">Street Road <span class="opt">(Optional)</span></label><input class="fi" id="zp-street" type="text" placeholder="Nearest road"/></div><div class="fg"><label class="fl">County District <span class="opt">(Optional)</span></label><input class="fi" id="zp-county" type="text" placeholder="e.g. Josephine"/></div></div>
       <div class="fr"><div class="fg"><label class="fl">State Province <span class="opt">(Optional)</span></label><input class="fi" id="zp-state" type="text" placeholder="e.g. Oregon"/></div><div class="fg"><label class="fl">Country <span class="req">*</span></label><select class="fs" id="zp-country"><option value="US">United States</option><option value="CA">Canada</option><option value="AU">Australia</option><option value="NZ">New Zealand</option><option value="ZA">South Africa</option><option value="BR">Brazil</option><option value="MX">Mexico</option><option value="OTHER">Other</option></select></div></div>
     </div>
-
     <div style="padding:0 14px;">
       <div class="mpv"><div class="mb"><span class="mbl">WMOS SCAN PREVIEW - QUARTER MILE SEARCH RING</span><span class="mbr" id="coordDisp">Enter location above</span></div><div id="scout-map"></div></div>
       <div class="ms"><span class="msl">METALS SCANNED EVERY SEARCH WORLDWIDE:</span><span class="mc mau">Au Gold</span><span class="mc mree">REE Rare Earth Elements</span></div>
@@ -277,12 +265,11 @@ body{background:var(--rock);color:var(--cream);font-family:'Bitter',Georgia,seri
       <div class="spc"></div>
     </div>
   </div>
-
   <!-- STEP 3 -->
   <div class="sp cb" id="p3">
     <div class="cfb">
       <div class="cft">Confirm Your Search Location</div>
-      <p class="cfn">Verify that WT Site Scout has correctly identified your intended search location before payment. If anything looks wrong go back and correct it.</p>
+      <p class="cfn">Verify WT Site Scout has correctly identified your intended search location before payment. If anything looks wrong go back and correct it.</p>
       <div id="conf-details"></div>
       <div class="cfbtns">
         <button class="bbk" onclick="setStep(2)">Edit Location</button>
@@ -290,24 +277,22 @@ body{background:var(--rock);color:var(--cream);font-family:'Bitter',Georgia,seri
       </div>
     </div>
   </div>
-
   <!-- STEP 4 -->
   <div class="sp cb" id="p4">
     <div class="paybox">
       <div class="payt">Secure Payment</div>
       <div class="pays">
         <div class="payw">WT Site Scout WMOS Scan<br><b id="pay-loc">Your location</b></div>
-        <div class="paya">$50.00</div>
+        <div class="paya">$49.99</div>
       </div>
       <div id="card-element"></div>
       <div id="card-errors"></div>
-      <button class="bp" id="payBtn" onclick="processPayment()">Pay $50.00 - Run My Scan</button>
+      <button class="bp" id="payBtn" onclick="processPayment()">Pay $49.99 - Run My Scan</button>
       <div class="paysec">Secured by Stripe - We never store your card details - All sales final</div>
     </div>
     <button class="bbk" style="width:100%;margin-top:4px;" onclick="setStep(3)">Back to Confirm</button>
     <div class="spc"></div>
   </div>
-
   <!-- STEP 5 -->
   <div class="sp" id="p5">
     <div style="padding:14px 14px 0;">
@@ -316,7 +301,7 @@ body{background:var(--rock);color:var(--cream);font-family:'Bitter',Georgia,seri
     <div class="rh">
       <div class="rht">
         <div><div class="rref" id="r-ref">ORDER WT-2026-0001</div><div class="rloc" id="r-loc">Location</div></div>
-        <div class="rrr"><div class="rprice">$50.00</div><div class="rpl">Paid Full Report</div></div>
+        <div class="rrr"><div class="rprice">$49.99</div><div class="rpl">Paid Full Report</div></div>
       </div>
       <div class="rpills"><span class="rpill rpr">Quarter Mile Worldwide</span><span class="rpill rpw">WMOS Full Stack</span><span class="rpill rpc" id="r-cpill">Coord</span></div>
     </div>
@@ -325,32 +310,28 @@ body{background:var(--rock);color:var(--cream);font-family:'Bitter',Georgia,seri
       <div class="hlbl" id="hits-lbl">WMOS Detected Anomalies</div>
       <div id="hitsContainer"></div>
     </div>
-    <div class="rcta"><div class="rctat">Your WMOS Report Is Ready</div><div class="rctas">Screenshot or save this page - Report also emailed - Valid 90 days - <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="432a2d252c03372b26342a2f273731222726302e222d6d202c2e">[email&#160;protected]</a></div></div>
+    <div class="rcta"><div class="rctat">Your WMOS Report Is Ready</div><div class="rctas">Screenshot or save this page - Report also emailed - Valid 90 days - info@thewildtradesman.com</div></div>
   </div>
-
 </div>
-
 <div class="how">
   <div class="hwt">How WT Site Scout Works</div>
   <div class="hws"><span class="hwn">1</span><span class="hwx"><b>Create your account</b> with name, email, and consent. Your report is tied to your email and delivered automatically.</span></div>
-  <div class="hws"><span class="hwn">2</span><span class="hwx"><b>Enter your location</b> any way you know it. Location name is optional - if the spot has no name just fill in what you know. GPS coordinates, Township Range Section down to QQQ, postal code, or county and state all work.</span></div>
+  <div class="hws"><span class="hwn">2</span><span class="hwx"><b>Enter your location</b> any way you know it. Location name is optional. GPS, Township Range Section down to QQQ, postal code, or county and state all work worldwide.</span></div>
   <div class="hws"><span class="hwn">3</span><span class="hwx"><b>Confirm your location</b> before paying. WT Site Scout shows you exactly what we identified so you are always searching the right ground.</span></div>
-  <div class="hws"><span class="hwn">4</span><span class="hwx"><b>Pay $50 securely</b> via Stripe. Your card is never stored. The moment payment clears WMOS runs your scan automatically.</span></div>
+  <div class="hws"><span class="hwn">4</span><span class="hwx"><b>Pay $49.99 securely</b> via Stripe. Your card is never stored. The moment payment clears WMOS runs your scan automatically.</span></div>
   <div class="hws"><span class="hwn">5</span><span class="hwx"><b>Your report appears instantly</b> on screen and is emailed to you. Gold and REE hits, WT Score, depth, bearing, rock type, and field notes. Built for the prospector with boots on.</span></div>
 </div>
-
 <div class="foot">
   WT SITE SCOUT - POWERED BY WMOS PROPRIETARY INTELLIGENCE - WORLDWIDE COVERAGE<br>
   THE WILD TRADESMAN EXPLORATION AND DISCOVERY LLC - OREGON USA<br>
   FOR PROSPECTING REFERENCE ONLY - NOT A GUARANTEE OF MINERAL PRESENCE<br>
   VERIFY LAND STATUS MINING LAWS AND PERMITS BEFORE FIELD WORK IN YOUR JURISDICTION<br>
-  <a href="#">Privacy Policy</a> - <a href="#">Terms of Service</a> - <a href="#">Contact</a>
+  <a href="#">Privacy Policy</a> - <a href="#">Terms of Service</a> - <a href="https://scout.thewildtradesman.com/demo">Free Demo</a> - <a href="#">Contact</a>
 </div>
-
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 const CFG={
-  STRIPE_KEY:'pk_live_YOUR_STRIPE_PUBLISHABLE_KEY',
-  BACKEND:'https://your-backend.vercel.app'
+  STRIPE_KEY:'pk_test_YOUR_STRIPE_PUBLISHABLE_KEY',
+  BACKEND:'https://wt-site-scout-backend.vercel.app'
 };
 let loc=null,sMap=null,rMap=null,sRing=null,stripe=null,card=null,oData={};
 
@@ -446,7 +427,7 @@ function getLoc(){
     const zip=document.getElementById('trs-zip').value.trim();
     const country=document.getElementById('trs-country').value;
     if(!t||!r||!s){alert('Please enter Township Range and Section.');return null;}
-    if(!qq){alert('Quarter-Quarter QQ is required, minimum 40 acres.');return null;}
+    if(!qq){alert('Quarter-Quarter QQ is required minimum 40 acres.');return null;}
     if(!county||!state){alert('Please enter county and state.');return null;}
     let tstr=t+' '+r+' Sec '+s+' '+qq;
     if(qqq)tstr+=' '+qqq;
@@ -483,7 +464,7 @@ function goStep3(){
     ['Country',l.country],['Entry Method',l.method],['Coordinates',l.cs],
     ['Search Radius','Quarter Mile 402 meters'],
     ['Metals Scanned','Gold Au and Rare Earth Elements REE'],
-    ['Scan Engine','WMOS Full Stack'],['Price','$50.00 USD']
+    ['Scan Engine','WMOS Full Stack'],['Price','$49.99 USD']
   ];
   document.getElementById('conf-details').innerHTML=rows.map(([k,v])=>'<div class="cfr"><span class="cfk">'+k+'</span><span class="cfv">'+v+'</span></div>').join('');
   document.getElementById('pay-loc').textContent=(l.dn||l.label).substring(0,40);
@@ -504,12 +485,39 @@ function initStripe(){
 }
 
 async function processPayment(){
+  // OWNER BYPASS CHECK
+  const locName=document.getElementById('nm-name')?.value||'';
+  const OWNER_PREFIX='WT-OWNER-';
+  if(locName.toUpperCase().startsWith(OWNER_PREFIX)){
+    const bypassCode=locName.substring(OWNER_PREFIX.length).trim();
+    showOv('Running WMOS Scan','Owner mode - scanning now');
+    try{
+      const r=await fetch(CFG.BACKEND+'/api/fulfill-order',{
+        method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          paymentIntentId:'OWNER',
+          orderId:'OWNER-'+Date.now().toString(36).toUpperCase(),
+          email:oData.email,firstName:oData.firstName,lastName:oData.lastName,
+          marketing:false,location:loc,ownerBypass:bypassCode
+        })
+      });
+      const result=await r.json();
+      hideOv();
+      if(result.ownerMode||result.success){
+        showReport(result.report,result.orderId);
+      }else{
+        showReport(fallbackReport(),genId());
+      }
+    }catch(e){hideOv();showReport(fallbackReport(),genId());}
+    return;
+  }
+  // NORMAL PAYMENT
   if(!stripe||!card){alert('Payment not initialized. Please refresh.');return;}
   const btn=document.getElementById('payBtn');
   btn.disabled=true;
   showOv('Processing Payment','Please do not close this window');
   try{
-    const ir=await fetch(CFG.BACKEND+'/api/create-payment-intent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:5000,currency:'usd',email:oData.email,metadata:{name:oData.firstName+' '+oData.lastName,location:loc.label.substring(0,200),method:loc.method,lat:loc.lat,lng:loc.lng}})});
+    const ir=await fetch(CFG.BACKEND+'/api/create-payment-intent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:4999,currency:'usd',email:oData.email,metadata:{name:oData.firstName+' '+oData.lastName,location:loc.label.substring(0,200),method:loc.method,lat:loc.lat,lng:loc.lng}})});
     const{clientSecret,orderId}=await ir.json();
     oData.orderId=orderId;
     updOv('Confirming Payment','Communicating with Stripe');
@@ -526,20 +534,17 @@ async function fulfill(piId){
     const result=await r.json();
     updOv('Report Ready','Loading your results');
     setTimeout(()=>{hideOv();showReport(result.report,result.orderId);},800);
-  }catch(err){
-    hideOv();
-    showReport(fallbackReport(),oData.orderId||genId());
-  }
+  }catch(err){hideOv();showReport(fallbackReport(),genId());}
 }
 
 function showReport(report,orderId){
   const ref=orderId||genId();
-  document.getElementById('r-ref').textContent='ORDER '+ref+' WMOS FULL SCAN '+loc.method;
+  document.getElementById('r-ref').textContent='ORDER '+ref+' WMOS FULL SCAN';
   document.getElementById('r-loc').textContent=loc.dn||loc.label;
   document.getElementById('r-cpill').textContent=loc.cs;
   document.getElementById('r-coord').textContent=loc.cs;
   document.getElementById('esAddr').textContent=oData.email;
-  const hits=report.hits||fallbackHits();
+  const hits=(report&&report.hits)||fallbackHits();
   document.getElementById('hits-lbl').textContent='WMOS Detected Anomalies - '+hits.length+' Hits - Au + REE';
   let html='';
   hits.forEach((h,i)=>{
@@ -571,7 +576,7 @@ function showReport(report,orderId){
       const hl=loc.lat+Math.sin(a)*d,hg=loc.lng+Math.cos(a)*d*1.4;
       const bg=pc[h.metal]||'#F0B429';
       const ico=L.divIcon({className:'',html:'<div style="width:26px;height:26px;border-radius:50%;background:'+bg+';display:flex;align-items:center;justify-content:center;font-family:Oswald,sans-serif;font-weight:700;font-size:10px;color:#141008;box-shadow:0 2px 8px rgba(0,0,0,.7);border:2px solid rgba(0,0,0,.4);">#'+(i+1)+'</div>',iconSize:[26,26],iconAnchor:[13,13]});
-      L.marker([hl,hg],{icon:ico}).addTo(rMap).bindTooltip('<div class="tip">'+h.label+'<br>WT Score '+h.score+'</div>',{direction:'top',offset:[0,-13]});
+      rMap.addLayer(L.marker([hl,hg],{icon:ico}).bindTooltip('<div class="tip">'+h.label+'<br>WT Score '+h.score+'</div>',{direction:'top',offset:[0,-13]}));
     });
   },200);
 }
@@ -579,14 +584,14 @@ function showReport(report,orderId){
 function fallbackReport(){return{hits:fallbackHits()};}
 function fallbackHits(){
   const s=[
-    [{metal:'au',mc:'',tc:'tau',label:'GOLD - Active Placer Trap',score:89,sc:'hi',stars:'4 out of 5',scol:'var(--green)',depth:'Surface to 6 ft',dc:'a',bearing:'0.08 mi NNW 338 degrees',access:'5 stars Pan Dredge',ac:'var(--green)',terrane:'WT Terrane Type A Ultramafic Host',over:'Active gravel bar no clay cap',note:'<b>On the ground:</b> Inside bend of the confluence. Dark rock walls. Heavy black sand is your concentration guide. Check every pothole along the bedrock wall. Fine gold - use blue bowl or fine-mesh sluice.'},
-     {metal:'ree',mc:'ree',tc:'tree',label:'RARE EARTH - WMOS Spectral Anomaly',score:72,sc:'md',stars:'3 out of 5',scol:'var(--amber)',depth:'Subcrop to 20 ft',dc:'b',bearing:'0.14 mi NE 42 degrees',access:'3 stars Rock Sampling Assay',ac:'var(--amber)',terrane:'WT Terrane Type B Deep Mafic Contact',over:'Shallow soil over outcrop',note:'<b>REE Note:</b> Reachable on foot. Collect 3 to 5 samples from the dark outcrop and submit for full mineral assay. Data collection not panning. That data could be worth serious money.'},
-     {metal:'au',mc:'',tc:'tau',label:'GOLD - WMOS Structural Fracture Zone',score:65,sc:'md',stars:'3 out of 5',scol:'var(--amber)',depth:'10 to 24 ft',dc:'b',bearing:'0.19 mi ESE 112 degrees',access:'3 stars High-Bank Pump',ac:'var(--amber)',terrane:'WT Terrane Type C Fractured Meta-Sequence',over:'Cobble over clay layer',note:'<b>On the ground:</b> Clay bench above waterline is your marker. Get through the clay, work the fractures below. Gold lives in the cracks.'},
-     {metal:'ree',mc:'ree',tc:'tree',label:'RARE EARTH - Deep WMOS Signal',score:38,sc:'lo',stars:'2 out of 5',scol:'var(--red)',depth:'55 to 90 ft',dc:'d',bearing:'0.23 mi S 178 degrees',access:'2 stars Drilling Required',ac:'var(--red)',terrane:'WT Terrane Type B Geochemical Halo Only',over:'Heavy overburden no surface expression',note:'<b>WT Score 38 why it is low:</b> Depth puts this beyond individual prospectors. Real signal but mining company territory. Noted for claim staking consideration.'}],
-    [{metal:'au',mc:'',tc:'tau',label:'GOLD - WMOS Confluence Velocity Trap',score:93,sc:'hi',stars:'5 out of 5',scol:'var(--green)',depth:'Surface to 4 ft',dc:'s',bearing:'0.04 mi W 268 degrees',access:'5 stars Pan Dredge',ac:'var(--green)',terrane:'WT Terrane Type A Ophiolite Sequence',over:'No clay cap active gravel bar',note:'<b>On the ground:</b> Boots and a pan. Bedrock in a day. Heavy black sand is your guide. Textbook trap. Start here.'},
-     {metal:'ree',mc:'ree',tc:'tree',label:'RARE EARTH - WMOS Contact Anomaly',score:69,sc:'md',stars:'3 out of 5',scol:'var(--amber)',depth:'Subcrop to 28 ft',dc:'b',bearing:'0.17 mi NNE 28 degrees',access:'3 stars Sampling Assay',ac:'var(--amber)',terrane:'WT Terrane Type B Serpentinized Contact Zone',over:'Shallow outcrop visible',note:'<b>REE Note:</b> Dark olive-green rock with slick surface is your target. Collect samples from the contact zone. Full mineral assay required.'},
-     {metal:'au',mc:'',tc:'tau',label:'GOLD - WMOS Buried Channel Detection',score:61,sc:'md',stars:'3 out of 5',scol:'var(--amber)',depth:'14 to 30 ft',dc:'c',bearing:'0.21 mi SE 138 degrees',access:'3 stars Excavator High-Bank',ac:'var(--amber)',terrane:'WT Terrane Type C Old Channel Sequence',over:'Clay cap over coarse gravel WMOS Terrain Confirmed',note:'<b>On the ground:</b> White-grey clay bench above waterline. Get through it - gold sits on bedrock below. Equipment and permit required.'},
-     {metal:'ree',mc:'ree',tc:'tree',label:'RARE EARTH - WMOS Geochemical Halo',score:44,sc:'lo',stars:'2 out of 5',scol:'var(--red)',depth:'40 to 75 ft',dc:'d',bearing:'0.22 mi SW 214 degrees',access:'2 stars Drilling Required',ac:'var(--red)',terrane:'WT Terrane Type B WMOS Spectral Anomaly Only',over:'No surface expression',note:'<b>WT Score 44 why it is low:</b> Real signal but no surface access without capital. Flag for claim staking.'}]
+    [{metal:'au',mc:'',tc:'tau',label:'GOLD - Active Placer Trap',score:89,sc:'hi',stars:'4 of 5',scol:'var(--green)',depth:'Surface to 6 ft',dc:'a',bearing:'0.08 mi NNW 338 degrees',access:'5 stars Pan Dredge',ac:'var(--green)',terrane:'WT Terrane Type A Ultramafic Host',over:'Active gravel bar no clay cap',note:'<b>On the ground:</b> Inside bend of the confluence. Dark rock walls. Heavy black sand is your concentration guide. Check every pothole along the bedrock wall. Fine gold - use blue bowl or fine-mesh sluice.'},
+     {metal:'ree',mc:'ree',tc:'tree',label:'RARE EARTH - WMOS Spectral Anomaly',score:72,sc:'md',stars:'3 of 5',scol:'var(--amber)',depth:'Subcrop to 20 ft',dc:'b',bearing:'0.14 mi NE 42 degrees',access:'3 stars Rock Sampling Assay',ac:'var(--amber)',terrane:'WT Terrane Type B Deep Mafic Contact',over:'Shallow soil over outcrop',note:'<b>REE Note:</b> Reachable on foot. Collect 3 to 5 samples from the dark outcrop and submit for full mineral assay. Data collection not panning. That data could be worth serious money.'},
+     {metal:'au',mc:'',tc:'tau',label:'GOLD - WMOS Structural Fracture Zone',score:65,sc:'md',stars:'3 of 5',scol:'var(--amber)',depth:'10 to 24 ft',dc:'b',bearing:'0.19 mi ESE 112 degrees',access:'3 stars High-Bank Pump',ac:'var(--amber)',terrane:'WT Terrane Type C Fractured Meta-Sequence',over:'Cobble over clay layer',note:'<b>On the ground:</b> Clay bench above waterline is your marker. Get through the clay, work the fractures below. Gold lives in the cracks.'},
+     {metal:'ree',mc:'ree',tc:'tree',label:'RARE EARTH - Deep WMOS Signal',score:38,sc:'lo',stars:'2 of 5',scol:'var(--red)',depth:'55 to 90 ft',dc:'d',bearing:'0.23 mi S 178 degrees',access:'2 stars Drilling Required',ac:'var(--red)',terrane:'WT Terrane Type B Geochemical Halo Only',over:'Heavy overburden no surface expression',note:'<b>WT Score 38 why it is low:</b> Depth puts this beyond individual prospectors. Real signal but mining company territory. Noted for claim staking consideration.'}],
+    [{metal:'au',mc:'',tc:'tau',label:'GOLD - WMOS Confluence Velocity Trap',score:93,sc:'hi',stars:'5 of 5',scol:'var(--green)',depth:'Surface to 4 ft',dc:'s',bearing:'0.04 mi W 268 degrees',access:'5 stars Pan Dredge',ac:'var(--green)',terrane:'WT Terrane Type A Ophiolite Sequence',over:'No clay cap active gravel bar',note:'<b>On the ground:</b> Boots and a pan. Bedrock in a day. Heavy black sand is your guide. Textbook trap. Start here.'},
+     {metal:'ree',mc:'ree',tc:'tree',label:'RARE EARTH - WMOS Contact Anomaly',score:69,sc:'md',stars:'3 of 5',scol:'var(--amber)',depth:'Subcrop to 28 ft',dc:'b',bearing:'0.17 mi NNE 28 degrees',access:'3 stars Sampling Assay',ac:'var(--amber)',terrane:'WT Terrane Type B Serpentinized Contact Zone',over:'Shallow outcrop visible',note:'<b>REE Note:</b> Dark olive-green rock with slick surface is your target. Collect samples from the contact zone. Full mineral assay required.'},
+     {metal:'au',mc:'',tc:'tau',label:'GOLD - WMOS Buried Channel Detection',score:61,sc:'md',stars:'3 of 5',scol:'var(--amber)',depth:'14 to 30 ft',dc:'c',bearing:'0.21 mi SE 138 degrees',access:'3 stars Excavator High-Bank',ac:'var(--amber)',terrane:'WT Terrane Type C Old Channel Sequence',over:'Clay cap over coarse gravel WMOS Terrain Confirmed',note:'<b>On the ground:</b> White-grey clay bench above waterline. Get through it - gold sits on bedrock below. Equipment and permit required.'},
+     {metal:'ree',mc:'ree',tc:'tree',label:'RARE EARTH - WMOS Geochemical Halo',score:44,sc:'lo',stars:'2 of 5',scol:'var(--red)',depth:'40 to 75 ft',dc:'d',bearing:'0.22 mi SW 214 degrees',access:'2 stars Drilling Required',ac:'var(--red)',terrane:'WT Terrane Type B WMOS Spectral Anomaly Only',over:'No surface expression',note:'<b>WT Score 44 why it is low:</b> Real signal but no surface access without capital. Flag for claim staking.'}]
   ];
   return s[Math.floor(Math.random()*s.length)];
 }
@@ -596,34 +601,28 @@ function showOv(t,s){document.getElementById('ovt').textContent=t;document.getEl
 function updOv(t,s){document.getElementById('ovt').textContent=t;document.getElementById('ovs2').textContent=s;}
 function hideOv(){document.getElementById('ov').classList.remove('show');}
 
+// URL PARAM HANDLER - demo handoff
 document.addEventListener('DOMContentLoaded',()=>{
-
-  // ── DEMO HANDOFF ──
-  // When customer arrives from demo CTA with ?loc=... and #payment
-  // auto-populate location field and advance to payment step
-  const params = new URLSearchParams(window.location.search);
-  const demoLoc = params.get('loc');
-  const hash = window.location.hash;
-
-  if (demoLoc) {
-    // Pre-fill the named location field
-    const nmName = document.getElementById('nm-name');
-    if (nmName) nmName.value = decodeURIComponent(demoLoc);
-
-    // Show a welcome banner
-    const banner = document.createElement('div');
-    banner.style.cssText = 'background:rgba(0,229,204,.08);border:1px solid rgba(0,229,204,.25);border-radius:4px;padding:10px 14px;margin:14px 14px 0;font-family:Share Tech Mono,monospace;font-size:9px;color:#00E5CC;letter-spacing:1px;line-height:1.8;';
-    banner.innerHTML = 'DEMO LOCATION LOADED: <b style="color:#F2E8D0;">' + decodeURIComponent(demoLoc) + '</b><br>Complete your info below to run the real WMOS scan.';
-    const card = document.querySelector('.card');
-    if (card) card.parentNode.insertBefore(banner, card);
+  const params=new URLSearchParams(window.location.search);
+  const demoLoc=params.get('loc');
+  if(demoLoc){
+    const nmName=document.getElementById('nm-name');
+    if(nmName)nmName.value=decodeURIComponent(demoLoc);
+    const banner=document.createElement('div');
+    banner.style.cssText='background:rgba(0,229,204,.08);border:1px solid rgba(0,229,204,.25);border-radius:4px;padding:10px 14px;margin:14px 14px 0;font-family:Share Tech Mono,monospace;font-size:9px;color:#00E5CC;letter-spacing:1px;line-height:1.8;';
+    banner.innerHTML='DEMO LOCATION LOADED: <b style="color:#F2E8D0;">'+decodeURIComponent(demoLoc)+'</b><br>Complete your info below to run the real WMOS scan.';
+    const card=document.querySelector('.card');
+    if(card)card.parentNode.insertBefore(banner,card);
   }
-
-  if (hash === '#payment' && demoLoc) {
-    // They confirmed in demo — skip straight to step 2 (location pre-filled)
-    // Step 1 still required for consent — just scroll to it smoothly
-    setTimeout(() => {
-      document.getElementById('p1').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 300);
-  }
-
-  ['ll-lat','ll-lng'].forEac
+  ['ll-lat','ll-lng'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)el.addEventListener('input',()=>{
+      const lat=parseFloat(document.getElementById('ll-lat').value);
+      const lng=parseFloat(document.getElementById('ll-lng').value);
+      if(!isNaN(lat)&&!isNaN(lng)&&lat>=-90&&lat<=90&&lng>=-180&&lng<=180)updMap(lat,lng);
+    });
+  });
+});
+</script>
+</body>
+</html>
