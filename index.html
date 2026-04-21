@@ -60,6 +60,7 @@ body{background:var(--rock);color:var(--cream);font-family:'Bitter',Georgia,seri
 .cil{font-family:'Bitter',serif;font-size:10px;color:var(--bone);line-height:1.45;cursor:pointer;}
 .cil b{font-weight:600;color:var(--cream);}
 .cir{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--red);letter-spacing:1px;margin-top:2px;}
+.err-box{display:none;background:rgba(192,57,43,.15);border:1px solid #C0392B;color:#ff6b6b;font-family:'Share Tech Mono',monospace;font-size:10px;padding:10px 12px;margin-bottom:10px;border-radius:2px;letter-spacing:1px;line-height:1.6;}
 .mtabs{display:flex;border-bottom:1px solid var(--slate);overflow-x:auto;}
 .mtab{font-family:'Share Tech Mono',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;padding:9px 12px;background:none;border:none;border-bottom:2px solid transparent;color:var(--steel);cursor:pointer;white-space:nowrap;transition:all .2s;margin-bottom:-1px;flex-shrink:0;}
 .mtab.on{color:var(--gold-b);border-bottom-color:var(--gold-b);background:rgba(240,180,41,.05);}
@@ -219,6 +220,7 @@ body{background:var(--rock);color:var(--cream);font-family:'Bitter',Georgia,seri
       <div class="ci"><input type="checkbox" id="c5"/><label class="cil" for="c5"><b>I confirm I am 18 years of age or older.</b><div class="cir">Required</div></label></div>
       <div class="ci"><input type="checkbox" id="c6"/><label class="cil" for="c6"><b>I acknowledge</b> WMOS reports are for prospecting reference only and I am solely responsible for compliance with all applicable laws in my jurisdiction.</label></div>
     </div>
+    <div class="err-box" id="step1-err"></div>
     <button class="bp" onclick="goStep2()">Continue to Location</button>
     <div class="spc"></div>
   </div>
@@ -330,11 +332,21 @@ body{background:var(--rock);color:var(--cream);font-family:'Bitter',Georgia,seri
 </div>
 <script>
 const CFG={
-  STRIPE_KEY:'pk_test_pk_live_51Rh5xvRrLuivTa9PmkEeZimytJXDYxqtz3fAFPt3kWFuK2Kz2osgj3GAFQBQ2j9BrfKRZgtCRGHeUFNuxkbXEKks00eUqvBTlw',
-  BACKEND:'https://wt-site-scout-backend.vercel.app/
-'
+  STRIPE_KEY:'pk_live_51Rh5xvRrLuivTa9PmkEeZimytJXDYxqtz3fAFPt3kWFuK2Kz2osgj3GAFQBQ2j9BrfKRZgtCRGHeUFNuxkbXEKks00eUqvBTlw',
+  BACKEND:'https://wt-site-scout-backend.vercel.app'
 };
 let loc=null,sMap=null,rMap=null,sRing=null,stripe=null,card=null,oData={};
+
+function showErr(msg){
+  const el=document.getElementById('step1-err');
+  el.textContent=msg;
+  el.style.display='block';
+  el.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function hideErr(){
+  const el=document.getElementById('step1-err');
+  el.style.display='none';
+}
 
 function setStep(n){
   for(let i=1;i<=5;i++){
@@ -354,11 +366,16 @@ function goStep2(){
   const ln=document.getElementById('uln').value.trim();
   const em=document.getElementById('uem').value.trim();
   const em2=document.getElementById('uem2').value.trim();
-  if(!fn||!ln){alert('Please enter your first and last name.');return;}
-  if(!em||!em2){alert('Please enter and confirm your email address.');return;}
-  if(em!==em2){alert('Email addresses do not match.');return;}
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){alert('Please enter a valid email address.');return;}
-  if(!document.getElementById('c1').checked||!document.getElementById('c2').checked||!document.getElementById('c3').checked||!document.getElementById('c5').checked){alert('Please check all required consent boxes.');return;}
+  if(!fn||!ln){showErr('Please enter your first and last name.');return;}
+  if(!em){showErr('Please enter your email address.');return;}
+  if(!em2){showErr('Please confirm your email address.');return;}
+  if(em.toLowerCase()!==em2.toLowerCase()){showErr('Email addresses do not match. Please check both fields.');return;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){showErr('Please enter a valid email address.');return;}
+  if(!document.getElementById('c1').checked){showErr('Please agree to the Terms of Service and Privacy Policy.');return;}
+  if(!document.getElementById('c2').checked){showErr('Please consent to location data storage.');return;}
+  if(!document.getElementById('c3').checked){showErr('Please agree to receive email communications.');return;}
+  if(!document.getElementById('c5').checked){showErr('Please confirm you are 18 years of age or older.');return;}
+  hideErr();
   oData={firstName:fn,lastName:ln,email:em,marketing:document.getElementById('c4').checked};
   setStep(2);
 }
@@ -486,7 +503,6 @@ function initStripe(){
 }
 
 async function processPayment(){
-  // OWNER BYPASS CHECK
   const locName=document.getElementById('nm-name')?.value||'';
   const OWNER_PREFIX='WT-OWNER-';
   if(locName.toUpperCase().startsWith(OWNER_PREFIX)){
@@ -512,8 +528,7 @@ async function processPayment(){
     }catch(e){hideOv();showReport(fallbackReport(),genId());}
     return;
   }
-  // NORMAL PAYMENT
-  if(!stripe||!card){alert('Payment not initialized. Please refresh.');return;}
+  if(!stripe||!card){document.getElementById('card-errors').textContent='Payment not initialized. Please refresh.';return;}
   const btn=document.getElementById('payBtn');
   btn.disabled=true;
   showOv('Processing Payment','Please do not close this window');
@@ -602,7 +617,6 @@ function showOv(t,s){document.getElementById('ovt').textContent=t;document.getEl
 function updOv(t,s){document.getElementById('ovt').textContent=t;document.getElementById('ovs2').textContent=s;}
 function hideOv(){document.getElementById('ov').classList.remove('show');}
 
-// URL PARAM HANDLER - demo handoff
 document.addEventListener('DOMContentLoaded',()=>{
   const params=new URLSearchParams(window.location.search);
   const demoLoc=params.get('loc');
