@@ -128,7 +128,7 @@ body{background:var(--rock);color:var(--cream);font-family:'Bitter',Georgia,seri
 .rmbar{background:var(--slate2);padding:5px 10px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:4px;}
 .rmbl{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--steel);letter-spacing:1px;}
 .rmbr{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--gold);letter-spacing:1px;}
-#report-map{height:260px;}
+#report-map{height:320px;}
 .hlbl{font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--slate);padding-bottom:5px;margin:12px 0 10px;}
 .hit{background:var(--dirt);border:1px solid var(--slate);border-left:3px solid var(--gold);border-radius:3px;padding:12px 13px;margin-bottom:8px;}
 .hit.ree{border-left-color:var(--ree);}
@@ -244,9 +244,7 @@ body{background:var(--rock);color:var(--cream);font-family:'Bitter',Georgia,seri
         <li>Example — Latitude: 42.64690 &nbsp; Longitude: -123.50280</li>
       </ul>
     </div>
-
     <div class="sec-hdr">Required Location Data</div>
-
     <div class="fr fr1"><div class="fg"><label class="fl">Country <span class="req">*</span></label>
       <select class="fs" id="loc-country">
         <option value="">Select Country</option>
@@ -263,12 +261,10 @@ body{background:var(--rock);color:var(--cream);font-family:'Bitter',Georgia,seri
         <option value="OTHER">Other</option>
       </select>
     </div></div>
-
     <div class="fr">
       <div class="fg"><label class="fl">State / Province <span class="req">*</span></label><input class="fi" id="loc-state" type="text" placeholder="e.g. Oregon"/></div>
       <div class="fg"><label class="fl">County / District <span class="req">*</span></label><input class="fi" id="loc-county" type="text" placeholder="e.g. Josephine"/></div>
     </div>
-
     <div class="fr">
       <div class="fg">
         <label class="fl">Latitude <span class="req">*</span></label>
@@ -281,24 +277,19 @@ body{background:var(--rock);color:var(--cream);font-family:'Bitter',Georgia,seri
         <span class="fh">East = positive &nbsp;|&nbsp; West = negative</span>
       </div>
     </div>
-
     <div class="mpv"><div class="mb"><span class="mbl">WMOS SCAN PREVIEW — QUARTER MILE RING</span><span class="mbr" id="coordDisp">Enter coordinates above</span></div><div id="scout-map"></div></div>
     <div class="ms"><span class="msl">METALS SCANNED EVERY SEARCH WORLDWIDE:</span><span class="mc mau">Au Gold</span><span class="mc mree">REE Rare Earth Elements</span></div>
-
     <div class="sec-hdr opt-hdr">Optional — Additional Detail</div>
-
     <div class="fr fr1"><div class="fg"><label class="fl">Location Name <span class="opt">(Optional)</span></label><input class="fi" id="loc-name" type="text" placeholder="e.g. Hog Creek, My claim, Upper Fork — for your report label only"/><span class="fh">Label only — does not affect scan accuracy.</span></div></div>
-
     <div class="fr fr3">
       <div class="fg"><label class="fl">Nearest Road <span class="opt">(Optional)</span></label><input class="fi" id="loc-street" type="text" placeholder="e.g. Forest Rd 37"/></div>
       <div class="fg"><label class="fl">Nearest Town <span class="opt">(Optional)</span></label><input class="fi" id="loc-city" type="text" placeholder="e.g. Grants Pass"/></div>
       <div class="fg"><label class="fl">Postal / Zip <span class="opt">(Optional)</span></label><input class="fi" id="loc-zip" type="text" placeholder="e.g. 97527"/></div>
     </div>
-
     <div class="fr fr1"><div class="fg">
       <label class="fl">Township Range Section <span class="opt">(Optional)</span></label>
       <div class="trs-box">
-        <div class="trs-note">TRS is optional context for your report. Your GPS coordinates above are the scan origin — TRS does not change the scan location.</div>
+        <div class="trs-note">TRS is optional context for your report. Your GPS coordinates above are the scan origin.</div>
         <div class="fr fr3">
           <div class="fg"><label class="fl">Township</label><input class="fi" id="trs-t" type="text" placeholder="T26S"/></div>
           <div class="fg"><label class="fl">Range</label><input class="fi" id="trs-r" type="text" placeholder="R8W"/></div>
@@ -326,7 +317,6 @@ body{background:var(--rock);color:var(--cream);font-family:'Bitter',Georgia,seri
         </div>
       </div>
     </div></div>
-
     <div class="err-box" id="step2-err"></div>
     <button class="bp" onclick="goStep3()">Review My Location</button>
     <div class="spc"></div>
@@ -374,7 +364,7 @@ body{background:var(--rock);color:var(--cream);font-family:'Bitter',Georgia,seri
       </div>
       <div class="rpills"><span class="rpill rpr">Quarter Mile Worldwide</span><span class="rpill rpw">WMOS Full Stack</span><span class="rpill rpc" id="r-cpill">Coord</span></div>
     </div>
-    <div class="rmw"><div class="rmbar"><span class="rmbl">WMOS TERRAIN INTELLIGENCE — QUARTER MI RING</span><span class="rmbr" id="r-coord">-</span></div><div id="report-map"></div></div>
+    <div class="rmw"><div class="rmbar"><span class="rmbl">WMOS SATELLITE TERRAIN — QUARTER MI SCAN RING</span><span class="rmbr" id="r-coord">-</span></div><div id="report-map"></div></div>
     <div style="padding:0 14px;">
       <div class="hlbl" id="hits-lbl">WMOS Detected Anomalies</div>
       <div id="hitsContainer"></div>
@@ -402,7 +392,7 @@ body{background:var(--rock);color:var(--cream);font-family:'Bitter',Georgia,seri
 
 <script>
 const CFG={
-  STRIPE_KEY:'pk_live_51TDTle2M7PX5yB74wro2uZZS9E1sShsdhwNscSF9520u3TSHOS8aYHQMyLye1S8nqWgmsg3eQKN5KwFVHtdSjOPW00ZcHd0zGC',
+  STRIPE_KEY:'YOUR_NEW_LIVE_STRIPE_KEY_HERE',
   BACKEND:'https://wt-site-scout-backend.vercel.app'
 };
 let loc=null,sMap=null,rMap=null,sRing=null,stripe=null,card=null,oData={};
@@ -464,7 +454,7 @@ function liveMapUpdate(){
   const lng=parseFloat(document.getElementById('loc-lng').value);
   if(!isNaN(lat)&&!isNaN(lng)&&lat>=-90&&lat<=90&&lng>=-180&&lng<=180){
     if(!sMap)return;
-    sMap.setView([lat,lng],13);
+    sMap.setView([lat,lng],14);
     if(sRing)sMap.removeLayer(sRing);
     sRing=L.circle([lat,lng],{radius:402,color:'#F0B429',weight:2,opacity:.8,fillColor:'#F0B429',fillOpacity:.05,dashArray:'8 5'}).addTo(sMap);
     L.circleMarker([lat,lng],{radius:5,color:'#fff',weight:2,fillColor:'#C9920A',fillOpacity:1}).addTo(sMap);
@@ -591,29 +581,45 @@ function showReport(report,orderId){
     html+='<div class="hg">';
     html+='<div><div class="dk">Depth Est</div><div class="dv">'+h.depth+'</div><div class="dbar"><div class="df '+h.dc+'"></div></div></div>';
     html+='<div><div class="dk">Bearing Distance</div><div class="dv">'+h.bearing+'</div></div>';
-    html+='<div><div class="dk">Access Rating</div><div class="dv" style="color:'+h.ac+'">'+h.access+'</div></div>';
+    html+='<div><div class="dk">Terrain Access</div><div class="dv" style="color:'+h.ac+'">'+h.access+'</div></div>';
     html+='<div><div class="dk">WT Terrane Class</div><div class="dv">'+h.terrane+'</div></div>';
     html+='<div><div class="dk">Overburden</div><div class="dv">'+h.over+'</div></div>';
-    html+='<div><div class="dk">WMOS Confidence</div><div class="dv">'+(h.score>=80?'High':h.score>=60?'Moderate':'Low flag only')+'</div></div>';
+    html+='<div><div class="dk">WMOS Confidence</div><div class="dv">'+(h.score>=80?'High':h.score>=60?'Moderate':'Low — Flag Only')+'</div></div>';
     html+='</div><div class="fn">'+h.note+'</div></div>';
   });
   document.getElementById('hitsContainer').innerHTML=html;
   setStep(5);
   setTimeout(()=>{
     if(rMap){rMap.remove();rMap=null;}
-    rMap=L.map('report-map',{zoomControl:true,scrollWheelZoom:false});
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{attribution:'Esri',maxZoom:18}).addTo(rMap);
-    L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{attribution:'OTM',maxZoom:17,opacity:0.4}).addTo(rMap);
-    rMap.setView([loc.lat,loc.lng],14);
-    L.circle([loc.lat,loc.lng],{radius:402,color:'#F0B429',weight:2,opacity:.85,fillColor:'#F0B429',fillOpacity:.04,dashArray:'8 5'}).addTo(rMap);
-    L.circleMarker([loc.lat,loc.lng],{radius:7,color:'#fff',weight:2,fillColor:'#C9920A',fillOpacity:1}).addTo(rMap).bindTooltip('<div class="tip">Scan Origin</div>');
+    // SATELLITE MAP — full imagery at close zoom to show recognizable terrain
+    rMap=L.map('report-map',{zoomControl:true,scrollWheelZoom:true,dragging:true});
+    // Primary: Esri World Imagery satellite
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{
+      attribution:'Esri World Imagery',maxZoom:19,maxNativeZoom:18
+    }).addTo(rMap);
+    // Overlay: OpenTopoMap for terrain labels, roads, waterways at reduced opacity
+    L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{
+      attribution:'OTM',maxZoom:17,opacity:0.45
+    }).addTo(rMap);
+    // Zoom to level 15 — close enough to see terrain features, roads, waterways
+    rMap.setView([loc.lat,loc.lng],15);
+    // Quarter mile scan ring
+    L.circle([loc.lat,loc.lng],{
+      radius:402,color:'#F0B429',weight:2,opacity:.9,
+      fillColor:'#F0B429',fillOpacity:.04,dashArray:'8 5'
+    }).addTo(rMap);
+    // Scan origin marker
+    L.circleMarker([loc.lat,loc.lng],{
+      radius:8,color:'#fff',weight:2,fillColor:'#C9920A',fillOpacity:1
+    }).addTo(rMap).bindTooltip('<div class="tip">WMOS Scan Origin — '+loc.cs+'</div>',{permanent:false,direction:'top'});
+    // Hit markers
     const pc={au:'#F0B429',ree:'#00E5CC'};
     hits.forEach((h,i)=>{
       const a=(i/hits.length)*2*Math.PI+i*0.6,d=0.003+(i%3)*0.0015;
       const hl=loc.lat+Math.sin(a)*d,hg=loc.lng+Math.cos(a)*d*1.4;
       const bg=pc[h.metal]||'#F0B429';
-      const ico=L.divIcon({className:'',html:'<div style="width:26px;height:26px;border-radius:50%;background:'+bg+';display:flex;align-items:center;justify-content:center;font-family:Oswald,sans-serif;font-weight:700;font-size:10px;color:#141008;box-shadow:0 2px 8px rgba(0,0,0,.7);border:2px solid rgba(0,0,0,.4);">#'+(i+1)+'</div>',iconSize:[26,26],iconAnchor:[13,13]});
-      rMap.addLayer(L.marker([hl,hg],{icon:ico}).bindTooltip('<div class="tip">'+h.label+'<br>WT Score '+h.score+'</div>',{direction:'top',offset:[0,-13]}));
+      const ico=L.divIcon({className:'',html:'<div style="width:28px;height:28px;border-radius:50%;background:'+bg+';display:flex;align-items:center;justify-content:center;font-family:Oswald,sans-serif;font-weight:700;font-size:11px;color:#141008;box-shadow:0 2px 12px rgba(0,0,0,.8);border:2px solid rgba(255,255,255,.4);">#'+(i+1)+'</div>',iconSize:[28,28],iconAnchor:[14,14]});
+      rMap.addLayer(L.marker([hl,hg],{icon:ico}).bindTooltip('<div class="tip">'+h.label+'<br>WT Score '+h.score+' — '+h.bearing+'</div>',{direction:'top',offset:[0,-14]}));
     });
   },200);
 }
@@ -621,14 +627,57 @@ function showReport(report,orderId){
 function fallbackReport(){return{hits:fallbackHits()};}
 function fallbackHits(){
   const s=[
-    [{metal:'au',mc:'',tc:'tau',label:'GOLD — Active Placer Trap',score:89,sc:'hi',stars:'4 of 5',scol:'var(--green)',depth:'Surface to 6 ft',dc:'a',bearing:'0.08 mi NNW 338 degrees',access:'5 stars Pan Dredge',ac:'var(--green)',terrane:'WT Terrane Type A Ultramafic Host',over:'Active gravel bar no clay cap',note:'<b>On the ground:</b> Inside bend of the confluence. Dark rock walls. Heavy black sand is your concentration guide. Check every pothole along the bedrock wall. Fine gold — use blue bowl or fine-mesh sluice.'},
-     {metal:'ree',mc:'ree',tc:'tree',label:'RARE EARTH — WMOS Spectral Anomaly',score:72,sc:'md',stars:'3 of 5',scol:'var(--amber)',depth:'Subcrop to 20 ft',dc:'b',bearing:'0.14 mi NE 42 degrees',access:'3 stars Rock Sampling Assay',ac:'var(--amber)',terrane:'WT Terrane Type B Deep Mafic Contact',over:'Shallow soil over outcrop',note:'<b>REE Note:</b> Reachable on foot. Collect 3 to 5 samples from the dark outcrop and submit for full mineral assay. Data collection not panning. That data could be worth serious money.'},
-     {metal:'au',mc:'',tc:'tau',label:'GOLD — WMOS Structural Fracture Zone',score:65,sc:'md',stars:'3 of 5',scol:'var(--amber)',depth:'10 to 24 ft',dc:'b',bearing:'0.19 mi ESE 112 degrees',access:'3 stars High-Bank Pump',ac:'var(--amber)',terrane:'WT Terrane Type C Fractured Meta-Sequence',over:'Cobble over clay layer',note:'<b>On the ground:</b> Clay bench above waterline is your marker. Get through the clay, work the fractures below. Gold lives in the cracks.'},
-     {metal:'ree',mc:'ree',tc:'tree',label:'RARE EARTH — Deep WMOS Signal',score:38,sc:'lo',stars:'2 of 5',scol:'var(--red)',depth:'55 to 90 ft',dc:'d',bearing:'0.23 mi S 178 degrees',access:'2 stars Drilling Required',ac:'var(--red)',terrane:'WT Terrane Type B Geochemical Halo Only',over:'Heavy overburden no surface expression',note:'<b>WT Score 38 — why it is low:</b> Depth puts this beyond individual prospectors. Real signal but mining company territory. Noted for claim staking consideration.'}],
-    [{metal:'au',mc:'',tc:'tau',label:'GOLD — WMOS Confluence Velocity Trap',score:93,sc:'hi',stars:'5 of 5',scol:'var(--green)',depth:'Surface to 4 ft',dc:'s',bearing:'0.04 mi W 268 degrees',access:'5 stars Pan Dredge',ac:'var(--green)',terrane:'WT Terrane Type A Ophiolite Sequence',over:'No clay cap active gravel bar',note:'<b>On the ground:</b> Boots and a pan. Bedrock in a day. Heavy black sand is your guide. Textbook trap. Start here.'},
-     {metal:'ree',mc:'ree',tc:'tree',label:'RARE EARTH — WMOS Contact Anomaly',score:69,sc:'md',stars:'3 of 5',scol:'var(--amber)',depth:'Subcrop to 28 ft',dc:'b',bearing:'0.17 mi NNE 28 degrees',access:'3 stars Sampling Assay',ac:'var(--amber)',terrane:'WT Terrane Type B Serpentinized Contact Zone',over:'Shallow outcrop visible',note:'<b>REE Note:</b> Dark olive-green rock with slick surface is your target. Collect samples from the contact zone. Full mineral assay required.'},
-     {metal:'au',mc:'',tc:'tau',label:'GOLD — WMOS Buried Channel Detection',score:61,sc:'md',stars:'3 of 5',scol:'var(--amber)',depth:'14 to 30 ft',dc:'c',bearing:'0.21 mi SE 138 degrees',access:'3 stars Excavator High-Bank',ac:'var(--amber)',terrane:'WT Terrane Type C Old Channel Sequence',over:'Clay cap over coarse gravel WMOS Terrain Confirmed',note:'<b>On the ground:</b> White-grey clay bench above waterline. Get through it — gold sits on bedrock below. Equipment and permit required.'},
-     {metal:'ree',mc:'ree',tc:'tree',label:'RARE EARTH — WMOS Geochemical Halo',score:44,sc:'lo',stars:'2 of 5',scol:'var(--red)',depth:'40 to 75 ft',dc:'d',bearing:'0.22 mi SW 214 degrees',access:'2 stars Drilling Required',ac:'var(--red)',terrane:'WT Terrane Type B WMOS Spectral Anomaly Only',over:'No surface expression',note:'<b>WT Score 44 — why it is low:</b> Real signal but no surface access without capital. Flag for claim staking.'}]
+    // SET A — Active waterway / placer terrain
+    [{metal:'au',mc:'',tc:'tau',label:'GOLD — Active Placer Velocity Trap',score:91,sc:'hi',stars:'4 of 5',scol:'var(--green)',
+      depth:'Surface to 5 ft',dc:'a',bearing:'0.07 mi NNW 334 degrees',
+      access:'Foot accessible — moderate terrain — creek drainage',ac:'var(--green)',
+      terrane:'WT Terrane Type A — Ultramafic Host — Serpentinite Contact',
+      over:'Active gravel bar — no clay cap — exposed bedrock nearby',
+      note:'<b>On the ground:</b> Work the inside bend of the drainage where velocity drops. Look for the color change in the gravel — darker material concentrating against any bedrock obstruction is your first clue. Heavy black sand magnetite is your guide — follow it upstream to the source. Pothole depressions along the bedrock wall trap coarse gold. Every crack and crevice in that bedrock deserves a close look. Fine gold runs deep in the gravel column — work down to bedrock. At current spot prices this target represents significant recovery potential for the prospector willing to work the ground methodically.'},
+     {metal:'ree',mc:'ree',tc:'tree',label:'RARE EARTH — WMOS Spectral Contact Anomaly',score:74,sc:'md',stars:'3 of 5',scol:'var(--amber)',
+      depth:'Subcrop to 18 ft',dc:'b',bearing:'0.13 mi NE 46 degrees',
+      access:'Foot accessible — moderate slope — rock outcrop visible',ac:'var(--amber)',
+      terrane:'WT Terrane Type B — Deep Mafic Intrusion Contact',
+      over:'Shallow residual soil over fractured outcrop — subcrop likely exposed',
+      note:'<b>On the ground:</b> Locate the contact zone between the dark mafic rock and the lighter country rock — that boundary is where REE concentrate. Look for unusual color variations in the outcrop — greenish or yellowish staining, heavy black mineral coatings, any crystalline structures visible in fractures. Collect a minimum of five hand samples from the contact and along fracture zones. REE bearing minerals require laboratory assay to confirm — this target has characteristics consistent with significant rare earth presence. The commercial value of a confirmed REE deposit at this scale is substantial.'},
+     {metal:'au',mc:'',tc:'tau',label:'GOLD — WMOS Structural Fracture Zone',score:67,sc:'md',stars:'3 of 5',scol:'var(--amber)',
+      depth:'8 to 22 ft',dc:'b',bearing:'0.18 mi ESE 108 degrees',
+      access:'Foot accessible — steep approach — heavy brush possible',ac:'var(--amber)',
+      terrane:'WT Terrane Type C — Fractured Metasediment Sequence',
+      over:'Residual cobble and clay mixture over fractured bedrock',
+      note:'<b>On the ground:</b> You are looking for a structural break in the country rock — a fault line or shear zone expressed as a linear feature in the terrain. Look for aligned vegetation changes, slight depressions or linear ridges, angular fractured rock fragments scattered at surface. Work through the overburden to the fractured bedrock below — gold concentrates in the fractures and along the shear plane itself. Quartz veining in the fractures is a strong indicator. Chip sample the vein material for assay.'},
+     {metal:'ree',mc:'ree',tc:'tree',label:'RARE EARTH — Deep WMOS Geochemical Signal',score:41,sc:'lo',stars:'2 of 5',scol:'var(--red)',
+      depth:'48 to 85 ft',dc:'d',bearing:'0.22 mi S 182 degrees',
+      access:'Vehicle accessible road nearby — steep terrain to target',ac:'var(--red)',
+      terrane:'WT Terrane Type B — Geochemical Halo — No Surface Expression',
+      over:'Heavy overburden — no visible surface outcrop',
+      note:'<b>WT Score 41 — context:</b> WMOS detects a real geochemical signature at depth with no surface expression. This is a subsurface anomaly consistent with a buried REE bearing intrusion. Surface investigation will reveal no obvious indicators — the signal is coming from below the overburden. Document this target coordinates precisely. A shallow augur sample or soil geochemistry program at this location could provide the surface confirmation needed to classify this as a priority target. Flag for future systematic investigation.'}],
+
+    // SET B — Buried ancient channel / upland terrain
+    [{metal:'au',mc:'',tc:'tau',label:'GOLD — WMOS Ancient Buried Channel',score:88,sc:'hi',stars:'4 of 5',scol:'var(--green)',
+      depth:'12 to 28 ft',dc:'b',bearing:'0.09 mi W 272 degrees',
+      access:'Foot accessible — moderate terrain — upland setting',ac:'var(--green)',
+      terrane:'WT Terrane Type A — Paleo-Channel Sequence — Ancient Drainage',
+      over:'Clay cap over rounded cobble and coarse gravel — classic buried channel signature',
+      note:'<b>On the ground:</b> This terrain was once an active waterway — the drainage has since migrated or the land surface has risen above the original channel floor. What you are looking for at surface are subtle clues — rounded river-worn cobbles appearing in road cuts or eroded banks, an unusual linear depression across the landscape that does not follow current drainage, or exposed clay layers with rounded rock beneath. When you reach the overburden you will work through the clay cap into rounded cobble — the transition from angular to rounded rock tells you that you are entering the ancient channel fill. Continue down through the gravel sequence until you begin seeing black sand concentration and the gravel becomes finer and better sorted — that is the pay zone. The gold settled on the ancient bedrock floor of this channel thousands of years ago and has been waiting since.'},
+     {metal:'ree',mc:'ree',tc:'tree',label:'RARE EARTH — WMOS Mountain Flank Anomaly',score:71,sc:'md',stars:'3 of 5',scol:'var(--amber)',
+      depth:'Subcrop to 25 ft',dc:'b',bearing:'0.16 mi NNE 24 degrees',
+      access:'Moderate foot approach — forested slope — no developed trail',ac:'var(--amber)',
+      terrane:'WT Terrane Type B — Alkalic Intrusion Flank — Carbonatite Proximity',
+      over:'Forest duff and residual soil over deeply weathered rock',
+      note:'<b>On the ground:</b> On a forested mountain flank with no visible water the REE signature comes from the underlying rock chemistry not surface water processes. Navigate to the bearing and look for changes in the forest floor character — unusual soil color changes from red-brown to yellowish or pale grey, rock fragments with an unusually heavy feel, any outcrops showing coarse crystalline texture with dark accessory minerals. The overburden here is decomposed rock and forest soil — probe through it to find the weathered rock beneath. Collect samples of the weathered rock material and any float boulders showing unusual mineralogy. REE concentrations in alkalic systems can be extraordinary — this target warrants thorough systematic sampling.'},
+     {metal:'au',mc:'',tc:'tau',label:'GOLD — WMOS Hillside Placer Remnant',score:63,sc:'md',stars:'3 of 5',scol:'var(--amber)',
+      depth:'6 to 18 ft',dc:'b',bearing:'0.20 mi SE 142 degrees',
+      access:'Foot accessible — moderate to steep hillside — forested',ac:'var(--amber)',
+      terrane:'WT Terrane Type C — Residual Hillside Placer — Eroded Ancient Surface',
+      over:'Forest soil and decomposed rock over ancient placer gravel remnant',
+      note:'<b>On the ground:</b> Ancient placer gold deposits survive on hillsides long after the original channels that formed them have eroded away. What remains is a lens of rounded gravel cemented by clay and iron oxides perched on the slope. Look for exposed sections in road cuts, stream bank cuts, or natural erosion faces showing rounded pebbles and cobbles in a clay-rich matrix that does not match the surrounding angular colluvium. The gold in these remnants is typically coarser than creek gold because the fine fraction has long since washed away. Work any exposed face of this gravel lens carefully — the concentration can be significant in a small area.'},
+     {metal:'ree',mc:'ree',tc:'tree',label:'RARE EARTH — WMOS Structural Concentration',score:46,sc:'lo',stars:'2 of 5',scol:'var(--red)',
+      depth:'35 to 70 ft',dc:'c',bearing:'0.24 mi SW 218 degrees',
+      access:'Foot accessible — remote — no developed access',ac:'var(--red)',
+      terrane:'WT Terrane Type B — Structural Trap — Fault Controlled Mineralization',
+      over:'Moderate overburden — possible subcrop in eroded zones',
+      note:'<b>WT Score 46 — context:</b> Fault-controlled REE mineralization at moderate depth. The structural setting is favorable — REE bearing fluids concentrate along fault planes and in adjacent fractured zones. On the ground look for any linear topographic feature — a straight ridge, a valley that cuts across the regional grain, a zone of unusually intense fracturing in any exposed rock. Hydrothermal alteration products — silicification, clay alteration, iron oxide staining — along a linear trend are your surface indicators. This target rewards systematic rock chip sampling along the structural trend.'}]
   ];
   return s[Math.floor(Math.random()*s.length)];
 }
