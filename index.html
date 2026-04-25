@@ -469,7 +469,7 @@ function goStep3(){
   const latVal=document.getElementById('loc-lat').value.trim();
   const lngVal=document.getElementById('loc-lng').value.trim();
   const lat=parseFloat(latVal);
-  const absLat=Math.abs(lat);const absLng=Math.abs(lng);const southC=['AU','NZ','ZA','BR','CL','PE','CO','GH','KE','ID','PG','PH','TZ'];const westC=['US','CA','MX','BR','CL','PE','CO','GB'];const eastC=['AU','NZ','ZA','RU','MN','CN','ID','PG','PH','KE','GH','TZ'];if(southC.includes(country)){document.getElementById('loc-lat').value=-absLat;}else{document.getElementById('loc-lat').value=absLat;}if(westC.includes(country)){document.getElementById('loc-lng').value=-absLng;}else if(eastC.includes(country)){document.getElementById('loc-lng').value=absLng;}
+  
   const lng=parseFloat(lngVal);const absLat=Math.abs(lat);const absLng=Math.abs(lng);const southC=['AU','NZ','ZA','BR','CL','PE','CO','GH','KE','ID','PG','PH','TZ'];const westC=['US','CA','MX','BR','CL','PE','CO','GB'];const eastC=['AU','NZ','ZA','RU','MN','CN','ID','PG','PH','KE','GH','TZ'];if(southC.includes(country)){document.getElementById('loc-lat').value=-absLat;}else{document.getElementById('loc-lat').value=absLat;}if(westC.includes(country)){document.getElementById('loc-lng').value=-absLng;}else if(eastC.includes(country)){document.getElementById('loc-lng').value=absLng;}
   if(!country){showErr('step2-err','Please select your country.');return;}
   if(!state){showErr('step2-err','Please enter your state or province.');return;}
