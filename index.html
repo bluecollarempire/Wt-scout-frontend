@@ -494,9 +494,9 @@ function goStep3(){
     if(trsQQ)trsStr+=' '+trsQQ;
     if(trsQQQ)trsStr+=' '+trsQQQ;
   }
-  const coordStr=lat.toFixed(5)+(lat>=0?' N ':' S ')+Math.abs(lng).toFixed(5)+(lng>=0?' E':' W');
+  const corrLat=parseFloat(document.getElementById('loc-lat').value);const corrLng=parseFloat(document.getElementById('loc-lng').value);const coordStr=corrLat.toFixed(5)+(corrLat>=0?' N ':' S ')+Math.abs(corrLng).toFixed(5)+(corrLng>=0?' E':' W');
   const dn=name||coordStr;
-  loc={lat,lng,label:[name,city,county,state,country].filter(Boolean).join(', '),dn,name,street,city,county,state,zip,country,cs:coordStr,method:'GPS LAT/LONG',type:'gps',trs:trsStr||null};
+  loc={lat:corrLat,lng:corrLng,label:
   oData.location=loc;
   const rows=[
     ['Scan Origin',coordStr],['Country',country],['State / Province',state],
