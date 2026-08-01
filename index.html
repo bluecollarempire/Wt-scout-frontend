@@ -528,6 +528,11 @@ function applyPrice() {
 let map, circle, marker;
 
 function initMap() {
+  if (typeof L === "undefined") {
+    document.getElementById("map-preview").innerHTML =
+      '<div style="height:200px;display:flex;align-items:center;justify-content:center;color:#6A7080;font-family:monospace;font-size:0.7rem">MAP PREVIEW LOADING…</div>';
+    return;
+  }
   map = L.map("map-preview", { zoomControl: true, attributionControl: false })
          .setView([42.67, -123.305], 12);
   L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
