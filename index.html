@@ -39,7 +39,6 @@ body {
   overflow-x: hidden;
 }
 
-/* ── Header ─────────────────────────────────────────────────────── */
 header {
   background: var(--bg2);
   border-bottom: 1px solid var(--border);
@@ -51,10 +50,7 @@ header {
   top: 0;
   z-index: 100;
 }
-.brand {
-  display: flex;
-  flex-direction: column;
-}
+.brand { display: flex; flex-direction: column; }
 .brand-title {
   font-family: 'Oswald', sans-serif;
   font-weight: 700;
@@ -86,7 +82,6 @@ header {
   letter-spacing: 0.06em;
 }
 
-/* ── Hero ────────────────────────────────────────────────────────── */
 .hero {
   padding: 36px 20px 24px;
   text-align: center;
@@ -110,10 +105,7 @@ header {
   letter-spacing: 0.03em;
   margin-bottom: 14px;
 }
-.hero h1 em {
-  color: var(--gold);
-  font-style: normal;
-}
+.hero h1 em { color: var(--gold); font-style: normal; }
 .hero-body {
   font-size: 0.95rem;
   color: var(--text);
@@ -128,9 +120,7 @@ header {
   flex-wrap: wrap;
   margin-top: 18px;
 }
-.stat {
-  text-align: center;
-}
+.stat { text-align: center; }
 .stat-num {
   font-family: 'Oswald', sans-serif;
   font-size: 1.5rem;
@@ -147,7 +137,6 @@ header {
   margin-top: 3px;
 }
 
-/* ── Scan form card ──────────────────────────────────────────────── */
 .form-section {
   padding: 28px 20px;
   max-width: 600px;
@@ -175,7 +164,6 @@ header {
   letter-spacing: 0.08em;
   margin-bottom: 20px;
 }
-
 .field-group {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -183,7 +171,6 @@ header {
   margin-bottom: 12px;
 }
 .field-group.single { grid-template-columns: 1fr; }
-
 label {
   font-family: 'Share Tech Mono', monospace;
   font-size: 0.62rem;
@@ -207,8 +194,6 @@ input {
 }
 input:focus { border-color: var(--gold-dim); }
 input::placeholder { color: var(--text-dim); opacity: 0.6; }
-input.error { border-color: var(--red); }
-
 .hint {
   font-family: 'Share Tech Mono', monospace;
   font-size: 0.6rem;
@@ -216,8 +201,6 @@ input.error { border-color: var(--red); }
   margin-top: 4px;
   letter-spacing: 0.04em;
 }
-
-/* Map preview */
 #map-preview {
   height: 200px;
   border-radius: 3px;
@@ -225,8 +208,6 @@ input.error { border-color: var(--red); }
   margin: 16px 0;
   background: var(--bg2);
 }
-
-/* Submit */
 .btn-scan {
   width: 100%;
   background: var(--gold);
@@ -244,13 +225,8 @@ input.error { border-color: var(--red); }
   margin-top: 4px;
 }
 .btn-scan:hover  { background: var(--gold-pale); }
-.btn-scan:active { background: var(--gold-dim);  }
-.btn-scan:disabled {
-  background: var(--border);
-  color: var(--text-dim);
-  cursor: not-allowed;
-}
-
+.btn-scan:active { background: var(--gold-dim); }
+.btn-scan:disabled { background: var(--border); color: var(--text-dim); cursor: not-allowed; }
 .price-line {
   font-family: 'Share Tech Mono', monospace;
   font-size: 0.68rem;
@@ -260,8 +236,6 @@ input.error { border-color: var(--red); }
   letter-spacing: 0.06em;
 }
 .price-line strong { color: var(--gold); }
-
-/* Status states */
 .status-msg {
   font-family: 'Share Tech Mono', monospace;
   font-size: 0.72rem;
@@ -273,13 +247,8 @@ input.error { border-color: var(--red); }
 .status-msg.loading { color: var(--gold); animation: pulse 1.4s infinite; }
 .status-msg.error   { color: var(--red); }
 .status-msg.success { color: var(--green); }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.45; } }
 
-@keyframes pulse {
-  0%,100% { opacity: 1; }
-  50%      { opacity: 0.45; }
-}
-
-/* ── Module badges ──────────────────────────────────────────────── */
 .modules-section {
   padding: 24px 20px;
   border-top: 1px solid var(--border);
@@ -319,8 +288,6 @@ input.error { border-color: var(--red); }
   font-weight: 600;
   letter-spacing: 0.04em;
 }
-
-/* ── Trust strip ─────────────────────────────────────────────────── */
 .trust-strip {
   border-top: 1px solid var(--border);
   padding: 20px;
@@ -339,18 +306,8 @@ input.error { border-color: var(--red); }
   align-items: center;
   gap: 6px;
 }
-.trust-item::before {
-  content: '✓';
-  color: var(--green);
-  font-size: 0.7rem;
-}
-
-/* ── Footer ─────────────────────────────────────────────────────── */
-footer {
-  border-top: 1px solid var(--border);
-  padding: 20px;
-  text-align: center;
-}
+.trust-item::before { content: '✓'; color: var(--green); font-size: 0.7rem; }
+footer { border-top: 1px solid var(--border); padding: 20px; text-align: center; }
 footer p {
   font-family: 'Share Tech Mono', monospace;
   font-size: 0.6rem;
@@ -358,12 +315,7 @@ footer p {
   letter-spacing: 0.07em;
   line-height: 1.8;
 }
-footer a {
-  color: var(--gold-dim);
-  text-decoration: none;
-}
-
-/* ── Responsive ─────────────────────────────────────────────────── */
+footer a { color: var(--gold-dim); text-decoration: none; }
 @media (max-width: 480px) {
   .field-group { grid-template-columns: 1fr; }
   .hero-stats  { gap: 18px; }
@@ -372,7 +324,6 @@ footer a {
 </head>
 <body>
 
-<!-- ── Header ─────────────────────────────────────────── -->
 <header>
   <div class="brand">
     <div class="brand-title">WildTradesman SiteScout</div>
@@ -384,7 +335,6 @@ footer a {
   </div>
 </header>
 
-<!-- ── Hero ───────────────────────────────────────────── -->
 <section class="hero">
   <div class="hero-eyebrow">Blue Collar Empire · The Wild Tradesman</div>
   <h1>Drop Coordinates.<br/><em>Get Intelligence.</em></h1>
@@ -413,7 +363,6 @@ footer a {
   </div>
 </section>
 
-<!-- ── Scan Form ──────────────────────────────────────── -->
 <section class="form-section">
   <div class="card">
     <div class="card-title">Run a Site Scan</div>
@@ -431,7 +380,6 @@ footer a {
     </div>
 
     <div class="hint">Decimal degrees. Negative longitude for Western US.</div>
-
     <div id="map-preview"></div>
 
     <div class="field-group">
@@ -462,7 +410,6 @@ footer a {
   </div>
 </section>
 
-<!-- ── Module Badges ──────────────────────────────────── -->
 <section class="modules-section">
   <div class="modules-title">Intelligence Modules</div>
   <div class="module-grid">
@@ -478,10 +425,11 @@ footer a {
     <div class="mod-badge"><strong>WT Seismic Vortex™</strong>Fault + seismic mapping</div>
     <div class="mod-badge"><strong>WT Proton Terrain™</strong>LiDAR terrain features</div>
     <div class="mod-badge"><strong>WT LightningTrace™</strong>Real-time CG strike intel</div>
+    <div class="mod-badge"><strong>WT Nexus Core™</strong>Probability synthesis</div>
+    <div class="mod-badge"><strong>WT Sentinel™</strong>Spectral analysis</div>
   </div>
 </section>
 
-<!-- ── Trust Strip ────────────────────────────────────── -->
 <div class="trust-strip">
   <div class="trust-item">Real field data — no defaults</div>
   <div class="trust-item">Secure Stripe payment</div>
@@ -489,7 +437,6 @@ footer a {
   <div class="trust-item">No subscription required</div>
 </div>
 
-<!-- ── Footer ────────────────────────────────────────── -->
 <footer>
   <p>
     © The Wild Tradesman Exploration &amp; Discovery LLC · Blue Collar Empire<br/>
@@ -500,31 +447,19 @@ footer a {
 </footer>
 
 <script>
-// ─────────────────────────────────────────────────────────────────────────────
-// PRICE CONFIG — edit this ONE object to change price everywhere on the page
-// ─────────────────────────────────────────────────────────────────────────────
-const PRICE = {
-  cents:   799,
-  display: "$7.99"
-};
+// ── PRICE CONFIG — edit this ONE line to change price everywhere ──
+const PRICE = { cents: 799, display: "$7.99" };
 
-// Backend URL — update if you deploy to a custom domain
+// ── BACKEND URL ──────────────────────────────────────────────────
 const BACKEND = "https://wt-site-scout.vercel.app";
 
-// ─── Apply price to all display elements ─────────────────────────────────────
 function applyPrice() {
-  document.querySelectorAll("[id$='-price'], #btn-price, #stat-price, #price-line-amount, #hdr-price-display")
-    .forEach(el => {
-      if (el.id === "hdr-price-label") return;
-      el.textContent = PRICE.display;
-    });
-  document.getElementById("hdr-price-display").textContent = PRICE.display;
-  document.getElementById("stat-price").textContent        = PRICE.display;
-  document.getElementById("btn-price").textContent         = PRICE.display;
-  document.getElementById("price-line-amount").textContent = PRICE.display;
+  document.getElementById("hdr-price-display").textContent  = PRICE.display;
+  document.getElementById("stat-price").textContent         = PRICE.display;
+  document.getElementById("btn-price").textContent          = PRICE.display;
+  document.getElementById("price-line-amount").textContent  = PRICE.display;
 }
 
-// ─── Leaflet map preview ──────────────────────────────────────────────────────
 let map, circle, marker;
 
 function initMap() {
@@ -550,7 +485,6 @@ function updateMapPreview(lat, lng) {
   circle = L.circle(ll, { radius: 1609, color: "#E8D028", weight: 1.5, dashArray: "6 4", fill: false, opacity: 0.7 }).addTo(map);
 }
 
-// ─── Form validation ──────────────────────────────────────────────────────────
 function setStatus(msg, type) {
   const el = document.getElementById("status-msg");
   el.textContent = msg;
@@ -563,17 +497,14 @@ function validate() {
   const email = document.getElementById("email").value.trim();
   const first = document.getElementById("firstName").value.trim();
   const last  = document.getElementById("lastName").value.trim();
-
-  if (isNaN(lat) || lat < -90  || lat > 90)  { setStatus("Enter a valid latitude (-90 to 90)", "error");   return null; }
+  if (isNaN(lat) || lat < -90  || lat > 90)  { setStatus("Enter a valid latitude (-90 to 90)", "error");    return null; }
   if (isNaN(lng) || lng < -180 || lng > 180)  { setStatus("Enter a valid longitude (-180 to 180)", "error"); return null; }
-  if (!email || !/^[^@]+@[^@]+\.[^@]+$/.test(email)) { setStatus("Enter a valid email address", "error"); return null; }
+  if (!email || !/^[^@]+@[^@]+\.[^@]+$/.test(email)) { setStatus("Enter a valid email address", "error");   return null; }
   if (!first) { setStatus("Enter your first name", "error"); return null; }
   if (!last)  { setStatus("Enter your last name",  "error"); return null; }
-
   return { lat, lng, email, firstName: first, lastName: last };
 }
 
-// ─── Submit handler ───────────────────────────────────────────────────────────
 async function handleScan() {
   setStatus("");
   const data = validate();
@@ -584,15 +515,19 @@ async function handleScan() {
   setStatus("Connecting to SiteScout backend…", "loading");
 
   try {
-    const resp = await fetch(`${BACKEND}/api/create-scan`, {
+    const resp = await fetch(`${BACKEND}/api/create-payment-intent`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        latitude:    data.lat,
-        longitude:   data.lng,
-        firstName:   data.firstName,
-        lastName:    data.lastName,
-        email:       data.email,
+        intake: {
+          email:     data.email,
+          firstName: data.firstName,
+          lastName:  data.lastName,
+          country:   "US",
+          region:    "Unknown",
+          county:    "Unknown"
+        },
+        center:      { lat: data.lat, lng: data.lng },
         radiusMiles: 1
       })
     });
@@ -605,23 +540,38 @@ async function handleScan() {
       return;
     }
 
-    // Owner bypass — scan triggered directly
-    if (result.bypass === true || result.scanId) {
+    // Owner bypass
+    if (result.ownerBypass === true) {
       setStatus("Owner bypass — scan queued. Check email.", "success");
       return;
     }
 
-    // Stripe checkout redirect
-    if (result.url) {
-      setStatus("Redirecting to secure checkout…", "loading");
-      window.location.href = result.url;
-      return;
-    }
-
-    // Stripe.js payment intent flow (client_secret)
+    // Has Stripe client secret — show inline card element
     if (result.clientSecret) {
-      setStatus("Redirecting to secure checkout…", "loading");
-      window.location.href = result.checkoutUrl || result.url || "#";
+      setStatus("Loading secure payment…", "loading");
+      const stripe = Stripe(result.stripePublishableKey);
+      const elements = stripe.elements();
+      const cardEl = elements.create("card", {
+        style: { base: { color: "#C8C4BC", fontFamily: "Share Tech Mono, monospace", fontSize: "15px", "::placeholder": { color: "#6A7080" } } }
+      });
+      const container = document.getElementById("status-msg");
+      container.innerHTML = '<div id="card-element" style="background:#0F1520;border:1px solid #1E2A3A;border-radius:3px;padding:12px;margin-bottom:10px"></div><button id="pay-btn" style="width:100%;background:#E8A020;color:#080C12;border:none;border-radius:3px;padding:14px;font-family:Oswald,sans-serif;font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;cursor:pointer">Complete Payment — ' + PRICE.display + '</button><div id="pay-err" style="color:#CC2828;font-family:Share Tech Mono,monospace;font-size:0.7rem;margin-top:8px;text-align:center"></div>';
+      cardEl.mount("#card-element");
+      document.getElementById("pay-btn").addEventListener("click", async () => {
+        document.getElementById("pay-btn").disabled = true;
+        document.getElementById("pay-btn").textContent = "Processing…";
+        const { error, paymentIntent } = await stripe.confirmCardPayment(result.clientSecret, { payment_method: { card: cardEl } });
+        if (error) {
+          document.getElementById("pay-err").textContent = error.message;
+          document.getElementById("pay-btn").disabled = false;
+          document.getElementById("pay-btn").textContent = "Complete Payment — " + PRICE.display;
+          return;
+        }
+        if (paymentIntent.status === "succeeded") {
+          container.innerHTML = "";
+          setStatus("Payment confirmed — scan queued. Check email.", "success");
+        }
+      });
       return;
     }
 
@@ -634,7 +584,6 @@ async function handleScan() {
   }
 }
 
-// ─── Coordinate auto-preview ──────────────────────────────────────────────────
 let previewTimer;
 function schedulePreview() {
   clearTimeout(previewTimer);
@@ -647,7 +596,6 @@ function schedulePreview() {
   }, 600);
 }
 
-// ─── Boot ─────────────────────────────────────────────────────────────────────
 window.addEventListener("DOMContentLoaded", () => {
   applyPrice();
   initMap();
