@@ -1,3 +1,4 @@
+<!-- SITESCOUT — index.html — 2026-08-06 — fixed CTA/card nesting bug (button was rendering before form fields due to orphaned closing div); added lat/long sign instructions + visual example -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -249,6 +250,52 @@ input::placeholder { color: var(--text-dim); opacity: 0.6; }
 .status-msg.success { color: var(--green); }
 @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.45; } }
 
+/* Coordinate help — added 2026-08-06 */
+.coord-example {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 10px 12px;
+  margin: 10px 0;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.72rem;
+}
+.coord-example-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  gap: 10px;
+}
+.coord-good { color: var(--green); white-space: nowrap; }
+.coord-bad  { color: var(--red); white-space: nowrap; }
+.coord-good u, .coord-bad u { text-decoration: none; font-weight: 700; font-size: 1.15em; }
+.coord-example-label {
+  font-size: 0.6rem;
+  color: var(--text-dim);
+  text-align: right;
+}
+.coord-help {
+  margin: 10px 0 4px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.66rem;
+}
+.coord-help summary {
+  cursor: pointer;
+  color: var(--gold-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.coord-help p {
+  color: var(--text-dim);
+  margin-top: 8px;
+  line-height: 1.6;
+  font-family: 'Bitter', serif;
+  font-size: 0.78rem;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
 .modules-section {
   padding: 24px 20px;
   border-top: 1px solid var(--border);
@@ -364,16 +411,6 @@ footer a { color: var(--gold-dim); text-decoration: none; }
 </section>
 
 <section class="form-section">
-  
-    </div>
-
-    <button class="btn-scan" id="btn-scan">
-      Run Site Scan — <span id="btn-price">Loading…</span>
-    </button>
-    <div class="price-line">
-      <strong id="price-line-amount">Loading…</strong> one-time · No subscription · Secure Stripe checkout
-    </div>
-    <div class="status-msg" id="status-msg"></div>
   <div class="card">
     <div class="card-title">Run a Site Scan</div>
     <div class="card-sub">Enter coordinates + contact info — secure checkout on next page</div>
@@ -389,7 +426,24 @@ footer a { color: var(--gold-dim); text-decoration: none; }
       </div>
     </div>
 
-    <div class="hint">Decimal degrees. Negative longitude for Western US.</div>
+    <div class="hint"><strong style="color:var(--gold-dim)">Longitude needs a minus sign</strong> if you're in the U.S. or most of the Americas — see example below.</div>
+
+    <div class="coord-example">
+      <div class="coord-example-row">
+        <span class="coord-good">✓ 42.6700, <u>−</u>123.3050</span>
+        <span class="coord-example-label">Correct — Oregon</span>
+      </div>
+      <div class="coord-example-row">
+        <span class="coord-bad">✗ 42.6700, 123.3050</span>
+        <span class="coord-example-label">Wrong — points to Asia</span>
+      </div>
+    </div>
+
+    <details class="coord-help">
+      <summary>How do I get coordinates for my spot?</summary>
+      <p>Open Google Maps and long-press your location until a pin drops. A card appears at the bottom showing two numbers — that's your latitude and longitude. Tap the numbers to copy them, then paste into the fields above. Double-check the second number (longitude) has a minus sign in front of it if you're in the U.S.</p>
+    </details>
+
     <div id="map-preview"></div>
 
     <div class="field-group">
@@ -408,6 +462,15 @@ footer a { color: var(--gold-dim); text-decoration: none; }
         <label for="email">Email — report delivered here</label>
         <input id="email" type="email" placeholder="jane@example.com" inputmode="email"/>
       </div>
+    </div>
+
+    <button class="btn-scan" id="btn-scan">
+      Run Site Scan — <span id="btn-price">Loading…</span>
+    </button>
+    <div class="price-line">
+      <strong id="price-line-amount">Loading…</strong> one-time · No subscription · Secure Stripe checkout
+    </div>
+    <div class="status-msg" id="status-msg"></div>
   </div>
 </section>
 
