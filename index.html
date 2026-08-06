@@ -364,6 +364,16 @@ footer a { color: var(--gold-dim); text-decoration: none; }
 </section>
 
 <section class="form-section">
+  
+    </div>
+
+    <button class="btn-scan" id="btn-scan">
+      Run Site Scan — <span id="btn-price">Loading…</span>
+    </button>
+    <div class="price-line">
+      <strong id="price-line-amount">Loading…</strong> one-time · No subscription · Secure Stripe checkout
+    </div>
+    <div class="status-msg" id="status-msg"></div>
   <div class="card">
     <div class="card-title">Run a Site Scan</div>
     <div class="card-sub">Enter coordinates + contact info — secure checkout on next page</div>
@@ -398,15 +408,6 @@ footer a { color: var(--gold-dim); text-decoration: none; }
         <label for="email">Email — report delivered here</label>
         <input id="email" type="email" placeholder="jane@example.com" inputmode="email"/>
       </div>
-    </div>
-
-    <button class="btn-scan" id="btn-scan">
-      Run Site Scan — <span id="btn-price">Loading…</span>
-    </button>
-    <div class="price-line">
-      <strong id="price-line-amount">Loading…</strong> one-time · No subscription · Secure Stripe checkout
-    </div>
-    <div class="status-msg" id="status-msg"></div>
   </div>
 </section>
 
