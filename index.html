@@ -1,4 +1,5 @@
-<!-- SITESCOUT — index.html — 2026-08-06 — fixed CTA/card nesting bug (button was rendering before form fields due to orphaned closing div); added lat/long sign instructions + visual example -->
+<!-- SITESCOUT — index.html — 2026-09-01 — updated module count/list (14->11), removed cut modules (mod_5 Plasma Conduit, mod_13 Sentinel), removed duplicate WT Nexus Core badge, added mod_16 WT Waterway Trace; added basic per-email rate limiting via create-payment-intent.js -->
+<!-- 2026-11-12 (fix/site-scout-audit-2026-11-12) — hero: dropped "satellite data" and "lightning conductivity" claims; each module badge now names its public data source; count caption states 11 live data sources + Nexus Core synthesis; footer carries the informational-only / non-refundable disclaimer. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -386,13 +387,13 @@ footer a { color: var(--gold-dim); text-decoration: none; }
   <div class="hero-eyebrow">Blue Collar Empire · The Wild Tradesman</div>
   <h1>Drop Coordinates.<br/><em>Get Intelligence.</em></h1>
   <p class="hero-body">
-    14-module AI scan analyzes satellite data, fault lines, lightning conductivity,
-    historical mining records, and geologic structure to rank your best targets —
+    11-module AI scan analyzes fault lines, real-time lightning strikes,
+    historical mining records, waterways, and geologic structure to rank your best targets —
     delivered as a full PDF field report.
   </p>
   <div class="hero-stats">
     <div class="stat">
-      <div class="stat-num">14</div>
+      <div class="stat-num">11</div>
       <div class="stat-label">Intel Modules</div>
     </div>
     <div class="stat">
@@ -400,7 +401,7 @@ footer a { color: var(--gold-dim); text-decoration: none; }
       <div class="stat-label">Per Scan</div>
     </div>
     <div class="stat">
-      <div class="stat-num">1mi</div>
+      <div class="stat-num">¼ mi</div>
       <div class="stat-label">Default Radius</div>
     </div>
     <div class="stat">
@@ -477,21 +478,20 @@ footer a { color: var(--gold-dim); text-decoration: none; }
 <section class="modules-section">
   <div class="modules-title">Intelligence Modules</div>
   <div class="module-grid">
-    <div class="mod-badge"><strong>WT AurVortex™</strong>Vein mapping + Au pathways</div>
-    <div class="mod-badge"><strong>WT StrataPlex™</strong>Geologic unit analysis</div>
-    <div class="mod-badge"><strong>WT Phantom Archive™</strong>Historical mining records</div>
-    <div class="mod-badge"><strong>WT Nucleus Dominance™</strong>Rock structure targeting</div>
-    <div class="mod-badge"><strong>WT Plasma Conduit™</strong>Hydro + alluvial channels</div>
-    <div class="mod-badge"><strong>WT Quantum Drift™</strong>Pathfinder geochemistry</div>
-    <div class="mod-badge"><strong>WT Ground Command™</strong>Claims intelligence</div>
+    <div class="mod-badge"><strong>WT AurVortex™</strong>USGS MRDS gold occurrences</div>
+    <div class="mod-badge"><strong>WT StrataPlex™</strong>Macrostrat geologic units</div>
+    <div class="mod-badge"><strong>WT Phantom Archive™</strong>USGS MRDS mining history</div>
+    <div class="mod-badge"><strong>WT Nucleus Dominance™</strong>Macrostrat + ASTER elevation</div>
+    <div class="mod-badge"><strong>WT Quantum Drift™</strong>USGS NURE stream sediment</div>
+    <div class="mod-badge"><strong>WT Ground Command™</strong>BLM MLRS claim records</div>
     <div class="mod-badge"><strong>WT Nexus Core™</strong>Probability synthesis</div>
-    <div class="mod-badge"><strong>WT Gamma Dominance™</strong>Mineralogy analysis</div>
-    <div class="mod-badge"><strong>WT Seismic Vortex™</strong>Fault + seismic mapping</div>
-    <div class="mod-badge"><strong>WT Proton Terrain™</strong>LiDAR terrain features</div>
-    <div class="mod-badge"><strong>WT LightningTrace™</strong>Real-time CG strike intel</div>
-    <div class="mod-badge"><strong>WT Nexus Core™</strong>Probability synthesis</div>
-    <div class="mod-badge"><strong>WT Sentinel™</strong>Spectral analysis</div>
+    <div class="mod-badge"><strong>WT Gamma Dominance™</strong>USGS NGDB rock geochemistry</div>
+    <div class="mod-badge"><strong>WT Seismic Vortex™</strong>USGS 30-year earthquake catalog</div>
+    <div class="mod-badge"><strong>WT Proton Terrain™</strong>USGS 3DEP elevation points</div>
+    <div class="mod-badge"><strong>WT LightningTrace™</strong>Xweather real-time strikes — experimental</div>
+    <div class="mod-badge"><strong>WT Waterway Trace™</strong>USGS NHD flowlines</div>
   </div>
+  <p style="font-family:'Share Tech Mono',monospace;font-size:0.62rem;color:var(--text-dim);letter-spacing:0.06em;margin-top:12px;">11 live data sources, combined by WT Nexus Core probability synthesis. Each badge names the public data source it reads.</p>
 </section>
 
 <div class="trust-strip">
@@ -506,7 +506,8 @@ footer a { color: var(--gold-dim); text-decoration: none; }
     © The Wild Tradesman Exploration &amp; Discovery LLC · Blue Collar Empire<br/>
     <a href="mailto:support@thewildtradesman.com">support@thewildtradesman.com</a>
     &nbsp;·&nbsp; thewildtradesman.com<br/>
-    Reports are intelligence tools for licensed user only. Not a guarantee of mineral deposits.
+    Reports are intelligence tools for licensed user only. Not a guarantee of mineral deposits.<br/>
+    Informational use only — not a mineral-resource estimate or land-status determination. All sales non-refundable.
   </p>
 </footer>
 
@@ -546,7 +547,7 @@ function updateMapPreview(lat, lng) {
   if (marker) map.removeLayer(marker);
   if (circle) map.removeLayer(circle);
   marker = L.circleMarker(ll, { radius: 6, color: "#E8A020", fillColor: "#E8A020", fillOpacity: 0.9, weight: 2 }).addTo(map);
-  circle = L.circle(ll, { radius: 1609, color: "#E8D028", weight: 1.5, dashArray: "6 4", fill: false, opacity: 0.7 }).addTo(map);
+  circle = L.circle(ll, { radius: 402, color: "#E8D028", weight: 1.5, dashArray: "6 4", fill: false, opacity: 0.7 }).addTo(map);
 }
 
 function setStatus(msg, type) {
@@ -592,7 +593,7 @@ async function handleScan() {
           county:    "Unknown"
         },
         center:      { lat: data.lat, lng: data.lng },
-        radiusMiles: 1
+        radiusMiles: 0.25
       })
     });
 
