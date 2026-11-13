@@ -297,6 +297,95 @@ input::placeholder { color: var(--text-dim); opacity: 0.6; }
   text-transform: none;
 }
 
+/* Sample report link + Target Review excerpts + who-it-is-for — added 2026-11-13 */
+.sample-link {
+  display: block;
+  text-align: center;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--gold);
+  letter-spacing: 0.04em;
+  margin-top: 14px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.sample-link:hover { color: var(--gold-pale); }
+.review-excerpts {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--gold);
+  border-radius: 3px;
+  padding: 12px 14px;
+  margin-top: 14px;
+  text-align: left;
+}
+.review-excerpts-title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.72rem;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+.review-excerpts p {
+  font-family: 'Bitter', serif;
+  font-size: 0.82rem;
+  color: var(--text);
+  line-height: 1.55;
+  margin: 0 0 8px;
+}
+.review-excerpts p:last-child { margin-bottom: 0; }
+.review-excerpts .excerpt-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--gold-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: block;
+  margin-bottom: 2px;
+}
+.review-excerpts .excerpt-note {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--text-dim);
+  letter-spacing: 0.04em;
+  margin-top: 10px;
+  line-height: 1.5;
+}
+.who-for-section {
+  padding: 24px 20px;
+  border-top: 1px solid var(--border);
+  max-width: 600px;
+  margin: 0 auto;
+}
+.who-for-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.who-for-list li {
+  font-family: 'Bitter', serif;
+  font-size: 0.82rem;
+  color: var(--text);
+  line-height: 1.55;
+  padding: 7px 0 7px 16px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.who-for-list li::before {
+  content: '›';
+  color: var(--gold);
+  position: absolute;
+  left: 2px;
+}
+.who-for-list li:last-child { border-bottom: none; }
+.who-for-list strong {
+  color: var(--gold);
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+}
+
 .modules-section {
   padding: 24px 20px;
   border-top: 1px solid var(--border);
@@ -471,8 +560,32 @@ footer a { color: var(--gold-dim); text-decoration: none; }
     <div class="price-line">
       <strong id="price-line-amount">Loading…</strong> one-time · No subscription · Secure Stripe checkout
     </div>
+    <a class="sample-link" href="/sample-report.pdf">See a sample report — Martha Mine area, Josephine County, Oregon (PDF)</a>
+    <div class="review-excerpts">
+      <div class="review-excerpts-title">Here is what the report says</div>
+      <p><span class="excerpt-label">On the scout zone</span>&ldquo;This one should be your first walk. A deposition zone at 84/100 where the drainage gradient flattens &mdash; that is the setup where moving water drops its heaviest material.&rdquo;</p>
+      <p><span class="excerpt-label">On the waterways</span>&ldquo;3 waterway segments run through this ground.&rdquo;</p>
+      <p><span class="excerpt-label">What to do next</span>&ldquo;Pan the gravels right at the gradient break, work the bedrock contact, and probe for gravel depth before any digging. If the pan shows color, work upstream along the waterway.&rdquo;</p>
+      <div class="excerpt-note">Excerpts from the Target Review in a sample SiteScout report (Martha Mine area) &mdash; the report assessing its own targets, not a customer quote.</div>
+    </div>
     <div class="status-msg" id="status-msg"></div>
   </div>
+</section>
+
+<section class="who-for-section">
+  <div class="modules-title">Who it is for</div>
+  <ul class="who-for-list">
+    <li><strong>Metal detectorists</strong> &mdash; Targets worth swinging over. Stop guessing where to dig and start where the ground already says look here.</li>
+    <li><strong>Gold prospectors &amp; placer miners</strong> &mdash; Paleo channels and deposition zones to work, mapped from real geology and waterways.</li>
+    <li><strong>Land brokers &amp; land sales</strong> &mdash; A $19 scan that makes a listing worth more. Buyers see data, not just dirt.</li>
+    <li><strong>Real estate agents</strong> &mdash; A real report on what is under the land, so buyers have a reason to say yes.</li>
+    <li><strong>Land buyers &amp; investors</strong> &mdash; Due diligence before you buy. Know what is under the parcel before the money moves.</li>
+    <li><strong>Mining claim buyers</strong> &mdash; Evaluate a claim before you buy or stake it. Real BLM records, real geology.</li>
+    <li><strong>Small-scale &amp; hobby miners</strong> &mdash; Plan where to sample and dig first, instead of working ground blind.</li>
+    <li><strong>Rockhounds &amp; mineral collectors</strong> &mdash; Find ground with the geology and minerals worth hunting.</li>
+    <li><strong>Land flippers</strong> &mdash; Add a real report to a parcel and lift its value before you list it.</li>
+    <li><strong>Treasure &amp; relic hunters</strong> &mdash; Promising ground to search, backed by real mining history and waterways.</li>
+  </ul>
 </section>
 
 <section class="modules-section">
