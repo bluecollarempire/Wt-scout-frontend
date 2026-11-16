@@ -13,6 +13,9 @@
 <!-- Leaflet -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+<!-- Country lookup (offline) — detects US vs Canada from the map pin so the
+     customer sees which country's gold records will be used before paying -->
+<script src="countryDetect.js"></script>
 <!-- Stripe -->
 <script src="https://js.stripe.com/v3/"></script>
 
@@ -207,8 +210,15 @@ input::placeholder { color: var(--text-dim); opacity: 0.6; }
   height: 200px;
   border-radius: 3px;
   border: 1px solid var(--border);
-  margin: 16px 0;
+  margin: 16px 0 8px;
   background: var(--bg2);
+}
+#country-line {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--gold-pale);
+  margin: 0 0 16px;
+  letter-spacing: 0.02em;
 }
 .btn-scan {
   width: 100%;
@@ -446,6 +456,7 @@ footer a { color: var(--gold-dim); text-decoration: none; }
     </details>
 
     <div id="map-preview"></div>
+    <div id="country-line">Scanning the United States — USGS MRDS gold records</div>
 
     <div class="field-group">
       <div>
@@ -526,6 +537,20 @@ function applyPrice() {
 }
 
 let map, circle, marker;
+let detectedCountry = "US"; // updated from the map pin; sent with the scan request
+
+function updateCountryLine(lat, lng) {
+  const el = document.getElementById("country-line");
+  if (!el) return;
+  if (typeof SiteScoutCountry !== "undefined" && SiteScoutCountry.detectCountry) {
+    detectedCountry = SiteScoutCountry.detectCountry(lat, lng);
+    el.textContent = SiteScoutCountry.countryLabel(detectedCountry);
+  } else {
+    // countryDetect.js failed to load — leave the default US line and let
+    // the backend detect from the coordinates (it is authoritative).
+    detectedCountry = "US";
+  }
+}
 
 function initMap() {
   if (typeof L === "undefined") {
@@ -543,6 +568,7 @@ function initMap() {
 function updateMapPreview(lat, lng) {
   if (!map) return;
   const ll = [lat, lng];
+  updateCountryLine(lat, lng);
   map.setView(ll, 13);
   if (marker) map.removeLayer(marker);
   if (circle) map.removeLayer(circle);
@@ -588,7 +614,7 @@ async function handleScan() {
           email:     data.email,
           firstName: data.firstName,
           lastName:  data.lastName,
-          country:   "US",
+          country:   detectedCountry,
           region:    "Unknown",
           county:    "Unknown"
         },
@@ -664,6 +690,7 @@ function schedulePreview() {
 window.addEventListener("DOMContentLoaded", () => {
   applyPrice();
   initMap();
+  updateCountryLine(42.67, -123.305); // default map view (Oregon, US)
   document.getElementById("lat").addEventListener("input", schedulePreview);
   document.getElementById("lng").addEventListener("input", schedulePreview);
   document.getElementById("btn-scan").addEventListener("click", handleScan);
