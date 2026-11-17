@@ -397,13 +397,13 @@ footer a { color: var(--gold-dim); text-decoration: none; }
   <div class="hero-eyebrow">Blue Collar Empire · The Wild Tradesman</div>
   <h1>Drop Coordinates.<br/><em>Get Intelligence.</em></h1>
   <p class="hero-body">
-    11-module AI scan analyzes fault lines, real-time lightning strikes,
+    12-module AI scan analyzes fault lines, real-time lightning strikes,
     historical mining records, waterways, and geologic structure to rank your best targets —
     delivered as a full PDF field report.
   </p>
   <div class="hero-stats">
     <div class="stat">
-      <div class="stat-num">11</div>
+      <div class="stat-num">12</div>
       <div class="stat-label">Intel Modules</div>
     </div>
     <div class="stat">
@@ -411,7 +411,7 @@ footer a { color: var(--gold-dim); text-decoration: none; }
       <div class="stat-label">Per Scan</div>
     </div>
     <div class="stat">
-      <div class="stat-num">¼ mi</div>
+      <div class="stat-num">1 mi</div>
       <div class="stat-label">Default Radius</div>
     </div>
     <div class="stat">
@@ -573,7 +573,7 @@ function updateMapPreview(lat, lng) {
   if (marker) map.removeLayer(marker);
   if (circle) map.removeLayer(circle);
   marker = L.circleMarker(ll, { radius: 6, color: "#E8A020", fillColor: "#E8A020", fillOpacity: 0.9, weight: 2 }).addTo(map);
-  circle = L.circle(ll, { radius: 402, color: "#E8D028", weight: 1.5, dashArray: "6 4", fill: false, opacity: 0.7 }).addTo(map);
+  circle = L.circle(ll, { radius: 1609, color: "#E8D028", weight: 1.5, dashArray: "6 4", fill: false, opacity: 0.7 }).addTo(map);
 }
 
 function setStatus(msg, type) {
@@ -619,7 +619,7 @@ async function handleScan() {
           county:    "Unknown"
         },
         center:      { lat: data.lat, lng: data.lng },
-        radiusMiles: 0.25
+        radiusMiles: 1
       })
     });
 
@@ -698,3 +698,4 @@ window.addEventListener("DOMContentLoaded", () => {
 </script>
 </body>
 </html>
+
