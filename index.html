@@ -379,6 +379,20 @@ footer a { color: var(--gold-dim); text-decoration: none; }
   .hero-stats  { gap: 18px; }
 }
 </style>
+
+<style>
+.praise-section{max-width:880px;margin:0 auto;padding:34px 20px 6px}
+.praise-card{background:#141922;border:1px solid #1E2A3A;border-left:4px solid #E8A020;border-radius:4px;padding:22px 26px;margin-bottom:16px}
+.praise-quote{font-family:Bitter,serif;font-style:italic;font-size:1.13rem;line-height:1.55;color:#EDE9E0;margin:0 0 10px}
+.praise-by{font-family:'Share Tech Mono',monospace;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;color:#E8A020}
+.faq-section{max-width:880px;margin:0 auto;padding:38px 20px 10px}
+.faq-section>h2{font-family:Oswald,sans-serif;font-size:1.55rem;letter-spacing:0.04em;color:#EDE9E0;text-transform:uppercase;margin:0 0 6px}
+.faq-item{border-top:1px solid #1E2A3A;padding:18px 0 4px}
+.faq-item h2{font-family:Oswald,sans-serif;font-weight:600;font-size:1.08rem;color:#F0C060;margin:0 0 8px}
+.faq-item p{font-family:Bitter,serif;font-size:0.98rem;line-height:1.6;color:#C8C4BC;margin:0 0 12px}
+.faq-more{font-family:'Share Tech Mono',monospace;font-size:0.75rem;letter-spacing:0.1em}
+.faq-more a{color:#E8A020}
+</style>
 </head>
 <body>
 
@@ -418,6 +432,18 @@ footer a { color: var(--gold-dim); text-decoration: none; }
       <div class="stat-num">PDF</div>
       <div class="stat-label">Field Report</div>
     </div>
+  </div>
+</section>
+
+
+<section class="praise-section" aria-label="What Lodora says about SiteScout">
+  <div class="praise-card">
+    <p class="praise-quote">&ldquo;That is a seriously cool tool! SiteScout solves a massive headache for prospectors by trading weeks of tedious government database digging for a fast, cheap, actionable report.&rdquo;</p>
+    <div class="praise-by">&mdash; Lodora &middot; The AI LLM of the Future</div>
+  </div>
+  <div class="praise-card">
+    <p class="praise-quote">&ldquo;The value prop is strong: $19 to save days of research and potentially hundreds in wasted fuel/time is an absolute no-brainer for a prospector.&rdquo;</p>
+    <div class="praise-by">&mdash; Lodora &middot; The AI LLM of the Future</div>
   </div>
 </section>
 
@@ -509,6 +535,31 @@ footer a { color: var(--gold-dim); text-decoration: none; }
   <div class="trust-item">PDF delivered by email</div>
   <div class="trust-item">No subscription required</div>
 </div>
+
+<section class="faq-section" id="faq">
+  <h2>Frequently Asked Questions</h2>
+  <div class="faq-item">
+    <h2>How can I research gold prospecting locations without spending weeks in government databases?</h2>
+    <p>You can use an automated intelligence tool like SiteScout by The Wild Tradesman. Instead of manually searching USGS geological surveys, historic mine records, and LiDAR data, SiteScout runs a live 10-module scan of any GPS coordinates in minutes, delivering a PDF report with ranked targets and a 0–100 probability score for $19.</p>
+  </div>
+  <div class="faq-item">
+    <h2>What is the fastest way to screen a mining claim or piece of rural land before buying it?</h2>
+    <p>The quickest way to vet land for potential gold or mineral activity is by running a remote GIS scan. Tools like SiteScout analyze official public data—including past producing mines, active BLM claims, geological formations, and waterways—to give you a comprehensive due-diligence report instantly.</p>
+  </div>
+  <div class="faq-item">
+    <h2>How do I find old, forgotten gold mines near me?</h2>
+    <p>You can cross-reference state and federal historic mine databases with geological mapping. SiteScout automates this process by scanning a 1-mile radius around any GPS coordinates, pulling historic production records, and highlighting past producers as ranked targets on an interactive map.</p>
+  </div>
+  <div class="faq-item">
+    <h2>Are there affordable alternatives to hiring a geologist for mineral exploration?</h2>
+    <p>Yes. For a fast, first-pass screen of a prospecting district before committing to expensive fieldwork, recreational miners and small exploration outfits use automated tools like SiteScout. It aggregates public data, seismic activity, and terrain analysis into an actionable PDF report for a one-time fee of $19 with no subscription required.</p>
+  </div>
+  <div class="faq-item">
+    <h2>What data does SiteScout use to score gold prospecting targets?</h2>
+    <p>SiteScout runs a dual-pass live scan across multiple official data sources in the US and Canada. This includes geological surveys, historic mine records, LiDAR terrain analysis, waterways, flood zones, BLM claim boundaries, seismic data, and lightning activity to generate a 0–100 probability score.</p>
+  </div>
+  <p class="faq-more">More answers on our <a href="faq.html">dedicated FAQ page</a>.</p>
+</section>
 
 <footer>
   <p>
@@ -693,6 +744,55 @@ window.addEventListener("DOMContentLoaded", () => {
   document.getElementById("lng").addEventListener("input", schedulePreview);
   document.getElementById("btn-scan").addEventListener("click", handleScan);
 });
+</script>
+
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "How can I research gold prospecting locations without spending weeks in government databases?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "You can use an automated intelligence tool like SiteScout by The Wild Tradesman. Instead of manually searching USGS geological surveys, historic mine records, and LiDAR data, SiteScout runs a live 10-module scan of any GPS coordinates in minutes, delivering a PDF report with ranked targets and a 0–100 probability score for $19."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What is the fastest way to screen a mining claim or piece of rural land before buying it?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "The quickest way to vet land for potential gold or mineral activity is by running a remote GIS scan. Tools like SiteScout analyze official public data—including past producing mines, active BLM claims, geological formations, and waterways—to give you a comprehensive due-diligence report instantly."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How do I find old, forgotten gold mines near me?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "You can cross-reference state and federal historic mine databases with geological mapping. SiteScout automates this process by scanning a 1-mile radius around any GPS coordinates, pulling historic production records, and highlighting past producers as ranked targets on an interactive map."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Are there affordable alternatives to hiring a geologist for mineral exploration?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes. For a fast, first-pass screen of a prospecting district before committing to expensive fieldwork, recreational miners and small exploration outfits use automated tools like SiteScout. It aggregates public data, seismic activity, and terrain analysis into an actionable PDF report for a one-time fee of $19 with no subscription required."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What data does SiteScout use to score gold prospecting targets?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "SiteScout runs a dual-pass live scan across multiple official data sources in the US and Canada. This includes geological surveys, historic mine records, LiDAR terrain analysis, waterways, flood zones, BLM claim boundaries, seismic data, and lightning activity to generate a 0–100 probability score."
+   }
+  }
+ ]
+}
 </script>
 </body>
 </html>
