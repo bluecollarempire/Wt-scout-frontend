@@ -239,6 +239,37 @@ input::placeholder { color: var(--text-dim); opacity: 0.6; }
 .btn-scan:hover  { background: var(--gold-pale); }
 .btn-scan:active { background: var(--gold-dim); }
 .btn-scan:disabled { background: var(--border); color: var(--text-dim); cursor: not-allowed; }
+.radius-picker {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.radius-option {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 10px 6px;
+  color: var(--text);
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.radius-option span {
+  display: block;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: var(--gold);
+  margin-top: 2px;
+}
+.radius-option:hover { border-color: var(--gold-dim); }
+.radius-option.selected { background: var(--gold); color: #080C12; border-color: var(--gold); }
+.radius-option.selected span { color: #080C12; }
 .price-line {
   font-family: 'Share Tech Mono', monospace;
   font-size: 0.68rem;
@@ -502,6 +533,16 @@ footer a { color: var(--gold-dim); text-decoration: none; }
       </div>
     </div>
 
+    <div style="margin-bottom:12px">
+      <label>Scan radius — same engine, bigger ground</label>
+      <div class="radius-picker" role="radiogroup" aria-label="Scan radius">
+        <button type="button" class="radius-option selected" data-radius="1">1 mile <span>$19</span></button>
+        <button type="button" class="radius-option" data-radius="3">3 miles <span>$39</span></button>
+        <button type="button" class="radius-option" data-radius="5">5 miles <span>$59</span></button>
+      </div>
+      <div class="hint">Bigger radius covers more ground in the same report — targets and mines are ranked the same way.</div>
+    </div>
+
     <button class="btn-scan" id="btn-scan">
       Run Site Scan — <span id="btn-price">Loading…</span>
     </button>
@@ -575,17 +616,43 @@ footer a { color: var(--gold-dim); text-decoration: none; }
 </footer>
 
 <script>
-// ── PRICE CONFIG — edit this ONE line to change price everywhere ──
-const PRICE = { cents: 1900, display: "$19.00" };
+// ── PRICE CONFIG — edit this ONE place to change prices everywhere ──
+// Radius tiers (2026-11-26): 1 mi $19 / 3 mi $39 / 5 mi $59. The price
+// shown everywhere on this page follows the selected radius; the backend
+// re-validates the radius and sets the Stripe amount server-side, so the
+// client never decides what a scan costs.
+const RADIUS_TIERS = {
+  1: { cents: 1900, display: "$19.00" },
+  3: { cents: 3900, display: "$39.00" },
+  5: { cents: 5900, display: "$59.00" }
+};
+let selectedRadius = 1; // default tier — 1 mile, $19
+function currentPrice() { return RADIUS_TIERS[selectedRadius] || RADIUS_TIERS[1]; }
 
 // ── BACKEND URL ──────────────────────────────────────────────────
 const BACKEND = "https://wt-site-scout.vercel.app";
 
 function applyPrice() {
-  document.getElementById("hdr-price-display").textContent  = PRICE.display;
-  document.getElementById("stat-price").textContent         = PRICE.display;
-  document.getElementById("btn-price").textContent          = PRICE.display;
-  document.getElementById("price-line-amount").textContent  = PRICE.display;
+  const price = currentPrice();
+  document.getElementById("hdr-price-display").textContent  = price.display;
+  document.getElementById("stat-price").textContent         = price.display;
+  document.getElementById("btn-price").textContent          = price.display;
+  document.getElementById("price-line-amount").textContent  = price.display;
+  // keep the radius picker in sync (selected = gold fill)
+  document.querySelectorAll("[data-radius]").forEach(btn => {
+    btn.classList.toggle("selected", Number(btn.dataset.radius) === selectedRadius);
+  });
+  // redraw the map circle at the selected radius
+  const lat = parseFloat(document.getElementById("lat").value);
+  const lng = parseFloat(document.getElementById("lng").value);
+  if (!isNaN(lat) && !isNaN(lng) && lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180) {
+    updateMapPreview(lat, lng);
+  }
+}
+
+function selectRadius(n) {
+  selectedRadius = [1, 3, 5].includes(Number(n)) ? Number(n) : 1;
+  applyPrice();
 }
 
 let map, circle, marker;
@@ -625,7 +692,7 @@ function updateMapPreview(lat, lng) {
   if (marker) map.removeLayer(marker);
   if (circle) map.removeLayer(circle);
   marker = L.circleMarker(ll, { radius: 6, color: "#E8A020", fillColor: "#E8A020", fillOpacity: 0.9, weight: 2 }).addTo(map);
-  circle = L.circle(ll, { radius: 1609, color: "#E8D028", weight: 1.5, dashArray: "6 4", fill: false, opacity: 0.7 }).addTo(map);
+  circle = L.circle(ll, { radius: 1609 * selectedRadius, color: "#E8D028", weight: 1.5, dashArray: "6 4", fill: false, opacity: 0.7 }).addTo(map);
 }
 
 function setStatus(msg, type) {
@@ -671,7 +738,7 @@ async function handleScan() {
           county:    "Unknown"
         },
         center:      { lat: data.lat, lng: data.lng },
-        radiusMiles: 1
+        radiusMiles: selectedRadius
       })
     });
 
@@ -698,7 +765,7 @@ async function handleScan() {
         style: { base: { color: "#C8C4BC", fontFamily: "Share Tech Mono, monospace", fontSize: "15px", "::placeholder": { color: "#6A7080" } } }
       });
       const container = document.getElementById("status-msg");
-      container.innerHTML = '<div id="card-element" style="background:#0F1520;border:1px solid #1E2A3A;border-radius:3px;padding:12px;margin-bottom:10px"></div><button id="pay-btn" style="width:100%;background:#E8A020;color:#080C12;border:none;border-radius:3px;padding:14px;font-family:Oswald,sans-serif;font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;cursor:pointer">Complete Payment — ' + PRICE.display + '</button><div id="pay-err" style="color:#CC2828;font-family:Share Tech Mono,monospace;font-size:0.7rem;margin-top:8px;text-align:center"></div>';
+      container.innerHTML = '<div id="card-element" style="background:#0F1520;border:1px solid #1E2A3A;border-radius:3px;padding:12px;margin-bottom:10px"></div><button id="pay-btn" style="width:100%;background:#E8A020;color:#080C12;border:none;border-radius:3px;padding:14px;font-family:Oswald,sans-serif;font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;cursor:pointer">Complete Payment — ' + currentPrice().display + '</button><div id="pay-err" style="color:#CC2828;font-family:Share Tech Mono,monospace;font-size:0.7rem;margin-top:8px;text-align:center"></div>';
       cardEl.mount("#card-element");
       document.getElementById("pay-btn").addEventListener("click", async () => {
         document.getElementById("pay-btn").disabled = true;
@@ -707,7 +774,7 @@ async function handleScan() {
         if (error) {
           document.getElementById("pay-err").textContent = error.message;
           document.getElementById("pay-btn").disabled = false;
-          document.getElementById("pay-btn").textContent = "Complete Payment — " + PRICE.display;
+          document.getElementById("pay-btn").textContent = "Complete Payment — " + currentPrice().display;
           return;
         }
         if (paymentIntent.status === "succeeded") {
@@ -743,6 +810,9 @@ window.addEventListener("DOMContentLoaded", () => {
   applyPrice();
   initMap();
   updateCountryLine(42.67, -123.305); // default map view (Oregon, US)
+  document.querySelectorAll("[data-radius]").forEach(btn => {
+    btn.addEventListener("click", () => selectRadius(btn.dataset.radius));
+  });
   document.getElementById("lat").addEventListener("input", schedulePreview);
   document.getElementById("lng").addEventListener("input", schedulePreview);
   document.getElementById("btn-scan").addEventListener("click", handleScan);
