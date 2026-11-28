@@ -1,0 +1,28 @@
+# SiteScout by The Wild Tradesman
+
+> SiteScout is a one-time mineral prospecting report for gold metal detecting. Drop GPS coordinates, get a PDF report with ranked gold targets to hunt with a metal detector — bearing, distance, lat/long, depth in feet, what to do at each target, and detector guidance.
+
+## What it is
+
+- A live, dual-pass scan of public data for any GPS coordinates in the US and Canada. Country-aware: a US scan reads US gold records, a Canadian scan reads Canadian records.
+- Data sources: USGS MRDS gold occurrences and mining history, Macrostrat geology, BLM active mining claims, USGS 3DEP elevation (LiDAR terrain), USGS earthquakes, USGS NHD waterways, FEMA flood zones, and Xweather lightning (experimental).
+- Each report ranks real terrain targets first (deposition zones, scour zones, paleo-channel terraces), then past-producer mines at their raw scores. Active mining claims are marked on the map, unscored, with their lat/long.
+- Reports are informational only — not a mineral-resource estimate, not a land-status determination, and not a guarantee of gold.
+
+## Pricing (one-time, no subscription)
+
+- 1-mile radius scan: $19
+- 3-mile radius scan: $39
+- 5-mile radius scan: $59
+- PDF report delivered by email.
+
+## Pages
+
+- [SiteScout — run a scan](https://www.thewildtradesman.com/)
+- [FAQ — gold prospecting research, claims screening, mine data](https://www.thewildtradesman.com/faq.html)
+- [Sample report — fictional 8-page example](https://www.thewildtradesman.com/sample-report.html)
+
+## Notes
+
+- The sample report is a fictional, illustrative example — not a real place, person, or scan.
+- All sales are non-refundable.
